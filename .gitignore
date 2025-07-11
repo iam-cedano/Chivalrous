@@ -1,4 +1,6 @@
+# Task Files
 
+.vscode/tasks.json
 
 # Nginx Files
 dev/nginx/logs/

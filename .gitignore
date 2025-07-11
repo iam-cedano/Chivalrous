@@ -1,10 +1,10 @@
 
 
 # Nginx Files
-./dev/nginx/logs/
+dev/nginx/logs/
 
 # Web Files
 
-./dev/web/.*
+dev/web/.env.*
 
 

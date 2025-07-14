@@ -3,10 +3,15 @@
 .vscode/tasks.json
 
 # Nginx Files
+
 dev/nginx/logs/
 
 # Web Files
 
 dev/web/.env.*
 
+# Environment files
+
+.env*
+!*.env.sample
 

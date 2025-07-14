@@ -10,9 +10,25 @@
             }
         },
         {
-            "label": "Modes | Development",
+            "label": "Docker | docker-compose up",
             "type": "shell",
-            "command": "echo Development Mode"
+            "command": "docker-compose -f docker-compose.dev.yaml up -d",
+            "presentation": {
+                "reveal": "never"
+            },
+            "options": {
+                "statusbar": {
+                    "hide": true
+                }
+            }
+        },
+        {
+            "label": "Nginx | Reload Configuration File",
+            "type": "shell",
+            "command": "docker exec -it chivalrous-nginx-1 nginx -s reload",
+            "presentation": {
+                "reveal": "never"
+            }
         }
     ]
 }

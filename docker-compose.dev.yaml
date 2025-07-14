@@ -2,13 +2,18 @@ services:
   php-fpm:
     build: 
       context: ./dev
-      dockerfile: Dockerfile.dev.web
+      dockerfile: Dockerfile.dev.php-fpm
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
     networks:
       - chivalrous-network
     ports:
       - "9000:9000"
     volumes:
-      - chivalrous-dev-web:/var/www/html
+      - chivalrous-php-fpm-public:/var/www/html
+    depends_on:
+      - db
         
   nginx:
     build: 
@@ -23,14 +28,44 @@ services:
       - chivalrous-network
     depends_on:
       - php-fpm
-
+    
+  workspace:
+    build:
+      context: ./dev
+      dockerfile: Dockerfile.dev.workspace
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    volumes: 
+      - chivalrous-php-fpm-public:/var/www/html:rw
+    networks:
+      - chivalrous-network
+    tty: true
+    env_file:
+      - ./dev/workspace/.env
+  
+  db:
+    build:
+      context: ./dev
+      dockerfile: Dockerfile.dev.db
+    ports:
+      - "3306:3306"
+    volumes:  
+      - chivalrous-db-dev:/var/lib/mysql
+      - ./dev/db/scripts/:/docker-entrypoint-initdb.d/
+    networks:
+      - chivalrous-network
+    env_file:
+      - ./dev/db/.env.db
+    
 volumes:
-  chivalrous-dev-web:
+  chivalrous-php-fpm-public:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ./dev/web/html/
+      device: ./dev/php-fpm/public/
+  chivalrous-db-dev:
 
 networks:
   chivalrous-network:

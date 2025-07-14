@@ -8,7 +8,31 @@ dev/nginx/logs/
 
 # Web Files
 
-dev/web/.env.*
+dev/php-fpm/public/.env.*
+dev/php-fpm/public/*.log
+dev/php-fpm/public/.DS_Store
+dev/php-fpm/public/.env
+dev/php-fpm/public/.env.backup
+dev/php-fpm/public/.env.production
+dev/php-fpm/public/.phpactor.json
+dev/php-fpm/public/.phpunit.result.cache
+dev/php-fpm/public/.fleet
+dev/php-fpm/public/.idea
+dev/php-fpm/public/.nova
+dev/php-fpm/public/.phpunit.cache
+dev/php-fpm/public/.vscode
+dev/php-fpm/public/.zed
+dev/php-fpm/public/auth.json
+dev/php-fpm/public/node_modules
+dev/php-fpm/public/public/build
+dev/php-fpm/public/public/hot
+dev/php-fpm/public/public/storage
+dev/php-fpm/public/storage/*.key
+dev/php-fpm/public/storage/pail
+dev/php-fpm/public/vendor
+dev/php-fpm/public/Homestead.json
+dev/php-fpm/public/Homestead.yaml
+dev/php-fpm/public/Thumbs.db
 
 # Environment files
 

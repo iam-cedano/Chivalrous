@@ -12,6 +12,7 @@ dev/web/.env.*
 
 # Environment files
 
-.env*
-!*.env.sample
+dev/.env.db
+dev/.env.web
+dev/.env.workspace
 

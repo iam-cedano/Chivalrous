@@ -11,7 +11,7 @@ services:
     ports:
       - "9000:9000"
     volumes:
-      - chivalrous-php-fpm-public:/var/www/html
+      - chivalrous-php-fpm-project:/var/www/html
     depends_on:
       - db
         
@@ -20,10 +20,11 @@ services:
       context: ./dev
       dockerfile: Dockerfile.dev.nginx
     ports:
-      - "80:80"
+      - "80:8080"
     volumes:
       - ./dev/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./dev/nginx/logs/:/var/log/nginx/
+      - chivalrous-php-fpm-project:/var/www/html
     networks:
       - chivalrous-network
     depends_on:
@@ -37,7 +38,7 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     volumes: 
-      - chivalrous-php-fpm-public:/var/www/html:rw
+      - chivalrous-php-fpm-project:/var/www/html
     networks:
       - chivalrous-network
     tty: true
@@ -59,12 +60,13 @@ services:
       - ./dev/db/.env.db
     
 volumes:
-  chivalrous-php-fpm-public:
+  chivalrous-php-fpm-project:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ./dev/php-fpm/public/
+      device: ./dev/php-fpm/project/
+
   chivalrous-db-dev:
 
 networks:

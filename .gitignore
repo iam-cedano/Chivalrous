@@ -2,37 +2,41 @@
 
 .vscode/tasks.json
 
+# Database Files
+
+dev/db/.env.*
+
 # Nginx Files
 
 dev/nginx/logs/
 
 # Web Files
 
-dev/php-fpm/public/.env.*
-dev/php-fpm/public/*.log
-dev/php-fpm/public/.DS_Store
-dev/php-fpm/public/.env
-dev/php-fpm/public/.env.backup
-dev/php-fpm/public/.env.production
-dev/php-fpm/public/.phpactor.json
-dev/php-fpm/public/.phpunit.result.cache
-dev/php-fpm/public/.fleet
-dev/php-fpm/public/.idea
-dev/php-fpm/public/.nova
-dev/php-fpm/public/.phpunit.cache
-dev/php-fpm/public/.vscode
-dev/php-fpm/public/.zed
-dev/php-fpm/public/auth.json
-dev/php-fpm/public/node_modules
-dev/php-fpm/public/public/build
-dev/php-fpm/public/public/hot
-dev/php-fpm/public/public/storage
-dev/php-fpm/public/storage/*.key
-dev/php-fpm/public/storage/pail
-dev/php-fpm/public/vendor
-dev/php-fpm/public/Homestead.json
-dev/php-fpm/public/Homestead.yaml
-dev/php-fpm/public/Thumbs.db
+dev/php-fpm/project/.env.*
+dev/php-fpm/project/*.log
+dev/php-fpm/project/.DS_Store
+dev/php-fpm/project/.env
+dev/php-fpm/project/.env.backup
+dev/php-fpm/project/.env.production
+dev/php-fpm/project/.phpactor.json
+dev/php-fpm/project/.phpunit.result.cache
+dev/php-fpm/project/.fleet
+dev/php-fpm/project/.idea
+dev/php-fpm/project/.nova
+dev/php-fpm/project/.phpunit.cache
+dev/php-fpm/project/.vscode
+dev/php-fpm/project/.zed
+dev/php-fpm/project/auth.json
+dev/php-fpm/project/node_modules
+dev/php-fpm/project/project/build
+dev/php-fpm/project/project/hot
+dev/php-fpm/project/project/storage
+dev/php-fpm/project/storage/*.key
+dev/php-fpm/project/storage/pail
+dev/php-fpm/project/vendor
+dev/php-fpm/project/Homestead.json
+dev/php-fpm/project/Homestead.yaml
+dev/php-fpm/project/Thumbs.d
 
 # Environment files
 

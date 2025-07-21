@@ -11,8 +11,7 @@ class SmmProvider extends Model
 
     protected $table = 'smm_providers';
     public $timestamps = false;
-
-    public $attributes = [
+    public $fillable = [
         'name',
         'description',
         'image'

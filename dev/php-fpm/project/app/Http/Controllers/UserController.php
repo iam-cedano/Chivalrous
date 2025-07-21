@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SmmProviderService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Config;
 
 class UserController extends Controller
 {
-    public function login(): View {
-        echo Config::get('app.cdn');
+    public function __construct(
+        private SmmProviderService $smmProviderService
+    ) {}
 
+    public function login(): View {
         return view('users.login', ['name' => 'Miguel']);
     }
 }

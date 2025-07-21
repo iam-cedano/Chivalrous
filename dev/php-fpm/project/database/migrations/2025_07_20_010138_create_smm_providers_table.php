@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('smm_providers', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary()->autoIncrement();
             $table->string('name');
             $table->string('description');
-            $table->string('image');
+            $table->string('url')->nullable();
+            $table->string('image')->nullable();
         });
     }
 

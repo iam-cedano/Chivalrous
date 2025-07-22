@@ -123,5 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'cdn' => 'https://google.com'
+    'cdn' => 'https://google.com',
+    'dev_server_url' => env('VITE_DEV_SERVER_URL', 'http://localhost:5173'),
+    'dev_server_host' => env('VITE_DEV_SERVER_HOST', 'localhost'),
 ];

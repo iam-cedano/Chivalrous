@@ -12,6 +12,6 @@ class UserController extends Controller
     ) {}
 
     public function login(): View {
-        return view('Users.login', ['name' => 'Miguel']);
+        return view('users.login');
     }
 }

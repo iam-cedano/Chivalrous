@@ -43,7 +43,7 @@ USER root
 RUN chown root:workspace /usr/bin/php83 /usr/bin/composer /bin/mkdir /bin/touch /var/log/ \
     && chmod 750 /usr/bin/php83 /usr/bin/composer /bin/mkdir /bin/touch /var/log/
 
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public/
 
 ENV PATH="/home/workspace/.composer/vendor/bin:$PATH"
 

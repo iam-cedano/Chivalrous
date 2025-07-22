@@ -1,26 +1,36 @@
-import { defineConfig } from 'vite';
-import laravel from 'laravel-vite-plugin';
-import tailwindcss from '@tailwindcss/vite';
-import vue from "@vitejs/plugin-vue"
+import { defineConfig } from 'vite'
+import laravel from 'laravel-vite-plugin'
+import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.ts',
+            ],
             refresh: true,
         }),
         vue({
             template: {
                 transformAssetUrls: {
                     includeAbsolute: false
-                }
-            }
+                },
+            },
         }),
-        tailwindcss(),
     ],
+    server: {
+        host: 'localhost',
+        port: 5173,
+        hmr: {
+            host: 'localhost',
+        },
+        cors: true,        
+    },
     resolve: {
         alias: {
-            vue: 'vue/dist/vue.esm-bundler.js',
+            '@': '/resources/js',
+            '~': '/resources',
         },
     },
-});
+})

@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^5.2.4",
+        "typescript": "^5.8.3",
         "vue-next": "^0.0.1"
     }
 }

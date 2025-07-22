@@ -4,10 +4,10 @@
     "src": "resources/css/app.css",
     "isEntry": true
   },
-  "resources/js/app.js": {
-    "file": "assets/app-BHL-TAUY.js",
+  "resources/js/app.ts": {
+    "file": "assets/app-BSunaI4j.js",
     "name": "app",
-    "src": "resources/js/app.js",
+    "src": "resources/js/app.ts",
     "isEntry": true
   }
 }

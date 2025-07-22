@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <head>
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
+    @vite(['resources/js/app.ts', 'resources/css/app.css'])
 </head>
 
 <body>
 
-    <div id="app">
+    <main id="app">
         <welcome-component></welcome-component>
-    </div>
+    </main>
 
 </body>

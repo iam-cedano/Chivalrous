@@ -49,6 +49,7 @@ WORKDIR /var/www/html
 
 EXPOSE 9000
 
+
 USER php-fpm
 
 CMD ["php-fpm83"]

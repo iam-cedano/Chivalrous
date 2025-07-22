@@ -11,5 +11,9 @@ Route::get('/users/login', function(UserController $user) {
 
 Route::get('/', function() {
     return "<h1>Hello World</h1>";
-});     
+});
+
+Route::get('/', function() {
+    return view('welcome');
+});
 

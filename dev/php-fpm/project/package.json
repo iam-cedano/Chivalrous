@@ -16,7 +16,6 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^5.2.4",
-        "vue-next": "^0.0.1",
-        "vue-router": "^4.5.1"
+        "vue-next": "^0.0.1"
     }
 }

@@ -54,7 +54,7 @@
 <body>  
 
     <div class="login-container">
-        <form action="/users/login" method="post">
+        <form action="{{ route('users.index') }}" method="post">
             <h2>Login</h2>
             <div class="input-group">
                 <label for="username">Username</label>

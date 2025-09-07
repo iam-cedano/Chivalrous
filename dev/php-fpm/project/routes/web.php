@@ -1,19 +1,19 @@
 <?php
-use App\Http\Controllers\SmmProviderController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/users/login', function(UserController $user) {
+Route::get('/auth/login', function(UserController $user) {
     return $user->login();
 });
 
-Route::get('/', function() {
-    return "<h1>Hello World</h1>";
+Route::prefix('/auth')->group(function() {
+    
+    Route::get('/login', [AuthController::class, 'login'])->name('users.login');
+
+    Route::post('/', [AuthController::class, 'index'])->name('users.index');
 });
 
 Route::get('/', function() {
-    return view('welcome');
+    return view('phpinfo');
 });
-

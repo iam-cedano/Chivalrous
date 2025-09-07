@@ -5,7 +5,10 @@ ARG GID
 
 USER root
 
+# Init memcached service
+
 RUN apk add --no-cache \
+    memcached \
     php83 \
     php83-fpm \
     php83-pecl-xdebug \
@@ -24,6 +27,7 @@ RUN apk add --no-cache \
     php83-fileinfo \
     php83-pdo \
     php83-pdo_mysql \
+    php83-pecl-memcached \
     nodejs \
     npm
 
@@ -37,18 +41,18 @@ RUN mkdir -p /var/log/php83/ \
 RUN sed -i 's/listen = 127.0.0.1:9000/listen = 0.0.0.0:9000/' /etc/php83/php-fpm.d/www.conf \
     && sed -i 's/;daemonize = yes/daemonize = no/' /etc/php83/php-fpm.conf
 
-
 RUN mkdir -p /etc/php83/conf.d/
 
-RUN echo "zend_extension=xdebug" > /etc/php83/conf.d/zzz-xdebug.ini \
-    && echo "xdebug.mode=develop,debug,coverage,trace,profile,gcstats" >> /etc/php83/conf.d/zzz-xdebug.ini
+RUN echo "zend_extension=xdebug" > /etc/php83/conf.d/yyy-xdebug.ini \
+    && echo "xdebug.mode=develop,debug,coverage,trace,profile,gcstats" >> /etc/php83/conf.d/yyy-xdebug.ini
+
+RUN echo "extension=memcached.so" > /etc/php83/conf.d/zzz-memcached.ini
 
 COPY ./php-fpm/php/php.ini-development /etc/php83/php.ini
 
 WORKDIR /var/www/html
 
 EXPOSE 9000
-
 
 USER php-fpm
 

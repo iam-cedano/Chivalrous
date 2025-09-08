@@ -13,11 +13,14 @@ class AuthController extends Controller
         private SmmProviderRepositoryInterface $smmProviderRepository
     ) {}
 
-    public function login(): View {
-        return view('users.login');
+    public function login(Request $request) {
+
     }
 
     public function index(Request $request): RedirectResponse {
         return redirect('users.login', 401);
     }
+    
+
+
 }

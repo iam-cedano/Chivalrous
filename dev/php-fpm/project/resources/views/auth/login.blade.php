@@ -54,7 +54,9 @@
 <body>  
 
     <div class="login-container">
-        <form action="{{ route('users.index') }}" method="post">
+        <form action="{{ route('api.auth.login') }}" method="post">
+        @csrf
+
             <h2>Login</h2>
             <div class="input-group">
                 <label for="username">Username</label>

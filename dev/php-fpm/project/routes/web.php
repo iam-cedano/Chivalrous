@@ -15,5 +15,5 @@ Route::prefix('/auth')->group(function() {
 });
 
 Route::get('/', function() {
-    return view('phpinfo');
+    return '<h1>Chivalrous the best SMM Panel</h1>';
 });

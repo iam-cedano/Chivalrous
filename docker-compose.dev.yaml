@@ -8,6 +8,7 @@ services:
         GID: ${GID:-1000}
     networks:
       - chivalrous-network
+      - chivalrous-cache-network
     ports:
       - "9000:9000"
     volumes:
@@ -29,6 +30,15 @@ services:
       - chivalrous-network
     depends_on:
       - php-fpm
+  
+  redis:
+    build:
+      context: ./dev
+      dockerfile: Dockerfile.dev.redis
+    ports:
+      - "6379:6379"
+    networks:
+      - chivalrous-cache-network
     
   workspace:
     build:
@@ -41,9 +51,10 @@ services:
       - chivalrous-php-fpm-project:/var/www/html
     networks:
       - chivalrous-network
+      - chivalrous-cache-network
     tty: true
     env_file:
-      - ./dev/workspace/.env
+      - ./dev/workspace/.env.db
   
   db:
     build:
@@ -71,4 +82,6 @@ volumes:
 
 networks:
   chivalrous-network:
+    driver: bridge
+  chivalrous-cache-network:
     driver: bridge

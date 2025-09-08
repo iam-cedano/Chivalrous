@@ -5,10 +5,7 @@ ARG GID
 
 USER root
 
-# Init memcached service
-
 RUN apk add --no-cache \
-    memcached \
     php83 \
     php83-fpm \
     php83-pecl-xdebug \
@@ -27,9 +24,10 @@ RUN apk add --no-cache \
     php83-fileinfo \
     php83-pdo \
     php83-pdo_mysql \
-    php83-pecl-memcached \
+    php83-pecl-redis \
     nodejs \
     npm
+
 
 RUN addgroup -g ${GID:-1000} -S php-fpm && \
     adduser -u ${UID:-1000} -S php-fpm -G php-fpm

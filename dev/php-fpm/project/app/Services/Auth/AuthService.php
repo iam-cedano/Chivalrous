@@ -6,11 +6,12 @@ use App\Services\Auth\Interfaces\AuthenticationStrategy;
 
 class AuthService {
     public function __construct(
-        private AuthenticationStrategy $authStrategy
+        private AuthenticationStrategy $strategy
     ) {
-    }
-    
-    public function login() {
+
     }
 
+    public function authenticate(array $data): bool {
+        return true;
+    }
 }

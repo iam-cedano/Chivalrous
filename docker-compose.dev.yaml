@@ -69,6 +69,14 @@ services:
       - chivalrous-network
     env_file:
       - ./dev/db/.env.db
+  
+  # Optional: RedisInsight for Redis GUI management
+  redis-insight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - "5540:5540"
+    networks:
+      - chivalrous-cache-network
     
 volumes:
   chivalrous-php-fpm-project:

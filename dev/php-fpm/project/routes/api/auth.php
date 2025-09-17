@@ -1,14 +1,16 @@
 <?php
 
-use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('/api/auth')->group(function() {
+use App\Http\Controllers\AuthController;
 
-    Route::post('/login', function(Request $request): RedirectResponse {
-        return redirect('https://google.com', 302);
+Route::prefix('/auth')->group(function() {
+
+    Route::post('/login', function(Request $request): JsonResponse {
+        return app(AuthController::class)->login($request);
     })->name('api.auth.login');
 
 });

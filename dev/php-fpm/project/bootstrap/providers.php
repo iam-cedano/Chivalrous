@@ -1,6 +1,6 @@
 <?php
 
 return [
-    App\AppServiceProvider::class,
-    App\PortsProvider::class,
+    App\Providers\AppServiceProvider::class,
+    App\Providers\PortsProvider::class,
 ];

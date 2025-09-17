@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Providers;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Database\Eloquent\Model;

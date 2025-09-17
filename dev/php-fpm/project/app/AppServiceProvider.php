@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use App\Services\JSONPlaceholder;
 
 class AppServiceProvider extends ServiceProvider implements DeferrableProvider
 {

@@ -5,6 +5,7 @@ USER root
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/dev.chivalrous.com/ /etc/nginx/sites-available/dev.chivalrous.com
 COPY ./nginx/chivalrous.com/ /etc/nginx/sites-available/chivalrous.com
+COPY ./php-fpm/project/resources /var/www/chivalrous.com/resources/
 
 RUN mkdir -p /var/www/chivalrous.com/public \
     && mkdir -p /var/www/dev.chivalrous.com/public \

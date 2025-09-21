@@ -9,8 +9,6 @@ services:
     networks:
       - chivalrous-network
       - chivalrous-cache-network
-    ports:
-      - "9000:9000"
     volumes:
       - chivalrous-php-fpm-project:/var/www/chivalrous.com/
     depends_on:
@@ -29,17 +27,17 @@ services:
       - chivalrous-network
     depends_on:
       - php-fpm
+      - vite
   
   redis:
     build:
       context: ./dev
       dockerfile: Dockerfile.dev.redis
-    ports:
-      - "6379:6379"
     networks:
       - chivalrous-cache-network
     
   workspace:
+    tty: true
     build:
       context: ./dev
       dockerfile: Dockerfile.dev.workspace
@@ -49,12 +47,23 @@ services:
     volumes: 
       - chivalrous-php-fpm-project:/var/www/chivalrous.com/
     networks:
-      - chivalrous-network
       - chivalrous-cache-network
-    tty: true
     env_file:
-      - ./dev/workspace/.env.db
-  
+      - ./dev/workspace/.env.workspace
+
+  vite: 
+    build:
+      context: ./dev
+      dockerfile: Dockerfile.dev.vite
+    networks:
+      - chivalrous-network
+    ports:
+      - "5173:5173"
+    volumes:
+      - chivalrous-php-fpm-project:/var/www/chivalrous.com/
+    env_file:
+      - ./dev/vite/.env.vite
+    
   db:
     build:
       context: ./dev

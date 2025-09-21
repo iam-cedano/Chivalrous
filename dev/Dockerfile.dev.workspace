@@ -44,6 +44,8 @@ USER root
 RUN chown root:workspace /usr/bin/php83 /usr/bin/composer /bin/mkdir /bin/touch /var/log/ \
     && chmod 750 /usr/bin/php83 /usr/bin/composer /bin/mkdir /bin/touch /var/log/
 
+COPY ./php-fpm/project/ /var/www/chivalrous.com/
+
 WORKDIR /var/www/chivalrous.com/
 
 ENV PATH="/home/workspace/.composer/vendor/bin:$PATH"

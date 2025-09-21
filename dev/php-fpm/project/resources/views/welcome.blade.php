@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <head>
-    @vite(['resources/js/app.ts', 'resources/css/app.css'])
+@viteReactRefresh
+@vite('resources/js/app.tsx')
+
 </head>
 
 <body>
 
-    <main id="app">
-        <welcome-component></welcome-component>
-    </main>
-
+    <div id="app"></div>
 
 </body>

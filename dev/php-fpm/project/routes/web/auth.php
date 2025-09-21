@@ -7,3 +7,4 @@ Route::prefix('/auth')->group(function() {
     Route::get('/login',  fn () => view('auth.login'))->name('auth.login');
 
 })->middleware(ValidateCsrfToken::class);
+    

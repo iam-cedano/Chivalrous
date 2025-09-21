@@ -29,7 +29,7 @@ dev/php-fpm/project/.vscode
 dev/php-fpm/project/.zed
 dev/php-fpm/project/auth.json
 dev/php-fpm/project/node_modules
-dev/php-fpm/project/public/build
+dev/php-fpm/project/public/build/*
 dev/php-fpm/project/hot
 dev/php-fpm/project/storage
 dev/php-fpm/project/storage/*.key
@@ -38,6 +38,7 @@ dev/php-fpm/project/vendor
 dev/php-fpm/project/Homestead.json
 dev/php-fpm/project/Homestead.yaml
 dev/php-fpm/project/Thumbs.d
+dev/php-fpm/project/public/hot
 
 # Environment files
 

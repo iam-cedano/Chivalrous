@@ -7,7 +7,8 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: [
-            __DIR__.'/../routes/web/auth.php'
+            __DIR__.'/../routes/web/auth.php',
+            __DIR__.'/../routes/web/welcome.php',
         ],
         api: [
             __DIR__.'/../routes/api/auth.php'

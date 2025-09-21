@@ -28,7 +28,7 @@ dev/php-fpm/project/.vscode
 dev/php-fpm/project/.zed
 dev/php-fpm/project/auth.json
 dev/php-fpm/project/node_modules
-dev/php-fpm/project/project/build
+dev/php-fpm/project/project/public/build
 dev/php-fpm/project/project/hot
 dev/php-fpm/project/project/storage
 dev/php-fpm/project/storage/*.key
@@ -43,4 +43,12 @@ dev/php-fpm/project/Thumbs.d
 dev/.env.db
 dev/.env.web
 dev/.env.workspace
+
+# Workspace files
+
+dev/workspace/.env.*
+
+# Vite Files
+
+dev/vite/.env.*
 

@@ -1,20 +1,17 @@
 FROM alpine:3.20
 
-USER root
+RUN apk add --no-cache nodejs npm
 
 RUN addgroup -g 1000 vite \
-    && adduser -u 1000 -S vite -G vite
+ && adduser -u 1000 -S vite -G vite
 
-RUN apk update \
-    && apk add --no-cache \
-    nodejs \ 
-    npm
+WORKDIR /var/www/chivalrous.com
 
-COPY php-fpm/project/ /var/www/chivalrous.com/
+COPY ./php-fpm/project/package*.json ./
 
-WORKDIR /var/www/chivalrous.com/
+RUN npm ci
 
-RUN npm i
+RUN chown -R vite:vite /var/www/chivalrous.com
 
 EXPOSE 5173
 

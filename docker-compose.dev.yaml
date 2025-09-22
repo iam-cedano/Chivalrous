@@ -55,15 +55,13 @@ services:
     build:
       context: ./dev
       dockerfile: Dockerfile.dev.vite
-    networks:
-      - chivalrous-network
     ports:
       - "5173:5173"
     volumes:
-      - chivalrous-php-fpm-project:/var/www/chivalrous.com/
+      - ./dev/php-fpm/project/:/var/www/chivalrous.com/
+      - /var/www/chivalrous.com/node_modules
     env_file:
       - ./dev/vite/.env.vite
-    
   db:
     build:
       context: ./dev

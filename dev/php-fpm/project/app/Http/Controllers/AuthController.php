@@ -7,17 +7,12 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function __construct(
-        private \App\Usecases\SmmProvider\GetServicesUsecase $getServicesUsecase
-    ) {}
+    public function authenticate(Request $request):void {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'password' => ['required']
+        ]);
 
-    public function login(Request $request) {
-        $response = $this->getServicesUsecase->execute();
-
-        return response()->json($response);
-    }
-
-    public function index(Request $request): RedirectResponse {
-        return redirect('users.login', 401);
+        var_dump($credentials);
     }
 }

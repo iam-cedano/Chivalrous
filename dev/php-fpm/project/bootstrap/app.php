@@ -8,6 +8,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: [
             __DIR__.'/../routes/web/auth.php',
+            __DIR__.'/../routes/web/admin.php',
             __DIR__.'/../routes/web/welcome.php',
         ],
         api: [
@@ -17,7 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->redirectGuestsTo(fn (Request $request) => route('auth.login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

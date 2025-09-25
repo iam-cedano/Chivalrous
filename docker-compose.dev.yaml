@@ -47,6 +47,7 @@ services:
     volumes: 
       - chivalrous-php-fpm-project:/var/www/chivalrous.com/
     networks:
+      - chivalrous-network
       - chivalrous-cache-network
     env_file:
       - ./dev/workspace/.env.workspace

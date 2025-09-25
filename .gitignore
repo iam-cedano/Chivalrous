@@ -8,8 +8,8 @@ dev/db/.env.*
 
 # Nginx Files
 
-dev/nginx/chivalrous.com/logs/*
-dev/nginx/dev.chivalrous.com/logs/*
+dev/nginx/chivalrous.com/logs/
+dev/nginx/dev.chivalrous.com/logs/
 
 # Web Files
 

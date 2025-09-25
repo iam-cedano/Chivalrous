@@ -10,7 +10,6 @@ dev/db/.env.*
 
 dev/nginx/chivalrous.com/logs/
 dev/nginx/dev.chivalrous.com/logs/
-dev/nginx/chivalrous.com/logs/access.log
 
 # Web Files
 

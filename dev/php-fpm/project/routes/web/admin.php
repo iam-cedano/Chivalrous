@@ -1,5 +1,10 @@
 <?php
 
-Route::prefix('admin')->group(function () {
-    Route::get('dashboard', fn () => 'Admin Dashboard')->name('admin.dashboard');
-})->middleware('auth');
+use App\Http\Controllers\AdminController;
+
+Route::controller(AdminController::class)
+->middleware('auth')
+->prefix('admin')
+->group( function () {
+    Route::get('/users', 'users')->name('admin.users');
+});

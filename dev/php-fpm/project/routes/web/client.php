@@ -1,5 +1,11 @@
 <?php
+use App\Http\Controllers\ClientController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => ['status' => 'ok']);
-Route::get('/orders', fn () => ['status' => 'ok']);
-Route::get('/addfunds', fn () => ['status' => 'ok']);
+Route::controller(ClientController::class)
+->middleware('auth:web')
+->group( function () {
+    Route::get('/orders', 'orders');
+});
+
+

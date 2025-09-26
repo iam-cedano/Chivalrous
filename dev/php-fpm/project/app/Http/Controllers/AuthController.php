@@ -10,14 +10,14 @@ class AuthController extends Controller
 {
     public function authenticate(Request $request): RedirectResponse {
         $credentials = $request->validate([
-            'username' => ['required'],
+            'name' => ['required'],
             'password' => ['required']
         ]);
 
-        if (Auth::guard('user')->attempt($credentials)) {
+        if (Auth::guard('web')->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            return redirect()->intended('/orders');
         } else {
             return back()->with('error', 'The provided credentials do not match our records.');
         }

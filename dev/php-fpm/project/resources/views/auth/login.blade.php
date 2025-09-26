@@ -54,13 +54,13 @@
 <body>  
 
     <div class="login-container">
-        <form action="{{ route('api.auth.authenticate') }}" method="post">
+        <form action="{{ route('auth.authenticate') }}" method="post">
         @csrf
 
             <h2>Login</h2>
             <div class="input-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+                <label for="name">Username</label>
+                <input type="text" id="name" name="name" required>
             </div>
             <div class="input-group">
                 <label for="password">Password</label>

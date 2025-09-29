@@ -16,13 +16,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory()->createMany([[
-            'role' => Config::get('constants.USER'),
+            'role' => Config::get('constants.roles.client'),
             'name' => 'Oscar Cedano',
             'email' => 'cedano@engineer.com',
             'password' => 'engineer123'
         ],
         [
-            'role' => Config::get('constants.ADMIN'),
+            'role' => Config::get('constants.roles.admin'),
             'name' => 'Jhon Doe',
             'email' => 'jhon_doe@gmail.com',
             'password' => 'jhon123'

@@ -49,6 +49,6 @@ class User extends Authenticatable
     }
 
     public function isAdministrator(): bool {
-        return $this->role == Config::get('constants.ADMIN');
+        return $this->role == Config::get('constants.roles.admin');
     }
 }

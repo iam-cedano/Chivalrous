@@ -54,7 +54,7 @@
 <body>  
 
     <div class="login-container">
-        <form action="{{ route('auth.authenticate') }}" method="post">
+        <form action="{{ route('auth.web') }}" method="post">
         @csrf
 
             <h2>Login</h2>

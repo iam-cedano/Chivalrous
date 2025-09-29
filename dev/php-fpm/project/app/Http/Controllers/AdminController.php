@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AdminController extends Controller
 {
-    public function users(): View {
+    public function showUsersPage(): View {
         return view('admin.users');
     }  
+
+    public function showDashboardPage(): View {
+        return view('admin.dashboard');
+    }
 }

@@ -6,8 +6,8 @@ use App\Http\Middleware\EnsureUserIsAuthenticated;
 
 Route::controller(AdminController::class)
 ->middleware([EnsureUserIsAuthenticated::class, EnsureUserIsAdministrator::class])
-->prefix('admin')
+->prefix('/admin')
 ->group( function () {
-    Route::get('/users', 'dashboard')->name('dashboard');
-    Route::get('/users', 'users')->name('users');
+    Route::get('/users', 'showUsersPage')->name('admin.users');
+    Route::get('/dashboard', 'showDashboardPage')->name('admin.dashboard');
 });

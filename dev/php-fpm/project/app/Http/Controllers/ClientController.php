@@ -7,9 +7,11 @@ use Illuminate\View\View;
 
 class ClientController extends Controller
 {
-
-    public function orders(Request $request): View {
-        
+    public function showOrdersPage(Request $request): View {
         return view('client.orders');
     }   
+
+    public function showDashboardPage(Request $request): View {
+        return view('client.dashboard');
+    }
 }

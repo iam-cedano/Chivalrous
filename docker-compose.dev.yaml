@@ -87,6 +87,8 @@ services:
       - "5540:5540"
     networks:
       - chivalrous-cache-network
+    volumes:
+      - redisinsight-data:/db
     
 volumes:
   chivalrous-php-fpm-project:
@@ -104,6 +106,7 @@ volumes:
       device: ./dev/php-fpm/project/public/
 
   chivalrous-db-dev:
+  redisinsight-data:
 
 networks:
   chivalrous-network:

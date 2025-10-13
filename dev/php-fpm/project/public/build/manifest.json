@@ -1,8 +1,39 @@
 {
-  "resources/js/app.tsx": {
-    "file": "assets/app-D-xVfOgl.js",
-    "name": "app",
-    "src": "resources/js/app.tsx",
+  "_index-D6CVo32A.js": {
+    "file": "assets/index-D6CVo32A.js",
+    "name": "index"
+  },
+  "resources/js/pages/admin/Admin.Dashboard.tsx": {
+    "file": "assets/Admin.Dashboard-DA-NIlrh.js",
+    "name": "Admin.Dashboard",
+    "src": "resources/js/pages/admin/Admin.Dashboard.tsx",
+    "isEntry": true,
+    "imports": [
+      "_index-D6CVo32A.js"
+    ]
+  },
+  "resources/js/pages/admin/Admin.Users.tsx": {
+    "file": "assets/Admin.Users-QZNyYpKn.js",
+    "name": "Admin.Users",
+    "src": "resources/js/pages/admin/Admin.Users.tsx",
+    "isEntry": true,
+    "imports": [
+      "_index-D6CVo32A.js"
+    ]
+  },
+  "resources/js/pages/auth/Auth.Login.tsx": {
+    "file": "assets/Auth.Login-B_SITdR7.js",
+    "name": "Auth.Login",
+    "src": "resources/js/pages/auth/Auth.Login.tsx",
+    "isEntry": true,
+    "imports": [
+      "_index-D6CVo32A.js"
+    ]
+  },
+  "resources/js/pages/client/Client.Dashboard.tsx": {
+    "file": "assets/Client.Dashboard-l0sNRNKZ.js",
+    "name": "Client.Dashboard",
+    "src": "resources/js/pages/client/Client.Dashboard.tsx",
     "isEntry": true
   }
 }

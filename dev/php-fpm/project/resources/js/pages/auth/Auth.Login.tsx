@@ -1,11 +1,9 @@
 import ReactDOM from "react-dom/client";
-import Head from "./components/Login.Head";
-import { StrictMode } from "react";
+import * as React from "react";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
-        <StrictMode>
-            <Head />
+        <React.StrictMode>
             <h1>Login</h1>
-        </StrictMode>
+        </React.StrictMode>
     );

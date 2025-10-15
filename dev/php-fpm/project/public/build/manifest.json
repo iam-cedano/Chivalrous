@@ -3,8 +3,13 @@
     "file": "assets/index-D6CVo32A.js",
     "name": "index"
   },
+  "resources/css/app.css": {
+    "file": "assets/app-Bvja6eeO.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
   "resources/js/pages/admin/Admin.Dashboard.tsx": {
-    "file": "assets/Admin.Dashboard-DA-NIlrh.js",
+    "file": "assets/Admin.Dashboard-CGkEthOZ.js",
     "name": "Admin.Dashboard",
     "src": "resources/js/pages/admin/Admin.Dashboard.tsx",
     "isEntry": true,
@@ -13,7 +18,7 @@
     ]
   },
   "resources/js/pages/admin/Admin.Users.tsx": {
-    "file": "assets/Admin.Users-QZNyYpKn.js",
+    "file": "assets/Admin.Users-CGkEthOZ.js",
     "name": "Admin.Users",
     "src": "resources/js/pages/admin/Admin.Users.tsx",
     "isEntry": true,
@@ -22,7 +27,7 @@
     ]
   },
   "resources/js/pages/auth/Auth.Login.tsx": {
-    "file": "assets/Auth.Login-B_SITdR7.js",
+    "file": "assets/Auth.Login-Dthwn0ZK.js",
     "name": "Auth.Login",
     "src": "resources/js/pages/auth/Auth.Login.tsx",
     "isEntry": true,

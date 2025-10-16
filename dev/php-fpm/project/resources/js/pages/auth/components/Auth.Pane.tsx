@@ -6,11 +6,11 @@ interface PaneContainer {
 
 function Pane(data: PaneContainer) {
     return (
-        <>
-            <div className="bg-white mx-auto rounded-10">
-                <p>Hello world</p>
+        <div key="main-pane" className="flex pt-50">
+            <div key="child-pane" className="bg-white h-screen w-100 m-2 rounded-[50px] p-[25px]">
+                { data.children }
             </div>
-        </>
+        </div>
     );
 }
 

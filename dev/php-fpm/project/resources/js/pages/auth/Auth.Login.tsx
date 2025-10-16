@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById("app")!)
         <React.StrictMode>
             <LocalComponents.Container backgroundImageURL={RightBrand}>
                 <LocalComponents.Pane>
-                    
+                    <h1>Hello world</h1>
                 </LocalComponents.Pane>
             </LocalComponents.Container>        
         </React.StrictMode>

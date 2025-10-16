@@ -10,7 +10,7 @@ function Container(data: ContainerProps) {
     
     return (
         <> 
-            <div key='Auth.Container.1' className="w-full h-screen bg-no-repeat bg-cover bg-top" 
+            <div key='Auth.Container.1' className="w-full h-screen bg-repeat bg-cover bg-position-[center_calc(50%-120px)]" 
             style={{
                 backgroundImage: bgImage,
             }}>

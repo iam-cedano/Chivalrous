@@ -6,8 +6,8 @@ interface PaneContainer {
 
 function Pane(data: PaneContainer) {
     return (
-        <div key="main-pane" className="flex pt-50">
-            <div key="child-pane" className="bg-white h-screen w-100 m-2 rounded-[50px] p-[25px]">
+        <div key="main-pane" className="flex pt-50 h-screen">
+            <div key="child-pane" className="bg-white w-full rounded-t-[100px] p-[50px]">
                 { data.children }
             </div>
         </div>

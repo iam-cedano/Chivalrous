@@ -20,7 +20,6 @@ class UserAndBalanceSeeders extends Seeder
                     'email' => 'cedano@engineer.com',
                     'password' => 'engineer123',
                     'role' => Config::get('constants.roles.client'),
-                    'language' => Config::get('constants.languages.en'),
                     'timezone_offset' => Config::get('timezones.mountain.offSet'),
                 ],
                 [
@@ -28,7 +27,6 @@ class UserAndBalanceSeeders extends Seeder
                     'email' => 'jhon_doe@gmail.com',
                     'password' => 'jhon123',
                     'role' => Config::get('constants.roles.admin'),
-                    'language' => Config::get('constants.languages.en'),
                     'timezone_offset' => Config::get('timezones.mountain.offSet'),
                 ],
             ))

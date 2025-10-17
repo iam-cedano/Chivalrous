@@ -23,7 +23,6 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
             'timezone_offset' => Config::get('timezones.central.offSet'),
-            'language' => Config::get('constants.languages.en'),
             'remember_token' => Str::random(10),
         ];
     }

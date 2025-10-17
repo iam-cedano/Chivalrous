@@ -20,7 +20,6 @@ class User extends Authenticatable
         'id',
         'username',
         'email',
-        'language',
         'timezone_offset',
         'role',
         'api_key'

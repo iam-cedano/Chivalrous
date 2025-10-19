@@ -75,6 +75,8 @@
                 <p>1000 Retweets: $6.79</p>
             </div>
         </div>
+
+        {{ route('auth.web')  }}
     </div>
 </body>
 </html>

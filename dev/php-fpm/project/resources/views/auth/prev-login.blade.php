@@ -56,7 +56,6 @@
     <div class="login-container">
         <form action="{{ route('auth.web') }}" method="post">
         @csrf
-
             <h2>Login</h2>
             <div class="input-group">
                 <label for="name">Username</label>

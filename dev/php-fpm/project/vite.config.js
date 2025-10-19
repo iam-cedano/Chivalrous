@@ -13,7 +13,13 @@ export default defineConfig({
                 'resources/js/pages/admin/Admin.Dashboard.tsx',
                 'resources/js/pages/client/Client.Dashboard.tsx',
                 'resources/js/pages/auth/Auth.Login.tsx',
-                'resources/css/app.css'
+                'resources/css/app.css',
+                'resources/fonts/Lobster-Regular.woff',
+                'resources/fonts/Lobster-Regular.woff2',
+                'resources/fonts/Montserrat-Bold.woff',
+                'resources/fonts/Montserrat-Bold.woff2',
+                'resources/fonts/Montserrat-Regular.woff',
+                'resources/fonts/Montserrat-Regular.woff2'
             ],
             refresh: true,
         }),

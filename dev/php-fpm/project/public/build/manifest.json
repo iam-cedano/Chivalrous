@@ -3,10 +3,38 @@
     "file": "assets/index-D6CVo32A.js",
     "name": "index"
   },
+  "public/assets/brand.jpg": {
+    "file": "assets/brand-DcFOajO6.jpg",
+    "src": "public/assets/brand.jpg"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-Bvja6eeO.css",
+    "file": "assets/app-CyGyYwr0.css",
     "src": "resources/css/app.css",
     "isEntry": true
+  },
+  "resources/fonts/Lobster-Regular.woff": {
+    "file": "assets/Lobster-Regular-SOmeV4Zl.woff",
+    "src": "resources/fonts/Lobster-Regular.woff"
+  },
+  "resources/fonts/Lobster-Regular.woff2": {
+    "file": "assets/Lobster-Regular-BMiYVCWa.woff2",
+    "src": "resources/fonts/Lobster-Regular.woff2"
+  },
+  "resources/fonts/Montserrat-Bold.woff": {
+    "file": "assets/Montserrat-Bold-CCOnW8jF.woff",
+    "src": "resources/fonts/Montserrat-Bold.woff"
+  },
+  "resources/fonts/Montserrat-Bold.woff2": {
+    "file": "assets/Montserrat-Bold-DEiP1Qp2.woff2",
+    "src": "resources/fonts/Montserrat-Bold.woff2"
+  },
+  "resources/fonts/Montserrat-Regular.woff": {
+    "file": "assets/Montserrat-Regular-BKWisIP-.woff",
+    "src": "resources/fonts/Montserrat-Regular.woff"
+  },
+  "resources/fonts/Montserrat-Regular.woff2": {
+    "file": "assets/Montserrat-Regular-Cp4YO4Vy.woff2",
+    "src": "resources/fonts/Montserrat-Regular.woff2"
   },
   "resources/js/pages/admin/Admin.Dashboard.tsx": {
     "file": "assets/Admin.Dashboard-CGkEthOZ.js",
@@ -27,12 +55,15 @@
     ]
   },
   "resources/js/pages/auth/Auth.Login.tsx": {
-    "file": "assets/Auth.Login-Dthwn0ZK.js",
+    "file": "assets/Auth.Login-b6S-3V26.js",
     "name": "Auth.Login",
     "src": "resources/js/pages/auth/Auth.Login.tsx",
     "isEntry": true,
     "imports": [
       "_index-D6CVo32A.js"
+    ],
+    "assets": [
+      "assets/brand-DcFOajO6.jpg"
     ]
   },
   "resources/js/pages/client/Client.Dashboard.tsx": {

@@ -11,7 +11,7 @@ class ClientController extends Controller
         return view('client.orders');
     }   
 
-    public function showDashboardPage(Request $request): View {
-        return view('client.dashboard');
+    public function showHomePage(Request $request): View {
+        return view('client.home');
     }
 }

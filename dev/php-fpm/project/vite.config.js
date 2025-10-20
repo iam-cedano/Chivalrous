@@ -3,6 +3,7 @@ import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 import path from "path";
 import tailwindcss from "@tailwindcss/vite";
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
     plugins: [
@@ -11,7 +12,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/admin/Admin.Users.tsx',
                 'resources/js/pages/admin/Admin.Dashboard.tsx',
-                'resources/js/pages/client/Client.Dashboard.tsx',
+                'resources/js/pages/client/Client.Home.tsx',
                 'resources/js/pages/auth/Auth.Login.tsx',
                 'resources/css/app.css',
                 'resources/fonts/Lobster-Regular.woff',
@@ -22,6 +23,11 @@ export default defineConfig({
                 'resources/fonts/Montserrat-Regular.woff2'
             ],
             refresh: true,
+        }),
+        viteStaticCopy({
+        targets: [
+            { src: 'resources/assets/logos/*', dest: 'assets/logos' },
+         ],
         }),
         react()
     ],

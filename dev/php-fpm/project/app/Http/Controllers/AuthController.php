@@ -43,7 +43,7 @@ trait AuthenticationsForWeb {
     private function redirectByRoleForWeb(int $role): RedirectResponse
     {
         return match ($role) {
-            Config::get('constants.roles.client') => redirect()->route('client.dashboard'),
+            Config::get('constants.roles.client') => redirect()->route('client.home'),
             Config::get('constants.roles.admin') => redirect()->route('admin.dashboard'),
             default => back()->with('error', 'User has an unknown role.')
         };

@@ -6,7 +6,7 @@ interface ContainerInterface {
 
 function Container({children}: ContainerInterface): JSX.Element {
     return (
-        <div className="bg-[#F8F8F8] h-screen pt-[30px] pl-[10px] pr-[10px]">
+        <div className="bg-[#F8F8F8] h-screen w-full pt-[10px]">
             {children}
         </div>
     );

@@ -24,7 +24,7 @@
     "src": "public/assets/wallet.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-DRLxLzry.css",
+    "file": "assets/app-9bBW4aZZ.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -83,7 +83,7 @@
     ]
   },
   "resources/js/pages/client/Client.Home.tsx": {
-    "file": "assets/Client.Home-Bv6L6vIu.js",
+    "file": "assets/Client.Home-ennLJbdq.js",
     "name": "Client.Home",
     "src": "resources/js/pages/client/Client.Home.tsx",
     "isEntry": true,

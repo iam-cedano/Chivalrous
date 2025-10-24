@@ -7,26 +7,22 @@ type ServiceListType = {
 
 function Service({name, image}: ServiceType): JSX.Element {
     return (
-        <div className="flex flex-col">
-            <img src={image} alt={`${name} image`} />
-            <span>{name}</span>
+        <div className="w-full h-full p-[10px] border-[1px] border-[#F3F3F3]">
+            <img src={image} className="size-[33px] m-auto" alt={`${name} image`} />
+            <span className="text-[6px] mt-[5px] block text-center">{name}</span>
         </div>
     );
 }
 
 function ServiceList({services}: ServiceListType): JSX.Element {
     
-    const FirstService = services[0];
+    const servicesAsJSX = services.map(service => <Service name={service.name} image={service.image} />);
 
     return (
-        <section className="flex flex-col w-full h-auto bg-red-500 p-[1px]" id="listOfServices">
-            
-            <div className="flex flex-row w-full bg-blue-500">
-                <Service name={FirstService.name} image={FirstService.image} />
-            </div>    
-
-            <div className="flex flex-row w-full bg-blue-500">
-                <span>Second Row</span>
+        <section className="w-full p-[10px]" id="services">
+        
+            <div className="bg-white grid grid-cols-7 grid-rows-2 overflow-hidden rounded-2xl">
+                    {servicesAsJSX}               
             </div>
 
         </section>

@@ -4,6 +4,7 @@ import { Container } from "./components/Client.Container";
 import * as Header from "./components/Client.Header";
 import { ServiceList } from "./components/Client.ServiceList";
 import ServiceAndURLsData from "./data/ServiceAndURLs.data";
+import { Details } from "./components/Client.Details";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
@@ -14,13 +15,14 @@ ReactDOM.createRoot(document.getElementById("app")!)
                     
                     <Header.Hambuger />
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-[10px]">
                         <Header.Wallet />
                         <Header.Account />  
                     </div>
 
                 </Header.Parent>
 
+                <Details />
                 <ServiceList services={ServiceAndURLsData} />
                 
             </Container>

@@ -5,6 +5,7 @@ import * as Header from "./components/Client.Header";
 import { ServiceList } from "./components/Client.ServiceList";
 import ServiceAndURLsData from "./data/ServiceAndURLs.data";
 import { Details } from "./components/Client.Details";
+import { Shopping } from "./components/Client.Shopping";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("app")!)
 
                 <Details />
                 <ServiceList services={ServiceAndURLsData} />
+                <Shopping />
                 
             </Container>
         </StrictMode>

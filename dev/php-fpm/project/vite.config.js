@@ -25,9 +25,9 @@ export default defineConfig({
             refresh: true,
         }),
         viteStaticCopy({
-        targets: [
+          targets: [
             { src: 'resources/assets/*', dest: 'assets/'  }
-         ],
+          ],
         }),
         react()
     ],

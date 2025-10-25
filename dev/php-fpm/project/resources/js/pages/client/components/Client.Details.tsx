@@ -1,14 +1,15 @@
 
 function Wallet() {
     return (
-        <div className="flex gap-[5px]  justify-between">
-           <div className="flex items-center">
-                <img className="block size-[50px]" src="build/assets/wallet-details.webp" alt="Wallet image"/> 
+        <div className="flex">
+           
+           <div className="flex items-center w-[60px]">
+                <img className="block size-[45px]" src="build/assets/wallet-details.webp" alt="Wallet image"/> 
            </div>
            
-           <div className="flex flex-col border-r-[0.3px] border-r-[#F3F3F3] pr-[15px]">
+           <div className="flex flex-col w-fit border-r-[0.3px] border-r-[#F3F3F3]">
                 <span className="font-[Montserrat] text-[15px]">Balance</span>
-                <span className="font-[Montserrat] font-bold">$101.12 MXN</span>
+                <span className="font-[Montserrat] font-bold">$10,500.12 MXN</span>
                 <a className="text-blue-500 font-[Montserrat] text-[12px]" href="https://google.com">Fill balance</a>
            </div>
         </div>
@@ -17,12 +18,14 @@ function Wallet() {
 
 function Orders() {
     return (
-        <div className="flex gap-[5px] pt-[10px] pb-[10px] pl-[20px] pr-[20px]">
-            <div>
-                <img src="build/assets/check-mark.webp" alt="Check mark" />
+        <div className="flex gap-[5px] pt-[2px] pb-[2px] ">
+            
+            <div className="flex items-center">
+                <img className="size-[45px]" src="build/assets/shopping-bag.webp" alt="Check mark" />
             </div>
+
             <div className="flex flex-col">
-                <span className="font-[Montserrat]">Orders completed</span>
+                <span className="font-[Montserrat] text-[13px]">Orders completed</span>
                 <span className="font-[Montserrat] font-bold">100</span>
             </div>
         </div>
@@ -32,7 +35,7 @@ function Orders() {
 function Details() {
     return (
         <section id="details" className="w-full p-[10px]">
-            <div className="bg-white w-full flex justify-between rounded-2xl">
+            <div className="bg-white flex w-full rounded-2xl pt-[5px] pb-[5px] pr-[5px] pl-[5px]">
                 <Wallet />
                 <Orders />
             </div>

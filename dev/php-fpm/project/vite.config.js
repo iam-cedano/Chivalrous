@@ -32,9 +32,11 @@ export default defineConfig({
         react()
     ],
     resolve: {
-        alias: {
-            "@": path.resolve(__dirname, "./public/")
-        }
+    alias: [
+        { find: "@/types/client", replacement: path.resolve(__dirname, "resources/js/pages/client/types") },
+        { find: "@/data/client", replacement: path.resolve(__dirname, "resources/js/pages/client/data") },
+        { find: "@", replacement: path.resolve(__dirname, "resources/js") },
+    ],
     },
     server: {
         port: 5173,

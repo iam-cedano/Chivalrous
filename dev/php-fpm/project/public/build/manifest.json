@@ -3,28 +3,8 @@
     "file": "assets/index-D6CVo32A.js",
     "name": "index"
   },
-  "public/assets/brand.jpg": {
-    "file": "assets/brand-DcFOajO6.jpg",
-    "src": "public/assets/brand.jpg"
-  },
-  "public/assets/down-arrow.png": {
-    "file": "assets/down-arrow-CH14i4-5.png",
-    "src": "public/assets/down-arrow.png"
-  },
-  "public/assets/hambuger.png": {
-    "file": "assets/hambuger-CpuzJvSf.png",
-    "src": "public/assets/hambuger.png"
-  },
-  "public/assets/srajo.jpg": {
-    "file": "assets/srajo-CG9YQj79.jpg",
-    "src": "public/assets/srajo.jpg"
-  },
-  "public/assets/wallet.png": {
-    "file": "assets/wallet-BjAt6JOI.png",
-    "src": "public/assets/wallet.png"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-Ceyb2CT2.css",
+    "file": "assets/app-CPsP7GWb.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -71,30 +51,21 @@
     ]
   },
   "resources/js/pages/auth/Auth.Login.tsx": {
-    "file": "assets/Auth.Login-CwFQ1a5G.js",
+    "file": "assets/Auth.Login-ByNuvC0f.js",
     "name": "Auth.Login",
     "src": "resources/js/pages/auth/Auth.Login.tsx",
     "isEntry": true,
     "imports": [
       "_index-D6CVo32A.js"
-    ],
-    "assets": [
-      "assets/brand-DcFOajO6.jpg"
     ]
   },
   "resources/js/pages/client/Client.Home.tsx": {
-    "file": "assets/Client.Home-mlXc5Nrz.js",
+    "file": "assets/Client.Home-BXWtYXkB.js",
     "name": "Client.Home",
     "src": "resources/js/pages/client/Client.Home.tsx",
     "isEntry": true,
     "imports": [
       "_index-D6CVo32A.js"
-    ],
-    "assets": [
-      "assets/wallet-BjAt6JOI.png",
-      "assets/srajo-CG9YQj79.jpg",
-      "assets/down-arrow-CH14i4-5.png",
-      "assets/hambuger-CpuzJvSf.png"
     ]
   }
 }

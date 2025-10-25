@@ -5,18 +5,19 @@ type ServiceListType = {
     services: ServiceType[]
 };
 
-function Service({name, image}: ServiceType): JSX.Element {
+function Service({title, service, image}: ServiceType): JSX.Element {
+    
     return (
         <div className="w-full h-full p-[10px] border-[1px] border-[#F3F3F3]">
-            <img src={image} className="size-[33px] m-auto" alt={`${name} image`} />
-            <span className="text-[6px] mt-[5px] block text-center">{name}</span>
+            <img src={image} className="size-[33px] m-auto" alt={`${service} image`} />
+            <span className="font-[Montserrat] text-[7px] mt-[5px] block text-center">{service}</span>
         </div>
     );
 }
 
 function ServiceList({services}: ServiceListType): JSX.Element {
     
-    const servicesAsJSX = services.map(service => <Service name={service.name} image={service.image} />);
+    const servicesAsJSX = services.map(service => <Service {...service} />);
 
     return (
         <section className="w-full p-[10px]" id="services">

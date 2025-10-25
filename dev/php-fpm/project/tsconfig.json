@@ -2,11 +2,13 @@
   "compilerOptions": {
     "target": "es2016",
     "jsx": "react-jsx",
-    "module": "commonjs",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./resources/js/*"],
-      "@/assets/*": ["./public/assets/*"]
+      "@/types/client/*": ["./resources/js/pages/client/types/*"],
+      "@/data/client/*": ["./resources/js/pages/client/data/*"]
     },
     "typeRoots": ["./resources/js/types/"],
     "isolatedModules": true,

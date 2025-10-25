@@ -1,6 +1,8 @@
 type ServiceType = {
-    name: string,
+    title: string,
+    service: string,
     image: string
+    description: string,
 }
 
 export default ServiceType;

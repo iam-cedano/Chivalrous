@@ -1,30 +1,35 @@
 import ReactDOM from "react-dom/client";
 import { StrictMode } from "react";
 import { Container } from "./components/Client.Container";
-import * as Header from "./components/Client.Header";
+import { Header } from "./components/header/Header";
+import { Hambuger } from "./components/header/Hambuger";
+import { Wallet } from "./components/header/Wallet";
+import { Account } from "./components/header/Account";
 import { ServiceList } from "./components/Client.ServiceList";
-import ServiceAndURLsData from "./data/ServiceAndURLs.data";
-import { Details } from "./components/Client.Details";
-import { Shopping } from "./components/Client.Shopping";
+import Services from "./data/Services.data";
+import { Details } from "./components/details/Details";
+import { Shopping } from "./components/shopping/Shopping";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
         <StrictMode>
             <Container>
                
-                <Header.Parent>
+                <Header>
                     
-                    <Header.Hambuger />
+                    <Hambuger />
 
                     <div className="flex gap-[10px]">
-                        <Header.Wallet />
-                        <Header.Account />  
+                        <Wallet />
+                        <Account />  
                     </div>
 
-                </Header.Parent>
+                </Header>
 
                 <Details />
-                <ServiceList services={ServiceAndURLsData} />
+                
+                <ServiceList services={Services} />
+                
                 <Shopping />
                 
             </Container>

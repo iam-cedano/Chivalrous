@@ -33,7 +33,7 @@ export default defineConfig({
     ],
     resolve: {
     alias: [
-        { find: "@/types/client", replacement: path.resolve(__dirname, "resources/js/pages/client/types") },
+        { find: "@/types/client", replacement: path.resolve(__dirname, "resources/js/pages/client/routes/home/types") },
         { find: "@/data/client", replacement: path.resolve(__dirname, "resources/js/pages/client/data") },
         { find: "@", replacement: path.resolve(__dirname, "resources/js") },
     ],

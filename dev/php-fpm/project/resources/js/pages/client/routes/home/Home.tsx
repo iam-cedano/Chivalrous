@@ -9,6 +9,7 @@ import { ServiceList } from "./components/Client.ServiceList";
 import Services from "./data/Services.data";
 import { Details } from "./components/details/Details";
 import { Shopping } from "./components/shopping/Shopping";
+import { Footer } from "./components/Client.Footer";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
@@ -29,9 +30,13 @@ ReactDOM.createRoot(document.getElementById("app")!)
                 <Details />
                 
                 <ServiceList services={Services} />
-                
+
                 <Shopping />
-                
+
+                <p>Checkout will be here!</p>
+
+                <Footer />
+
             </Container>
         </StrictMode>
     );

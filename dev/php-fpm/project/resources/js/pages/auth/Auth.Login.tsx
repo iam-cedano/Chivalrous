@@ -9,7 +9,7 @@ import AccessMethod from "./shared/AccessMethod.enum";
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
         <React.StrictMode>
-            <Container backgroundImageURL="/build/assets/brand.jpg">
+            <Container backgroundImageURL="/build/assets/brand.webp">
                 <Pane>
                 
                     <Slogan />

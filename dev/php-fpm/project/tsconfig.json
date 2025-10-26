@@ -7,10 +7,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./resources/js/*"],
-      "@/types/client/*": ["./resources/js/pages/client/types/*"],
-      "@/data/client/*": ["./resources/js/pages/client/data/*"]
+      "@/types/client/*": ["./resources/js/pages/client/routes/home/types/*"],
+      "@/data/client/*": ["resources/js/pages/client/routes/home/data/*"]
     },
-    "typeRoots": ["./resources/js/types/"],
+    "typeRoots": ["resources/js/modules"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

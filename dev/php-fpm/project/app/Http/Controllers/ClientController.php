@@ -7,11 +7,7 @@ use Illuminate\View\View;
 
 class ClientController extends Controller
 {
-    public function showOrdersPage(Request $request): View {
-        return view('client.orders');
-    }   
-
     public function showHomePage(Request $request): View {
-        return view('client.home');
+        return view('client.index');
     }
 }

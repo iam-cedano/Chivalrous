@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import ServiceType from "../types/Service.type";
+import ServiceType from "../../../types/Service.type";
 
 type ServiceListType = {
     services: ServiceType[]
@@ -17,7 +17,7 @@ function Service({title, service, image}: ServiceType): JSX.Element {
 
 function ServiceList({services}: ServiceListType): JSX.Element {
     
-    const servicesAsJSX = services.map(service => <Service {...service} />);
+    const servicesAsJSX = services.map(service => <Service key={service.service} {...service} />);
 
     return (
         <section className="w-full p-[10px]" id="services">

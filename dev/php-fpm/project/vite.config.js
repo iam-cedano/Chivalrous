@@ -12,7 +12,7 @@ export default defineConfig({
             input: [
                 'resources/js/pages/admin/Admin.Users.tsx',
                 'resources/js/pages/admin/Admin.Dashboard.tsx',
-                'resources/js/pages/client/Client.Home.tsx',
+                'resources/js/pages/client/Client.tsx',
                 'resources/js/pages/auth/Auth.Login.tsx',
                 'resources/css/app.css',
                 'resources/fonts/Lobster-Regular.woff',

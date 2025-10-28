@@ -4,15 +4,32 @@ import Services from "@/pages/client/routes/home/data/Services.data";
 
 function ServiceCounter() {
     const [count, setCount] = useState(0);
+
+    function decrement() {
+        if (count == 0) {
+            return;
+        }
+        
+        setCount(count - 1);
+    }
+
+    function increment() {
+
+        if (count == 99) {
+            return;
+        }
+
+        setCount(count + 1);
+    }
     
     return (
         <div className="flex gap-[10px] items-center">
            
-            <img className="size-[35px]" src="/build/assets/subtracting.webp" alt="Minus image" />
+            <img onClick={decrement} className="size-[27px]" src="/build/assets/subtracting.webp" alt="Minus image" />
 
-            <span className="font-[Montserrat] text-3xl">5</span>
+            <span className="font-[Montserrat] text-2xl">{ count }</span>
 
-            <img className="size-[35px]" src="/build/assets/add.webp" alt="Addition image" />
+            <img onClick={increment} className="size-[27px]" src="/build/assets/add.webp" alt="Addition image" />
 
         </div>
     );

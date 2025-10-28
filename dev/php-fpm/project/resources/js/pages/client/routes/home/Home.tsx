@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { StrictMode } from "react";
+import { JSX, StrictMode } from "react";
 import { Container } from "./components/Client.Container";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
@@ -9,35 +9,33 @@ import { ServiceList } from "./components/Client.ServiceList";
 import Services from "./data/Services.data";
 import { Details } from "./components/details/Details";
 import { Shopping } from "./components/shopping/Shopping";
-import { Footer } from "./components/Client.Footer";
+import { Footer } from "../shared/Footer";
 
-ReactDOM.createRoot(document.getElementById("app")!)
-    .render(
-        <StrictMode>
-            <Container>
-               
-                <Header>
-                    
-                    <Hambuger />
+function Home(): JSX.Element {
+    return (
+        <Container>
 
-                    <div className="flex gap-[10px]">
-                        <Wallet />
-                        <Account />  
-                    </div>
+            <Header>
 
-                </Header>
+                <Hambuger />
 
-                <Details />
-                
-                <ServiceList services={Services} />
+                <div className="flex gap-[10px]">
+                    <Wallet />
+                    <Account />
+                </div>
 
-                <Shopping />
+            </Header>
 
-                <p>Checkout will be here!</p>
+            <Details />
 
-                <Footer />
+            <ServiceList services={Services} />
 
-            </Container>
-        </StrictMode>
+            <Shopping />
+
+            <Footer />
+
+        </Container>
     );
-    
+}
+
+export {Home};

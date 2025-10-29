@@ -4,7 +4,7 @@
     "name": "index"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CuqeSJEA.css",
+    "file": "assets/app-Du3sd4rC.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -60,7 +60,7 @@
     ]
   },
   "resources/js/pages/client/Client.tsx": {
-    "file": "assets/Client-B-bz65Ng.js",
+    "file": "assets/Client-hEV47yZI.js",
     "name": "Client",
     "src": "resources/js/pages/client/Client.tsx",
     "isEntry": true,

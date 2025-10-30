@@ -24,8 +24,6 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 function Tab({ details, withBorder = true, selected = false, onSelect }: TabProps) {
-    console.info(`Creating <Tab /> for ${details.key}`);
-    
     return (
         <Link to={`/${details.key}`} onClick={() => onSelect(details.key)}>
               <div className={`flex flex-col pr-[5px] ${ withBorder ? 'border-r-[0.5px] border-r-[#F8F8F8]' : '' }`}>

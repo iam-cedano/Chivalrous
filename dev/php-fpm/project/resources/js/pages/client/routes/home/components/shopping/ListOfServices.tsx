@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { JSX, useState } from "react";
 import ServiceType from "@/types/client/Service.type";
 import Services from "@/pages/client/routes/home/data/Services.data";
 
@@ -59,11 +59,12 @@ function Service(service: ServiceType) {
 }
 
 function ListOfServices() {
-    const FirstService: ServiceType = Services[1];
+    const ValidServices = Services.slice(1, Services.length - 1);
+    const JSXElements: JSX.Element[] = ValidServices.slice(1).map(service => <Service {...service} />);
 
     return (
         <div className=" w-full pt-[15px] pb-[15px] h-[290px] overflow-scroll">
-            <Service {...FirstService} />
+            { JSXElements }
         </div>
     );
 }

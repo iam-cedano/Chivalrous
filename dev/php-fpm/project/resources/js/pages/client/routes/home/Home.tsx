@@ -5,13 +5,16 @@ import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
 import { Wallet } from "./components/header/Wallet";
 import { Account } from "./components/header/Account";
-import { ServiceList } from "./components/Client.ServiceList";
 import Services from "./data/Services.data";
 import { Details } from "./components/details/Details";
 import { Shopping } from "./components/shopping/Shopping";
 import { Footer } from "../shared/Footer";
+import { ServiceList } from "./components/services/ServiceList";
+import { Service } from "./components/services/Service";
 
 function Home(): JSX.Element {
+    const services = Services.map(service => <Service {...service} />)
+
     return (
         <Container>
 
@@ -28,8 +31,9 @@ function Home(): JSX.Element {
 
             <Details />
 
-            <ServiceList services={Services} />
-
+            <ServiceList>
+                { services }
+            </ServiceList>
             <Shopping />
 
             <Footer />

@@ -60,10 +60,10 @@ function Service(service: ServiceType) {
 
 function ListOfServices() {
     const ValidServices = Services.slice(1, Services.length - 1);
-    const JSXElements: JSX.Element[] = ValidServices.slice(1).map(service => <Service {...service} />);
+    const JSXElements: JSX.Element[] = ValidServices.slice(1).map(service => <Service key={service.service} {...service} />);
 
     return (
-        <div className=" w-full pt-[15px] pb-[15px] h-[290px] overflow-scroll">
+        <div className=" w-full pt-[15px] pb-[15px] h-[290px] overflow-y-scroll no-scrollbar">
             { JSXElements }
         </div>
     );

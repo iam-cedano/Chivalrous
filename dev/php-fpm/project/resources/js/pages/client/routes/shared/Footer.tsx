@@ -51,8 +51,6 @@ function Footer() {
         />
     ));
 
-    console.info(`Selected Tab: ${activeKey}`);
-
     return (
         <nav id="footer" className="w-full p-[10px] fixed inset-x-0 bottom-0 flex justify-center bg-white">
             <ul className="flex flex-row gap-[10px]">

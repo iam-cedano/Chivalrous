@@ -13,7 +13,7 @@ import { ServiceList } from "./components/services/ServiceList";
 import { Service } from "./components/services/Service";
 
 function Home(): JSX.Element {
-    const services = Services.map(service => <Service {...service} />)
+    const services = Services.map(service => <Service key={service.service} {...service} />)
 
     return (
         <Container>
@@ -22,7 +22,7 @@ function Home(): JSX.Element {
 
                 <Hambuger />
 
-                <div className="flex gap-[10px]">
+                <div className="flex gap-2.5">
                     <Wallet />
                     <Account />
                 </div>

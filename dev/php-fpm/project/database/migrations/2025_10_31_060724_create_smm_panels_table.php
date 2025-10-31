@@ -6,21 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('balances', function (Blueprint $table) {
+        Schema::create('smm_panels', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignUuid('user_id')->constrained('users', 'id', 'fk_user_id_01');
-            
-            $table->unique('user_id');
-
+            $table->string('name', 100);
+            $table->string('url', 255);
+            $table->string('api_url', 255);
             $table->timestamps();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        Schema::dropIfExists('balances');
+        Schema::dropIfExists('smm_panels');
     }
 };

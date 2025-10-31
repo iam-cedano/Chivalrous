@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('short_description', 60);
             $table->text('long_description');
-            $table->string('logo_url', 60);
+            $table->string('logo_uri', 255);
             $table->unsignedInteger('minimum_quantity');
             $table->unsignedInteger('maximum_quantity')->nullable();
             $table->timestamps();

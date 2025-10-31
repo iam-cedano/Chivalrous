@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -11,12 +12,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids, SoftDeletes;
+    use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
     protected $keyType = 'string';
-    protected $guard = [
+    protected $guard = [    
         'id',
         'username',
         'email',
@@ -40,5 +42,9 @@ class User extends Authenticatable
     }
     public function isAdministrator(): bool {
         return $this->role == Config::get('constants.roles.admin');
+    }
+
+    protected static function newFactory() {
+        return UserFactory::new();
     }
 }

@@ -10,7 +10,9 @@ class ServicesController extends Controller
  
     public function index(): JsonResponse
     {
-        return response()->json();
+        return response()->json([
+            'message' => 'OK! Endpoint working'
+        ])->setStatusCode(200);
     }
 
     public function store(Request $request)

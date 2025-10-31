@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
             __DIR__.'/../routes/web/global.php'
         ],
         api: [
-            __DIR__.'/../routes/api/auth.php'
+            __DIR__.'/../routes/api/services.php'
         ],
         commands: __DIR__.'/../routes/commands.php',
         health: '/up',

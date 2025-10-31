@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Database\Factories\ServiceFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -9,5 +11,19 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Service extends Model
 {
+    use HasFactory;
+    protected $table = 'services';
+    protected $guard = [    
+        'id',
+        'name',
+        'short_description',
+        'long_description',
+        'logo_uri',
+        'minimum_quantity',
+        'maximum_quantity'
+    ];
 
+    protected static function newFactory() {
+        return ServiceFactory::new();
+    }
 }

@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { JSX, StrictMode } from "react";
+import { JSX } from "react";
 import { Container } from "./components/Client.Container";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
@@ -34,6 +34,7 @@ function Home(): JSX.Element {
             <ServiceList>
                 { services }
             </ServiceList>
+
             <Shopping />
 
             <Footer />

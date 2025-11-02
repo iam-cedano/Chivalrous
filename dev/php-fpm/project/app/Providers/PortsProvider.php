@@ -2,21 +2,18 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ServicesController;
+use App\Usecases\Services\GetServicesUsecase;
 use Illuminate\Support\ServiceProvider;
-use App\Ports\SmmProvider\GetServicesPort;
-use Infrastructure\SmmProvider\MorethanPanel\GetServicesAdapter;
+use Infrastructure\Services\ServiceLocalAdapter;
 
 class PortsProvider extends ServiceProvider {
-    // public $bindings = [
-    //     \App\Ports\SmmProvider\GetServicesPort::class => \Infrastructure\SmmProvider\MorethanPanel\GetServicesAdapter::class,
-    // ];
-
     public function register() {
-
-        $this->app->bind(GetServicesPort::class, function() {
-            $request = $this->app->make('request');
-
-            return $this->app->make(GetServicesAdapter::class);
+        
+        $this->app->when(ServicesController::class)
+        ->needs(GetServicesUsecase::class)
+        ->give( function() {
+            return new GetServicesUsecase($this->app->make(ServiceLocalAdapter::class));
         });
     }
 

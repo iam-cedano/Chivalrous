@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('smm_panels_api_keys', function (Blueprint $table) {
             $table->id();
             $table->foreignId('smm_panel_id')->constrained('smm_panels', 'id', 'fk_smm_panel_id_02');
-            $table->string('api_key', 255);
+            $table->string('api_key', 255)->unique();
             $table->unsignedInteger('order')->default(1);
             $table->timestamps();
         });

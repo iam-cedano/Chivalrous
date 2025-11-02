@@ -1,37 +1,28 @@
-<?php
+<?php 
 
 namespace App\Http\Controllers;
 
+use App\Usecases\Services\GetServicesUsecase;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ServicesController extends Controller
 {
- 
-    public function index(): JsonResponse
-    {
-        return response()->json([
-            'message' => 'OK! Endpoint working'
-        ])->setStatusCode(200);
-    }
+    public function __construct(
+        private GetServicesUsecase $getServicesUsecase
+    ) {}
 
-    public function store(Request $request)
-    {
-        //
-    }
-
+    public function searchByQuery(string $pageNumber = '1', string $count = '10', string $query ): JsonResponse {
+        $page = $this->getServicesUsecase->query($query ) ;
     
-    public function show(string $id)
-    {
+        return response()->json($page);
     }
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    public function searchAll(string $pageNumber = '1', string $count = '10'): JsonResponse {
+        $page = $this->getServicesUsecase->allAsPage($pageNumber, $count);
 
-    public function destroy(string $id)
-    {
-        //
+        return response()->json($page);
     }
 }

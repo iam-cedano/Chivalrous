@@ -9,7 +9,6 @@ import { History } from "./routes/history/History";
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
         <StrictMode>
-            
             <BrowserRouter>
                 <Routes>
                     <Route path="/home" element={ <Home /> }  />

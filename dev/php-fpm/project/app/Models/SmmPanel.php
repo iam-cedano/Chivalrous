@@ -20,7 +20,7 @@ class SmmPanel extends Model
         'logo_uri'
     ];
 
-    public function ApiKey(): HasMany {
+    public function apiKey(): HasMany {
         return $this->hasMany(SmmPanelApiKey::class, 'smm_panel_id');
     }
 

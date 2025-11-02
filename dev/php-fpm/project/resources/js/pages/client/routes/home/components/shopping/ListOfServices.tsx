@@ -1,6 +1,8 @@
-import { JSX, useState } from "react";
+import { useRef, useState } from "react";
 import ServiceType from "@/types/client/Service.type";
-import Services from "@/pages/client/routes/home/data/Services.data";
+import InfiniteScroll from "react-infinite-scroll-component";
+import axios from "axios";
+import Lottie from "lottie-react";
 
 function ServiceCounter() {
     const [count, setCount] = useState(0);
@@ -59,12 +61,31 @@ function Service(service: ServiceType) {
 }
 
 function ListOfServices() {
-    const ValidServices = Services.slice(1, Services.length - 1);
-    const JSXElements: JSX.Element[] = ValidServices.slice(1).map(service => <Service key={service.service} {...service} />);
+    const page = useRef(1);
+    const [services, setServices] = useState([]);
+
+    function fetchMoreServices() {
+        console.log('fetchMoreServices() | Executed');
+
+        axios.get('/api/services/').then((data) => {
+            console.info(data);
+        })
+
+        page.current = page.current + 1;
+    }
 
     return (
-        <div className=" w-full pt-[15px] pb-[15px] h-[290px] overflow-y-scroll no-scrollbar">
-            { JSXElements }
+        <div id="list-services" className="w-full pt-[15px] pb-[15px] h-[290px] overflow-y-scroll no-scrollbar">
+            <InfiniteScroll
+                dataLength={services.length}
+                next={fetchMoreServices}
+                hasMore={true}
+                loader={<h4>Loading</h4>}
+                scrollableTarget="list-services"
+                >
+                <p>Hello world</p>
+                <Lottie animationData={} loop={true}></Lottie>
+            </InfiniteScroll>
         </div>
     );
 }

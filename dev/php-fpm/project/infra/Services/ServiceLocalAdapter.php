@@ -33,7 +33,7 @@ class ServiceLocalAdapter implements GetServicesPort {
         $servicesInCacheAsJson = Cache::get( $idCache);
          
         if (! $servicesInCacheAsJson ) {
-            $services = Service::query()->select(['name', 'short_description'])->get();
+            $services = Service::query()->select(['id', 'name', 'short_description', 'logo_uri', 'minimum_quantity', 'maximum_quantity'] )->get();
 
             Cache::set($idCache, json_encode($services->toArray()), 20);
 

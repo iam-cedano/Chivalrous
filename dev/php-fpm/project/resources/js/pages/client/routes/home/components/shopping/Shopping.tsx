@@ -1,6 +1,33 @@
 import { ShoppingHeader } from "./ShoppingHeader";
 import { SearchInput } from "./SearchInput";
 import { ListOfServices } from "./ListOfServices";
+import { useEffect, useState } from "react";
+
+function SearchInputAndServices() {
+    const [input, setInput] = useState<string>('');
+    const [debouncedQuery, setDebouncedQuery] = useState<string>('');
+
+    function handleInput(text: string) {
+        setInput(text);
+    }
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setDebouncedQuery(input);
+        }, 1000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [input]);
+
+    return (
+        <>
+            <SearchInput handleInput={handleInput}  />
+            <ListOfServices query={debouncedQuery} />
+        </>
+    );
+}
 
 function Shopping() {
     return (
@@ -8,8 +35,9 @@ function Shopping() {
             <div className="bg-white flex flex-col gap-[15px] rounded-2xl p-[10px]">
                 
                 <ShoppingHeader />
-                <SearchInput />
-                <ListOfServices />
+
+                <SearchInputAndServices />
+        
 
             </div>
         </section>

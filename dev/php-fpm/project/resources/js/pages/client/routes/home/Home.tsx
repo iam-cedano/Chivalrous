@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import { JSX } from "react";
 import { Container } from "./components/Client.Container";
 import { Header } from "./components/header/Header";

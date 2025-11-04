@@ -1,8 +1,14 @@
-import { useRef, useState } from "react";
-import ServiceType from "@/types/client/Service.type";
-import InfiniteScroll from "react-infinite-scroll-component";
-import axios from "axios";
-import Lottie from "lottie-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import ServiceResponse from "../../api/res/ServiceResponse";
+import { getAllServicesAsPage, getServicesAsPageByQuery } from "../../api/Services";
+
+type ListOfServicesProps = {
+    query: string
+};
+
+type ServiceProps = {
+    service: ServiceResponse,
+}
 
 function ServiceCounter() {
     const [count, setCount] = useState(0);
@@ -23,9 +29,9 @@ function ServiceCounter() {
 
         setCount(count + 1);
     }
-    
+            
     return (
-        <div className="flex gap-[10px] items-center">
+        <div className="flex gap-2.5 items-center">
            
             <img onClick={decrement} className="size-[27px]" src="/build/assets/subtracting.webp" alt="Minus image" />
 
@@ -37,55 +43,88 @@ function ServiceCounter() {
     );
 }
 
-function ServiceInformation({service, title, image,description}: ServiceType) {
+function ServiceInformation({name, logo_uri, short_description}: ServiceResponse) {
     return (
-        <div className="flex w-[240px] items-center gap-[5px]">
+        <div className="flex w-60 items-center gap-[5px]">
             
-            <img className="size-[50px]" src={image} alt={`${service} official logo`} />
+            <img className="size-[50px]" src={logo_uri} alt={`${name} official logo`} />
 
             <div className="flex flex-col gap-[5px]">
-                <span className="font-[Montserrat] text-[16px] w-[250px]">{title}</span>
-                <span className="font-[Montserrat] text-[12px] w-[170px]">{description}</span>
+                <span className="font-[Montserrat] text-[16px] w-[250px]">{name}</span>
+                <span className="font-[Montserrat] text-[12px] w-[170px]">{short_description}</span>
             </div>
         </div>
     );
 }
 
-function Service(service: ServiceType) {
+function Service({ service }: ServiceProps) {
     return (
-        <div className="flex justify-between border-[#f1f1f1] border-b-[1px] pb-[20px]">
+        <div className="flex justify-between border -[#f1f1f1] border-b-[1px] pb-[20px]">
             <ServiceInformation {...service} />
-            <ServiceCounter />       
+            <ServiceCounter />
         </div>
     );
 }
 
-function ListOfServices() {
-    const page = useRef(1);
-    const [services, setServices] = useState([]);
-
-    function fetchMoreServices() {
-        console.log('fetchMoreServices() | Executed');
-
-        axios.get('/api/services/').then((data) => {
-            console.info(data);
-        })
-
-        page.current = page.current + 1;
-    }
+function Loader() {
 
     return (
-        <div id="list-services" className="w-full pt-[15px] pb-[15px] h-[290px] overflow-y-scroll no-scrollbar">
-            <InfiniteScroll
-                dataLength={services.length}
-                next={fetchMoreServices}
-                hasMore={true}
-                loader={<h4>Loading</h4>}
-                scrollableTarget="list-services"
-                >
-                <p>Hello world</p>
-                <Lottie animationData={} loop={true}></Lottie>
-            </InfiniteScroll>
+        <div className="flex flex-col items-center gap-[5px] pt-[10px]">
+            <img className="size-[35px]" src="/build/assets/loading.gif" />
+            <span className="text-[15px] text-gray-600">Loading...</span>
+        </div>
+    );
+
+}
+
+function ListOfServices({query}: ListOfServicesProps) {
+    const [services, setServices] = useState<ServiceResponse[]>([]);
+    const page = useRef(1);
+
+    useEffect(() => {
+        if (query.length == 0) {
+            getAllServicesAsPage(1).then(({ data }) => {
+              setServices(data);
+            });
+
+            return;
+        }
+    }, [query]);
+
+    const handleScrollToBottom = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+        const target = e.target;
+
+        if (
+            "scrollHeight" in target && "scrollTop" in target && "clientHeight" in target &&
+            typeof target.scrollHeight == "number" && typeof target.scrollTop == "number" && typeof target.clientHeight == "number"
+        ) {
+
+            if ( ( target.scrollHeight - target.scrollTop ) == target.clientHeight) {
+
+                getAllServicesAsPage(page.current + 1).then(({ data }) => {
+                    if (data.length == 0) {
+                        console.info('There\'s no more data to display!');
+                        
+                        return;
+                    }
+
+                    const servicesWithNewPages = services.concat(data);
+
+                    setServices(servicesWithNewPages);
+
+                    page.current = page.current + 1;
+                })
+            }
+        }
+    }
+
+    const servicesAsJsx = services ? services.map(service => <Service key={service.id} service={service} />) : <></>;
+
+    return (
+        <div id="list-services" onScroll={(e) => handleScrollToBottom(e)} className="w-full pt-[15px]  h-[290px] overflow-y-scroll no-scrollbar">
+            {servicesAsJsx}
+    
+            <Loader />
         </div>
     );
 }

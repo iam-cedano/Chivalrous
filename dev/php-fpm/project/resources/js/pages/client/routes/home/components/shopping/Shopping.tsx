@@ -3,17 +3,6 @@ import { SearchInput } from "./SearchInput";
 import { ServicesContainer } from "./ListOfServices";
 import { useEffect, useState } from "react";
 
-function CartButton() {
-    return (
-        <div className="p-[15x] flex justify-center">
-            <button className="bg-[#39B437]">
-                <img src="/build/assets/filled-cart.webp" alt="Cart button "/>
-                <span className="text-white">Cart</span>
-            </button>
-        </div>
-    );
-}
-
 function SearchInputAndServices() {
     const [input, setInput] = useState<string>('');
     const [debouncedQuery, setDebouncedQuery] = useState<string>('');
@@ -36,7 +25,6 @@ function SearchInputAndServices() {
         <>
             <SearchInput handleInput={handleInput}  />
             <ServicesContainer query={debouncedQuery} />
-            <CartButton />
         </>
     );
 }
@@ -49,7 +37,6 @@ function Shopping() {
                 <ShoppingHeader />
 
                 <SearchInputAndServices />
-        
 
             </div>
         </section>

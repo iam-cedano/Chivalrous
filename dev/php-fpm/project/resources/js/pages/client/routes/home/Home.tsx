@@ -10,6 +10,7 @@ import { Shopping } from "./components/shopping/Shopping";
 import { Footer } from "../shared/Footer";
 import { ServiceList } from "./components/services/ServiceList";
 import { Service } from "./components/services/Service";
+import { CartButton } from "./components/cart/CartButton";
 
 function Home(): JSX.Element {
     const services = Services.map(service => <Service key={service.service} {...service} />)
@@ -35,6 +36,8 @@ function Home(): JSX.Element {
             </ServiceList>
 
             <Shopping />
+
+            <CartButton />
 
             <Footer />
 

@@ -152,7 +152,7 @@ function ServicesContainer({query}: ListOfServicesProps) {
     }, [services]);
 
     return (
-        <div id="list-services" onScroll={(e) => handleScrollToBottom(e)} className="w-full pt-[15px] h-[265px] overflow-y-scroll no-scrollbar">
+        <div id="list-services" onScroll={(e) => handleScrollToBottom(e)} className="w-full pt-[15px] h-[285px] overflow-y-scroll no-scrollbar">
             { listOfServices }
 
             { isVisible ? <Loader /> : <></> }

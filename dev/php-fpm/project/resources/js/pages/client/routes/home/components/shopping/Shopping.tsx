@@ -1,7 +1,18 @@
 import { ShoppingHeader } from "./ShoppingHeader";
 import { SearchInput } from "./SearchInput";
-import { ListOfServices } from "./ListOfServices";
+import { ServicesContainer } from "./ListOfServices";
 import { useEffect, useState } from "react";
+
+function CartButton() {
+    return (
+        <div className="p-[15x] flex justify-center">
+            <button className="bg-[#39B437]">
+                <img src="/build/assets/filled-cart.webp" alt="Cart button "/>
+                <span className="text-white">Cart</span>
+            </button>
+        </div>
+    );
+}
 
 function SearchInputAndServices() {
     const [input, setInput] = useState<string>('');
@@ -24,7 +35,8 @@ function SearchInputAndServices() {
     return (
         <>
             <SearchInput handleInput={handleInput}  />
-            <ListOfServices query={debouncedQuery} />
+            <ServicesContainer query={debouncedQuery} />
+            <CartButton />
         </>
     );
 }

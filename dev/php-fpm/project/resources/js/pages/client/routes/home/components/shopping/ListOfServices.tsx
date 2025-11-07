@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import ServiceResponse from "../../api/res/ServiceResponse";
-import { getAllServicesAsPage, getServicesAsPageByQuery } from "../../api/Services";
+import { getAllServicesAsPage } from "../../api/Services";
 
 type ListOfServicesProps = {
     query: string
@@ -59,7 +59,7 @@ function ServiceInformation({name, logo_uri, short_description}: ServiceResponse
 
 function Service({ service }: ServiceProps) {
     return (
-        <div className="flex justify-between border -[#f1f1f1] border-b-[1px] pb-[20px]">
+        <div className="flex justify-between border-[#f1f1f1] border-b-[1px] pb-[20px]">
             <ServiceInformation {...service} />
             <ServiceCounter />
         </div>
@@ -77,17 +77,26 @@ function Loader() {
 
 }
 
-function ListOfServices({query}: ListOfServicesProps) {
+function ServicesContainer({query}: ListOfServicesProps) {
     const [services, setServices] = useState<ServiceResponse[]>([]);
+    const [isVisible, setVisible] = useState<boolean>(false);
+    const areRequestsBlocked = useRef<boolean>(false);
+    
     const page = useRef(1);
 
     useEffect(() => {
         if (query.length == 0) {
             getAllServicesAsPage(1).then(({ data }) => {
               setServices(data);
-            });
 
-            return;
+              areRequestsBlocked.current = false;
+            }).catch((reason) => {
+              areRequestsBlocked.current = false;
+            });
+        }
+
+        return () => {
+            setServices([]);
         }
     }, [query]);
 
@@ -97,13 +106,26 @@ function ListOfServices({query}: ListOfServicesProps) {
         if (
             "scrollHeight" in target && "scrollTop" in target && "clientHeight" in target &&
             typeof target.scrollHeight == "number" && typeof target.scrollTop == "number" && typeof target.clientHeight == "number"
+            && !areRequestsBlocked.current
         ) {
 
-            if ( ( target.scrollHeight - target.scrollTop ) == target.clientHeight) {
+            if ( ( target.scrollHeight - target.scrollTop ) == target.clientHeight ) {
+
+                areRequestsBlocked.current = true;
+
+                setVisible(true);
 
                 getAllServicesAsPage(page.current + 1).then(({ data }) => {
+                    areRequestsBlocked.current = false;
+
                     if (data.length == 0) {
-                        console.info('There\'s no more data to display!');
+                        setVisible(false);
+                        
+                        areRequestsBlocked.current = true;
+
+                        setTimeout(() => {
+                            areRequestsBlocked.current = false;
+                        }, 5000);
                         
                         return;
                     }
@@ -113,20 +135,29 @@ function ListOfServices({query}: ListOfServicesProps) {
                     setServices(servicesWithNewPages);
 
                     page.current = page.current + 1;
-                })
+
+                    setVisible(false);
+
+                }).catch((reason) => {
+                    areRequestsBlocked.current = false;
+
+                    setVisible(false);
+                });
             }
         }
-    }
+    }   
 
-    const servicesAsJsx = services ? services.map(service => <Service key={service.id} service={service} />) : <></>;
+    const listOfServices = useMemo(() => { 
+        return services ? services.map(service => <Service key={service.id} service={service} />) : <div>Loading</div>
+    }, [services]);
 
     return (
-        <div id="list-services" onScroll={(e) => handleScrollToBottom(e)} className="w-full pt-[15px]  h-[290px] overflow-y-scroll no-scrollbar">
-            {servicesAsJsx}
-    
-            <Loader />
+        <div id="list-services" onScroll={(e) => handleScrollToBottom(e)} className="w-full pt-[15px] h-[265px] overflow-y-scroll no-scrollbar">
+            { listOfServices }
+
+            { isVisible ? <Loader /> : <></> }
         </div>
     );
 }
 
-export { ListOfServices };
+export { ServicesContainer };

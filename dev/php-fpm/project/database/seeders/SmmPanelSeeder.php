@@ -2,16 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\SmmPanel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use App\Models\SmmPanel;
 use Illuminate\Database\Seeder;
 
 class SmmPanelSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
        $panels = SmmPanel::factory()->count(2)->state(new Sequence(

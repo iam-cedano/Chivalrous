@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Service;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -27,7 +26,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
-          'logo_uri' => '/logos/instagram.webp',
+          'logo_uri' => '/build/assets/logos/instagram.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '10000000'
         ],
@@ -43,7 +42,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
-          'logo_uri' => '/logos/facebook.webp',
+          'logo_uri' => '/build/assets/logos/facebook.webp',
           'minimum_quantity' => '5',
           'maximum_quantity' => '1000'
         ],
@@ -59,7 +58,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
-          'logo_uri' => '/logos/tiktok.webp',
+          'logo_uri' => '/build/assets/logos/tiktok.webp',
           'minimum_quantity' => '100',
           'maximum_quantity' => '1000000'
         ],
@@ -75,7 +74,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
-          'logo_uri' => '/logos/x.webp',
+          'logo_uri' => '/build/assets/logos/twitter.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '1000000'
         ],
@@ -91,7 +90,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The channel must be public and region-unrestricted. Do not change the channel name/URL during delivery.
         ",
-          'logo_uri' => '/logos/youtube.webp',
+          'logo_uri' => '/build/assets/logos/youtube.webp',
           'minimum_quantity' => '100',
           'maximum_quantity' => '500000'
         ],
@@ -107,7 +106,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The profile/page must be public. Avoid edits to the URL or visibility settings during processing.
         ",
-          'logo_uri' => '/logos/linkedin.webp',
+          'logo_uri' => '/build/assets/logos/linkedin.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '500000'
         ],
@@ -123,7 +122,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Ensure your profile is discoverable and not restricted. Do not switch to private during delivery.
         ",
-          'logo_uri' => '/logos/snapchat.webp',
+          'logo_uri' => '/build/assets/logos/snapchat.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '500000'
         ],
@@ -139,7 +138,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The account must be public. Avoid changing the username while the order is active.
         ",
-          'logo_uri' => '/logos/pinterest.webp',
+          'logo_uri' => '/build/assets/logos/pinterest.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '500000'
         ],
@@ -155,7 +154,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The group/channel must be public or have a join link. Disable join approvals during delivery.
         ",
-          'logo_uri' => '/logos/telegram.webp',
+          'logo_uri' => '/build/assets/logos/telegram.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '200000'
         ],
@@ -171,7 +170,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Keep the channel public and avoid username changes until completion.
         ",
-          'logo_uri' => '/logos/twitch.webp',
+          'logo_uri' => '/build/assets/logos/twitch.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '1000000'
         ],
@@ -187,7 +186,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Ensure the profile is public. No username edits during the order.
         ",
-          'logo_uri' => '/logos/reddit.webp',
+          'logo_uri' => '/build/assets/logos/reddit.webp',
           'minimum_quantity' => '10',
           'maximum_quantity' => '200000'
         ],
@@ -203,7 +202,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Account must be public. Avoid URL or name changes during delivery.
         ",
-          'logo_uri' => '/logos/soundcloud.webp',
+          'logo_uri' => '/build/assets/logos/soundcloud.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '500000'
         ],
@@ -219,7 +218,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Provide the correct profile/artist URL. Do not modify the URL during fulfillment.
         ",
-          'logo_uri' => '/logos/spotify.webp',
+          'logo_uri' => '/build/assets/logos/spotify.webp',
           'minimum_quantity' => '100',
           'maximum_quantity' => '1000000'
         ],
@@ -235,7 +234,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Provide a permanent invite link without verification/captcha. Disable membership screening during delivery.
         ",
-          'logo_uri' => '/logos/discord.webp',
+          'logo_uri' => '/build/assets/logos/discord.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '500000'
         ],
@@ -251,7 +250,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Keep the profile public and avoid changes during the order.
         ",
-          'logo_uri' => '/logos/vimeo.webp',
+          'logo_uri' => '/build/assets/logos/vimeo.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '200000'
         ],
@@ -267,7 +266,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The account must be public. Do not change the handle during delivery.
         ",
-          'logo_uri' => '/logos/threads.webp',
+          'logo_uri' => '/build/assets/logos/threads.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '1000000'
         ],
@@ -283,7 +282,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Ensure your profile is public and the URL remains unchanged during fulfillment.
         ",
-          'logo_uri' => '/logos/quora.webp',
+          'logo_uri' => '/build/assets/logos/quora.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '200000'
         ],
@@ -299,7 +298,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Keep the profile public and do not change the username/URL while processing.
         ",
-          'logo_uri' => '/logos/medium.webp',
+          'logo_uri' => '/build/assets/logos/medium.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '200000'
         ],
@@ -315,7 +314,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ The blog must be public. Avoid changing the blog URL during delivery.
         ",
-          'logo_uri' => '/logos/tumblr.webp',
+          'logo_uri' => '/build/assets/logos/tumblr.webp',
           'minimum_quantity' => '25',
           'maximum_quantity' => '500000'
         ],
@@ -331,7 +330,7 @@ class ServiceSeeder extends Seeder
              
             ⚠ Keep the profile/public page accessible. Do not switch privacy settings during the order.
         ",
-          'logo_uri' => '/logos/vk.webp',
+          'logo_uri' => '/build/assets/logos/vk.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '1000000'
         ]

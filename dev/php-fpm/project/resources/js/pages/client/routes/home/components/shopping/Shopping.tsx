@@ -6,8 +6,8 @@ type ShoppingProps = {
 
 function Shopping({children}: ShoppingProps) {
     return (
-        <section id="shopping" className="w-full p-2.5">
-            <div className="bg-white flex flex-col gap-[15px] rounded-2xl p-2.5">
+    <section id="shopping" className="w-full flex justify-center">
+            <div className="bg-white flex flex-col gap-4 rounded-2xl p-3">
                 {children}
             </div>
         </section>

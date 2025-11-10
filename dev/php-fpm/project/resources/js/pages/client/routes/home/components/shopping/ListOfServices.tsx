@@ -45,7 +45,7 @@ function ServiceCounter() {
 
 function ServiceInformation({name, logo_uri, short_description}: ServiceResponse) {
     return (
-        <div className="flex w-60 items-center gap-[5px]">
+        <div className="flex w-55 items-center gap-[5px]">
             
             <img className="size-[50px]" src={logo_uri} alt={`${name} official logo`} />
 
@@ -59,7 +59,7 @@ function ServiceInformation({name, logo_uri, short_description}: ServiceResponse
 
 function Service({ service }: ServiceProps) {
     return (
-        <div className="flex justify-between border-[#f1f1f1] border-b-[1px] pb-[20px]">
+        <div className="flex justify-between border-[#f1f1f1] border-b pb-5">
             <ServiceInformation {...service} />
             <ServiceCounter />
         </div>

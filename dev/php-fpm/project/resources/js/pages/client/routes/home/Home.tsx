@@ -2,19 +2,21 @@ import { JSX, useContext, useState } from "react";
 import { Container } from "./components/Client.Container";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
-import { Wallet } from "./components/header/Wallet";
+import { Balance } from "./components/header/Balance";
 import { Account } from "./components/header/Account";
-import Services from "./data/Services.data";
 import { Details } from "./components/details/Details";
 import { Shopping } from "./components/shopping/Shopping";
 import { Footer } from "../shared/Footer";
 import { ServiceList } from "./components/services/ServiceList";
 import { Service } from "./components/services/Service";
 import { CartButton } from "./components/cart/CartButton";
-import FullScreenSlideDialog from "./components/cart/FullScreenSlideDialog";
 import { ShoppingHeader } from "./components/shopping/ShoppingHeader";
 import { SearchInputAndServices } from "./components/shopping/SearchInputAndServices";
 import { Orders } from "./components/details/Orders";
+import { Wallet } from "./components/details/Wallet";
+
+import FullScreenDialog from "./components/cart/FullScreenDialog";
+import Services from "./data/Services.data";
 
 type HomeMainProps = {
     onCheckout: () => void,
@@ -34,7 +36,7 @@ function HomeMain({onCheckout, isVisible}: HomeMainProps) {
                 <Hambuger />
 
                 <div className="flex gap-2.5">
-                    <Wallet />
+                    <Balance />
                     <Account />
                 </div>
             </Header>
@@ -51,18 +53,20 @@ function HomeMain({onCheckout, isVisible}: HomeMainProps) {
             <Shopping>
                 <ShoppingHeader />
                 <SearchInputAndServices />
+
             </Shopping>
 
             <CartButton onClick={onCheckout} />
+
         </div>
     );
 }
 
 function CheckoutDialog({ onClose }: CheckoutProps) {
     return (
-        <FullScreenSlideDialog open={true} onClose={onClose} closeLabel="X" title="Full Screen Dialog">
+        <FullScreenDialog open={true} onClose={onClose} closeAriaLabel="X" title="Checkout ">
             <h1>Full Screen Slide Dialog</h1>
-        </FullScreenSlideDialog>
+        </FullScreenDialog>
     );
 }
 

@@ -1,10 +1,10 @@
 {
-  "_index-D6CVo32A.js": {
-    "file": "assets/index-D6CVo32A.js",
+  "_index-Gmx51jhy.js": {
+    "file": "assets/index-Gmx51jhy.js",
     "name": "index"
   },
   "resources/css/app.css": {
-    "file": "assets/app-iX6u8Ecm.css",
+    "file": "assets/app-7Es7__kN.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -33,39 +33,39 @@
     "src": "resources/fonts/Montserrat-Regular.woff2"
   },
   "resources/js/pages/admin/Admin.Dashboard.tsx": {
-    "file": "assets/Admin.Dashboard-CGkEthOZ.js",
+    "file": "assets/Admin.Dashboard-DCKD3j9W.js",
     "name": "Admin.Dashboard",
     "src": "resources/js/pages/admin/Admin.Dashboard.tsx",
     "isEntry": true,
     "imports": [
-      "_index-D6CVo32A.js"
+      "_index-Gmx51jhy.js"
     ]
   },
   "resources/js/pages/admin/Admin.Users.tsx": {
-    "file": "assets/Admin.Users-CGkEthOZ.js",
+    "file": "assets/Admin.Users-DCKD3j9W.js",
     "name": "Admin.Users",
     "src": "resources/js/pages/admin/Admin.Users.tsx",
     "isEntry": true,
     "imports": [
-      "_index-D6CVo32A.js"
+      "_index-Gmx51jhy.js"
     ]
   },
   "resources/js/pages/auth/Auth.Login.tsx": {
-    "file": "assets/Auth.Login-BmiuDhBH.js",
+    "file": "assets/Auth.Login-Bixmkmtq.js",
     "name": "Auth.Login",
     "src": "resources/js/pages/auth/Auth.Login.tsx",
     "isEntry": true,
     "imports": [
-      "_index-D6CVo32A.js"
+      "_index-Gmx51jhy.js"
     ]
   },
   "resources/js/pages/client/Client.tsx": {
-    "file": "assets/Client-CdmP8wWy.js",
+    "file": "assets/Client-DCaXCoam.js",
     "name": "Client",
     "src": "resources/js/pages/client/Client.tsx",
     "isEntry": true,
     "imports": [
-      "_index-D6CVo32A.js"
+      "_index-Gmx51jhy.js"
     ]
   }
 }

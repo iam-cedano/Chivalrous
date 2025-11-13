@@ -52,8 +52,8 @@ function Footer() {
     ));
 
     return (
-        <nav id="footer" className="w-full p-[10px] fixed inset-x-0 bottom-0 flex justify-center bg-white">
-            <ul className="flex flex-row gap-[10px]">
+        <nav id="footer" className="w-full p-2.5 fixed inset-x-0 bottom-0 flex justify-center bg-white">
+            <ul className="flex flex-row gap-2.5">
                 { navItems }
             </ul>
         </nav>

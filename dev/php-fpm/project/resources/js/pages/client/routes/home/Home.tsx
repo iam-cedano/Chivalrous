@@ -1,5 +1,4 @@
 import { JSX, useContext, useState } from "react";
-import { Container } from "./components/Client.Container";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
 import { Balance } from "./components/header/Balance";
@@ -15,16 +14,13 @@ import { SearchInputAndServices } from "./components/shopping/SearchInputAndServ
 import { Orders } from "./components/details/Orders";
 import { Wallet } from "./components/details/Wallet";
 
-import FullScreenDialog from "./components/cart/FullScreenDialog";
 import Services from "./data/Services.data";
+import { CheckoutDialog } from "./components/dialogs/CheckoutDialog";
+import { AddingServiceDialog } from "./components/dialogs/AddingServiceDialog";
 
 type HomeMainProps = {
     onCheckout: () => void,
     isVisible: boolean
-};
-
-type CheckoutProps = {
-    onClose: () => void
 };
 
 function HomeMain({onCheckout, isVisible}: HomeMainProps) {
@@ -62,14 +58,6 @@ function HomeMain({onCheckout, isVisible}: HomeMainProps) {
     );
 }
 
-function CheckoutDialog({ onClose }: CheckoutProps) {
-    return (
-        <FullScreenDialog open={true} onClose={onClose} closeAriaLabel="X" title="Checkout ">
-            <h1>Full Screen Slide Dialog</h1>
-        </FullScreenDialog>
-    );
-}
-
 function Home(): JSX.Element {
     const [isCheckoutVisible, setCheckoutVisible] = useState(false);
 
@@ -77,15 +65,15 @@ function Home(): JSX.Element {
     const closeCheckoutHandler = () => setCheckoutVisible(false);
 
     return (
-        <Container>
+        <div className="p-[5px]">
 
-            { isCheckoutVisible && <CheckoutDialog onClose={closeCheckoutHandler} /> }
+            { isCheckoutVisible && <AddingServiceDialog onClose={closeCheckoutHandler} /> }
 
             <HomeMain onCheckout={checkoutHandler} isVisible={ ! isCheckoutVisible } />
 
             <Footer />
 
-        </Container>
+        </div>
     );
 }
 

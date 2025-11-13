@@ -4,7 +4,7 @@ type ServiceResponse = {
     short_description: string;
     logo_uri: string;
     minimum_quantity: number;
-    maximum_quantity: number; 
+    maximum_quantity: number;
 };
 
 export default ServiceResponse;

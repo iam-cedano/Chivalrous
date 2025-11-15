@@ -54,3 +54,6 @@ dev/workspace/.env.*
 
 dev/vite/.env.*
 
+# Github Copilot Files
+
+.github/

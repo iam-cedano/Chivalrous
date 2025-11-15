@@ -13,7 +13,7 @@ type HeaderProps = {
 
 function Header({ title, onClose }: HeaderProps) {
   return (
-    <header className="flex items-center px-4 py-3">
+    <header className="sticky top-0 z-30 flex w-full items-center bg-white px-4 py-3 shadow-sm">
       <button
         type="button"
         onClick={onClose}
@@ -35,23 +35,20 @@ export default function FullScreenDialog({
   children,
 }: FullScreenDialogProps) {
   return (
-    <>
-      <div
+      <main
         role="dialog"
         aria-modal="true"
         aria-label={title}
+        className=""
       >
-        <div
-          className="w-full h-full bg-white flex flex-col outline-none"
-        >
+        <div className="w-full h-full bg-white flex flex-col">
           <Header title={title}  onClose={onClose} />
 
-          <main className="flex-1 overflow-y-auto p-4">
+          <div>
             {children}
-          </main>
+          </div>
         </div>
-      </div>
-    </>
+      </main>
   );
 }
 

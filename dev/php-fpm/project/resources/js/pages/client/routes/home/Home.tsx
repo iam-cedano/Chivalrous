@@ -66,7 +66,7 @@ function Home(): JSX.Element {
         id: 1,
         name: "Instagram Followers",
         banner_uri: "/build/assets/services/1/banner.webp",
-        long_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        long_description: "**Lorem** ipsum dolor sit amet, **consectetur adipiscing** elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
 
     const checkoutHandler = () => setCheckoutVisible(true);

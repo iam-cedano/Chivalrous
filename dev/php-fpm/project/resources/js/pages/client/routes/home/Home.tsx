@@ -1,4 +1,4 @@
-import { JSX, useContext, useRef, useState } from "react";
+import { JSX, useRef, useState } from "react";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
 import { Balance } from "./components/header/Balance";
@@ -17,11 +17,13 @@ import SingleServiceResponse from "./api/res/SingleServiceResponse";
 import Services from "./data/Services.data";
 import DialogContext from "./contexts/DialogContext";
 import { CheckoutDialog } from "./components/dialogs/CheckoutDialog";
+import { LoadingOverlay } from "./components/loading/LoadingOverlay";
 
 const services = Services.map(service => <Service key={service.service} {...service} />)
 
 function Home(): JSX.Element {
     const [isDialogVisible, setDialogVisible ] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const dialogSelected = useRef<number>(0);
     const visibility = isDialogVisible ? "hidden" : "block";
 
@@ -37,8 +39,9 @@ function Home(): JSX.Element {
             handleClosingDialog: () => {
                 setDialogVisible(false);
                 dialogSelected.current = 0;
+                setIsLoading(false);
             },
-            handleAddingService: (dialog_id: number) => {
+            handleAddingService: (_dialogId: number) => {
                 setDialogVisible(true);
                 dialogSelected.current = 1;
 
@@ -46,8 +49,16 @@ function Home(): JSX.Element {
             handleOpeningCheckout: () => {
                 setDialogVisible(true);
                 dialogSelected.current = 2;
+            },
+            showLoading: () => {
+                setIsLoading(true);
+            },
+            hideLoading: () => {
+                setIsLoading(false);
             }
         }}>
+
+            <LoadingOverlay isVisible={true} />
 
             {isDialogVisible && dialogSelected.current == 1 && (
                 <AddingServiceDialog service={defaultDialogService} />

@@ -35,7 +35,7 @@ export default function FullScreenDialog({
   children,
 }: FullScreenDialogProps) {
   return (
-      <main
+      <div
         role="dialog"
         aria-modal="true"
         aria-label={title}
@@ -48,7 +48,7 @@ export default function FullScreenDialog({
             {children}
           </div>
         </div>
-      </main>
+      </div>
   );
 }
 

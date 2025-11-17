@@ -1,16 +1,12 @@
 import DOMPurify from 'dompurify';
 
-enum MODES {
-    NORMAL
-};
-
 function transformText(text: string): string {
-    const transformedText = machine(text, MODES.NORMAL);
+    const transformedText = machine(text);
     
     return transformedText;
 }
 
-function machine(text: string, modes: MODES): string {
+function machine(text: string): string {
     
     const firstTransformation = text.replace(/\*\*(.+?)\*\*/g, '<span class="font-bold">$1</span>');
     

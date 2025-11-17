@@ -26,4 +26,8 @@ class GetServicesUsecase {
     public function allAsPage(string $pageNumber = '1', string $count = '10'): array {
         return $this->getServicesPort->allAsPage($pageNumber, $count);
     }
+
+    public function getService(int $id): array {
+        return $this->getServicesPort->getService($id);
+    }
 }

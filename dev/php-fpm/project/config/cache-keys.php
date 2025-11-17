@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'services' => 'list-of-services'
+    'services' => 'list-of-services',
+    'service-' => 'service-'
 ];

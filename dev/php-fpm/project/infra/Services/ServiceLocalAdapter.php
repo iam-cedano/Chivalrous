@@ -30,9 +30,9 @@ class ServiceLocalAdapter implements GetServicesPort {
     public function allAsPage(string $pageNumber, string $count = '10'): array {
         $idCache = Config::get('cache-keys.services');
 
-        $servicesInCacheAsJson = Cache::get( $idCache);
+        $servicesInCache = Cache::get( $idCache);
          
-        if (! $servicesInCacheAsJson ) {
+        if (! $servicesInCache ) {
             $services = Service::query()->select(['id', 'name', 'short_description', 'logo_uri', 'minimum_quantity', 'maximum_quantity'] )->get();
 
             Cache::set($idCache, json_encode($services->toArray()), 20);
@@ -40,11 +40,21 @@ class ServiceLocalAdapter implements GetServicesPort {
             return $services->forPage($pageNumber, $count)->values()->toArray();
         }
 
-        $services = collect(json_decode($servicesInCacheAsJson))
+        $services = collect(json_decode($servicesInCache))
                            ->forPage($pageNumber, $count)
                            ->values()
                            ->toArray();
 
         return $services;
     }   
+
+    public function getService(int $id): array {
+        $keyCache = Config::get('cache-keys.service-') . $id;
+        
+        $service = Service::find($id);
+
+        if ($service == null) return [];
+
+        return $service->toArray();
+    }
 }

@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::table('services', function (Blueprint $table) {
             $table->string('banner_uri', 60);
             $table->string('logo_uri', 60)->change();
-
         });
 
         Schema::table('service_providers', function (Blueprint $table) {
@@ -25,14 +24,13 @@ return new class extends Migration
 
         Schema::create('source_services', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('service_id')->constrained('services', 'id', 'fk_services_id_01');
 
             $table->char('country_abbreviation', 3);
 
             $table->string('quality', 60);
             $table->decimal('price_per_thousand', 7, 2);
             $table->tinyInteger('status', unsigned: true)->default(1);
-
-            $table->foreignId('service_id')->constrained('services', 'id', 'fk_services_id_01');
        
             $table->timestamps();
         });
@@ -60,10 +58,6 @@ return new class extends Migration
             $table->dropUnique('service_providers_smm_panel_id_service_id_unique');
             $table->dropColumn('price_per_thousand');
             $table->unsignedBigInteger('service_id')->change();
-        });
-
-        Schema::table('service_providers', function (Blueprint $table) {
-            $table->foreign('service_id', 'fk_service_id_01')->references('id')->on('services');
         });
 
         Schema::table('services', function (Blueprint $table) {

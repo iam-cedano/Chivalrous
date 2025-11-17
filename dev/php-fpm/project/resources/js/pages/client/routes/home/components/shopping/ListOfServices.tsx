@@ -1,16 +1,23 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import ServiceResponse from "../../api/res/ServiceResponse";
 import { getAllServicesAsPage } from "../../api/Services";
+import DialogContext from "../../contexts/DialogContext";
 
 type ListOfServicesProps = {
     query: string
 };
 
 type ServiceProps = {
-    service: ServiceResponse,
+    service: ServiceResponse;
+    onAddingService: (dialog_id: number) => void;
 }
 
-function ServiceCounter() {
+type ServiceCounterProps = {
+    service_id: number;
+    onAddingService: (dialog_id: number) => void;
+}
+
+function ServiceCounter({service_id, onAddingService}: ServiceCounterProps) {
     const [count, setCount] = useState(0);
 
     function decrement() {
@@ -21,15 +28,6 @@ function ServiceCounter() {
         setCount(count - 1);
     }
 
-    function increment() {
-
-        if (count == 99) {
-            return;
-        }
-
-        setCount(count + 1);
-    }
-            
     return (
         <div className="flex gap-2.5 items-center">
            
@@ -37,7 +35,7 @@ function ServiceCounter() {
 
             <span className="font-[Montserrat] text-2xl">{ count }</span>
 
-            <img onClick={increment} className="size-[27px]" src="/build/assets/add.webp" alt="Addition image" />
+            <img onClick={() => onAddingService(service_id)} className="size-[27px]" src="/build/assets/add.webp" alt="Addition image" />
 
         </div>
     );
@@ -57,11 +55,11 @@ function ServiceInformation({name, logo_uri, short_description}: ServiceResponse
     );
 }
 
-function Service({ service }: ServiceProps) {
+function Service({ service, onAddingService }: ServiceProps) {
     return (
         <div className="flex justify-between border-[#f1f1f1] border-b pb-5">
             <ServiceInformation {...service} />
-            <ServiceCounter />
+            <ServiceCounter service_id={service.id} onAddingService={onAddingService} />
         </div>
     );
 }
@@ -78,6 +76,7 @@ function Loader() {
 }
 
 function ServicesContainer({query}: ListOfServicesProps) {
+    const { handleAddingService } = useContext(DialogContext);
     const [services, setServices] = useState<ServiceResponse[]>([]);
     const [isVisible, setVisible] = useState<boolean>(false);
     const areRequestsBlocked = useRef<boolean>(false);
@@ -148,7 +147,7 @@ function ServicesContainer({query}: ListOfServicesProps) {
     }   
 
     const listOfServices = useMemo(() => { 
-        return services ? services.map(service => <Service key={service.id} service={service} />) : <div>Loading</div>
+        return services ? services.map(service => <Service key={service.id} service={service} onAddingService={handleAddingService} />) : <div>Loading</div>
     }, [services]);
 
     return (

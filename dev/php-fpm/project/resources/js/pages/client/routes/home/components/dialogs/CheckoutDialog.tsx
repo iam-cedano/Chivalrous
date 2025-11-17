@@ -1,13 +1,12 @@
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
+import DialogContext from "../../contexts/DialogContext";
+import { useContext } from "react";
 
-type CheckoutProps = {
-    onClose: () => void
-};
-
-
-function CheckoutDialog({ onClose }: CheckoutProps) {
+function CheckoutDialog() {
+    const { handleClosingDialog } = useContext(DialogContext);
+    
     return (
-        <FullScreenDialog onClose={onClose} title="Checkout ">
+        <FullScreenDialog onClose={handleClosingDialog} title="Checkout ">
             <h1>Checkout</h1>
         </FullScreenDialog>
     );

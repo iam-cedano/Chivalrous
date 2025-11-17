@@ -24,7 +24,7 @@ class ServiceSeeder extends Seeder
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
           'logo_uri' => '/build/assets/logos/instagram.webp',
-          'banner_uri' => '/build/assets/banner/instagram.webp',
+          'banner_uri' => '/build/assets/banners/instagram.webp',
           'minimum_quantity' => '50',
           'maximum_quantity' => '10000000'
         ],
@@ -41,7 +41,7 @@ class ServiceSeeder extends Seeder
             ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
         ",
           'logo_uri' => '/build/assets/logos/facebook.webp',
-          'banner_uri' => '/build/assets/banner/facebook.webp',
+          'banner_uri' => '/build/assets/banners/facebook.webp',
           'minimum_quantity' => '5',
           'maximum_quantity' => '1000'
         ],

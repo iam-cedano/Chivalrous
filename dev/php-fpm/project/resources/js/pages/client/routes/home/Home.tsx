@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX, useContext, useRef, useState } from "react";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
 import { Balance } from "./components/header/Balance";
@@ -12,56 +12,19 @@ import { ShoppingHeader } from "./components/shopping/ShoppingHeader";
 import { SearchInputAndServices } from "./components/shopping/SearchInputAndServices";
 import { Orders } from "./components/details/Orders";
 import { Wallet } from "./components/details/Wallet";
-import { Footer } from "../shared/Footer";
-
-import Services from "./data/Services.data";
 import { AddingServiceDialog } from "./components/dialogs/AddingServiceDialog";
 import SingleServiceResponse from "./api/res/SingleServiceResponse";
+import Services from "./data/Services.data";
+import DialogContext from "./contexts/DialogContext";
+import { CheckoutDialog } from "./components/dialogs/CheckoutDialog";
 
-type HomeMainProps = {
-    onCheckout: () => void,
-    isVisible: boolean
-};
-
-function HomeMain({onCheckout, isVisible}: HomeMainProps) {
-    const services = Services.map(service => <Service key={service.service} {...service} />)
-
-    const visibility = isVisible ? "block" : "hidden";
-
-    return (
-        <main className={`${visibility} p-[5px]`}>
-            <Header>
-                <Hambuger />
-
-                <div className="flex gap-2.5">
-                    <Balance />
-                    <Account />
-                </div>
-            </Header>
-
-            <Details>
-                <Wallet />
-                <Orders />
-            </Details>
-
-            <ServiceList>
-                {services}
-            </ServiceList>
-
-            <Shopping>
-                <ShoppingHeader />
-                <SearchInputAndServices />
-
-            </Shopping>
-
-            <CartButton onClick={onCheckout} />
-
-        </main>
-    );
-}
+const services = Services.map(service => <Service key={service.service} {...service} />)
 
 function Home(): JSX.Element {
-    const [isCheckoutVisible, setCheckoutVisible] = useState(false);
+    const [isDialogVisible, setDialogVisible ] = useState(false);
+    const dialogSelected = useRef<number>(0);
+    const visibility = isDialogVisible ? "hidden" : "block";
+
     const defaultDialogService: SingleServiceResponse = {
         id: 1,
         name: "Instagram Followers",
@@ -69,20 +32,62 @@ function Home(): JSX.Element {
         long_description: "**Lorem** ipsum dolor sit amet, **consectetur adipiscing** elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
 
-    const checkoutHandler = () => setCheckoutVisible(true);
-    const closeCheckoutHandler = () => setCheckoutVisible(false);
+    console.info(visibility);
 
     return (
-        <>
-            { isCheckoutVisible && (
-                <AddingServiceDialog service={defaultDialogService} onClose={closeCheckoutHandler} />
-            ) }
+        <DialogContext.Provider value={{
+            handleClosingDialog: () => {
+                setDialogVisible(false);
+                dialogSelected.current = 0;
+            },
+            handleAddingService: (dialog_id: number) => {
+                setDialogVisible(true);
+                dialogSelected.current = 1;
 
+            },
+            handleOpeningCheckout: () => {
+                setDialogVisible(true);
+                dialogSelected.current = 2;
+            }
+        }}>
 
-            <HomeMain onCheckout={checkoutHandler} isVisible={ ! isCheckoutVisible } />
+            {isDialogVisible && dialogSelected.current == 1 && (
+                <AddingServiceDialog service={defaultDialogService} />
+            )}
 
-            <Footer />
-        </>
+            {isDialogVisible && dialogSelected.current == 2 && (
+                <CheckoutDialog />
+            )}
+
+            <div className={`${visibility} p-[5px]`}>
+                <Header>
+                    <Hambuger />
+
+                    <div className="flex gap-2.5">
+                        <Balance />
+                        <Account />
+                    </div>
+                </Header>
+
+                <Details>
+                    <Wallet />
+                    <Orders />
+                </Details>
+
+                <ServiceList>
+                    {services}
+                </ServiceList>
+
+                <Shopping>
+                    <ShoppingHeader />
+                    <SearchInputAndServices />
+                </Shopping>
+
+                <CartButton />
+
+            </div>
+
+        </DialogContext.Provider>
     );
 }
 

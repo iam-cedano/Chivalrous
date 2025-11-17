@@ -18,7 +18,6 @@ ReactDOM.createRoot(document.getElementById("app")!)
                 <Footer />
                 
             </BrowserRouter>
-            
         </StrictMode>
     );
     

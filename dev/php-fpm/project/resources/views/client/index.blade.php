@@ -20,6 +20,6 @@
 
 </head>
 <body>
-   <div id="app"></div>
+   <main id="app"></main>
 </body>
 </html>

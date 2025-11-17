@@ -30,4 +30,8 @@ class GetServicesUsecase {
     public function getService(int $id): array {
         return $this->getServicesPort->getService($id);
     }
+
+    public function getServiceAndSources(int $id): array {
+        return $this->getServicesPort->getServiceAndSources($id);
+    }
 }

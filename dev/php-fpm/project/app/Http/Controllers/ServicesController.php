@@ -26,9 +26,15 @@ class ServicesController extends Controller
         return response()->json($page);
     }
 
-    public function getService(int $id) {
+    public function getService(int $id): JsonResponse {
         $data = $this->getServicesUsecase->getService($id);
         
+        return response()->json($data);
+    }
+
+    public function getServiceAndSources(int $id): JsonResponse {
+        $data = $this->getServicesUsecase->getServiceAndSources($id);
+
         return response()->json($data);
     }
 }

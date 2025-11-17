@@ -5,7 +5,6 @@ namespace Infrastructure\Services;
 use App\Models\Service;
 use App\Ports\Services\GetServicesPort;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
@@ -17,7 +16,7 @@ class ServiceLocalAdapter implements GetServicesPort {
     }
     
     public function query(string $query): Collection {
-        return null;
+        return [];
     }
 
     public function queryAsPage(string $pageNumber, string $count, string $query): array {
@@ -51,10 +50,56 @@ class ServiceLocalAdapter implements GetServicesPort {
     public function getService(int $id): array {
         $keyCache = Config::get('cache-keys.service-') . $id;
         
-        $service = Service::find($id);
+        $serviceInCache = Cache::get($keyCache);
 
-        if ($service == null) return [];
+        if ( $serviceInCache ) {
+            return json_decode($serviceInCache, true);
+        }
 
-        return $service->toArray();
+        $service = Service::find($id, ['name', 'long_description', 'logo_uri', 'banner_uri', 'minimum_quantity', 'maximum_quantity']);
+
+        if ($service == null) {
+            Cache::delete($keyCache);
+
+            return [];
+        };
+
+        $servicePayload = $service->toArray();
+
+        Cache::set($keyCache, $servicePayload, 600);
+
+        return $servicePayload;
+    }
+
+    public function getServiceAndSources(int $id): array {
+        if (! is_numeric($id) ) {
+            return [];
+        }
+
+        $keyCache = Config::get('cache-keys.service-and-source-') . $id;
+
+        $serviceInCache = Cache::get($keyCache);
+
+        if ($serviceInCache) {
+            return json_decode($serviceInCache, true);
+        }
+
+        $service = Service::query()
+            ->with(['sources' => function ($query) {
+                $query->select(['id', 'country_abbreviation','service_id', 'quality', 'price_per_thousand', 'status']);
+            }])
+            ->find($id, ['id', 'name', 'long_description', 'logo_uri', 'banner_uri', 'minimum_quantity', 'maximum_quantity']);
+
+        if ($service == null) {
+            Cache::delete($keyCache);
+
+            return [];
+        }
+
+        $servicePayload = $service->toArray();
+
+        Cache::set($keyCache, json_encode($servicePayload), 600);
+
+        return $servicePayload;
     }
 }

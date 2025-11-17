@@ -11,4 +11,5 @@ interface GetServicesPort {
     public function allAsPage(string $pageNumber, string $count): array;
     public function queryAsPage(string $pageNumber, string $count, string $query): array;
     public function getService(int $id): array;
+    public function getServiceAndSources(int $id): array;
 }

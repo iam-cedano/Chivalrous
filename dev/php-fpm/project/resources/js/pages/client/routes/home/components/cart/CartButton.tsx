@@ -1,21 +1,19 @@
 import { useContext } from "react";
 import { orderContext } from "../../contexts/orderContext";
+import DialogContext from "../../contexts/DialogContext";
 
 type FilledCartButtonProps = {
     orderCount: number,
     onClick: () => void
 };
 
-type CartButtonProps = {
-    onClick: () => void
-};
-
-function CartButton({onClick}: CartButtonProps) {
+function CartButton() {
+    const { handleOpeningCheckout } = useContext(DialogContext);
     const orderCount: number = useContext(orderContext);
 
     return (
         <div className="pt-[5px]">
-            { orderCount > 0 ? <FilledCartButton onClick={onClick} orderCount={orderCount} /> : <EmptyCartButton /> }
+            { orderCount > 0 ? <FilledCartButton onClick={handleOpeningCheckout} orderCount={orderCount} /> : <EmptyCartButton /> }
         </div>
     );
 }

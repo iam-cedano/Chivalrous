@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { FormEvent, FocusEvent } from "react";
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
 import SingleServiceResponse from "../../api/res/SingleServiceResponse";
 import TextMagic from "@/functions/TextMagic.function";
+import DialogContext from "../../contexts/DialogContext";
 
 type AddingServiceProps = {
     service: SingleServiceResponse;
-    onClose: () => void
 };
 
 type QualityOption = {
@@ -60,7 +60,8 @@ function ServiceInformation ({title, description, details}: ServiceInformationPr
     );
 }
 
-function AddingServiceDialog({ service, onClose }: AddingServiceProps) {
+function AddingServiceDialog({ service }: AddingServiceProps) {
+    const { handleClosingDialog } = useContext(DialogContext);
     const bannerImage = service.banner_uri || "/build/assets/services/1/banner.webp";
 
     const mockupDetails = `|**Lorem** ipsum dolor **sit** amet, cotetur adipiscing|nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur`;
@@ -161,7 +162,7 @@ function AddingServiceDialog({ service, onClose }: AddingServiceProps) {
     }, []);
 
     return (
-        <FullScreenDialog onClose={onClose} title="Adding Service">
+        <FullScreenDialog onClose={handleClosingDialog} title="Adding Service">
             <div>
                     <img
                         className="w-full object-cover"

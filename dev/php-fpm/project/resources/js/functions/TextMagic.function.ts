@@ -9,8 +9,9 @@ function transformText(text: string): string {
 function machine(text: string): string {
     
     const firstTransformation = text.replace(/\*\*(.+?)\*\*/g, '<span class="font-bold">$1</span>');
+    const secondTransformation = firstTransformation.replace(/(?:\r\n|\r|\n|\u0085|\u2028|\u2029)/g, '<br/>');
     
-    return DOMPurify.sanitize(firstTransformation);
+    return DOMPurify.sanitize(secondTransformation);
 }
 
 export default { transformText };

@@ -19,8 +19,6 @@ class Service extends Model
         'name',
         'short_description',
         'long_description',
-        'logo_uri',
-        'banner_uri',
         'minimum_quantity',
         'maximum_quantity'
     ];

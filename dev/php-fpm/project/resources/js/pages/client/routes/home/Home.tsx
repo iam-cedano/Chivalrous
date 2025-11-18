@@ -13,58 +13,82 @@ import { SearchInputAndServices } from "./components/shopping/SearchInputAndServ
 import { Orders } from "./components/details/Orders";
 import { Wallet } from "./components/details/Wallet";
 import { AddingServiceDialog } from "./components/dialogs/AddingServiceDialog";
-import SingleServiceResponse from "./api/res/SingleServiceResponse";
-import Services from "./data/Services.data";
-import DialogContext from "./contexts/DialogContext";
+
 import { CheckoutDialog } from "./components/dialogs/CheckoutDialog";
 import { LoadingOverlay } from "./components/loading/LoadingOverlay";
 
-const services = Services.map(service => <Service key={service.service} {...service} />)
+import DialogContext from "./contexts/DialogContext";
+import Services from "./data/Services.data";
+import * as ServicesApi  from "./api/Services";
+import ServiceDialogResponse from "./api/res/ServiceDialogResponse";
+import ShoppingDialogResponse from "./api/res/ShoppingDialogResponse";
+
+const services = Services.map(service => <Service key={service.service} {...service} />);
+
+type DialogInformation = {
+    status: boolean,
+    data: ServiceDialogResponse | ShoppingDialogResponse | null
+};
 
 function Home(): JSX.Element {
-    const [isDialogVisible, setDialogVisible ] = useState(false);
+    const [isDialog, setDialog] = useState<DialogInformation>({
+        status: false,
+        data: null
+    });
+
     const [isLoading, setIsLoading] = useState(false);
     const dialogSelected = useRef<number>(0);
-    const visibility = isDialogVisible ? "hidden" : "block";
-
-    const defaultDialogService: SingleServiceResponse = {
-        id: 1,
-        name: "Instagram Followers",
-        banner_uri: "/build/assets/services/1/banner.webp",
-        long_description: "**Lorem** ipsum dolor sit amet, **consectetur adipiscing** elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    };
+    const visibility = isDialog.status ? "hidden" : "block";
 
     return (
-        <DialogContext.Provider value={{
+        <DialogContext value={{
             handleClosingDialog: () => {
-                setDialogVisible(false);
-                dialogSelected.current = 0;
-                setIsLoading(false);
-            },
-            handleAddingService: (_dialogId: number) => {
-                setDialogVisible(true);
-                dialogSelected.current = 1;
+                setDialog({
+                    status: false,
+                    data: null
+                });
 
+                dialogSelected.current = 0;
+            },
+            handleAddingService: (serviceId: number) => {
+                setIsLoading(true);
+
+                ServicesApi.getServiceForDialog(serviceId).then(res => {
+                    setIsLoading(false);
+
+                    setDialog({
+                        status: true,
+                        data: res.data
+                    });
+
+                    dialogSelected.current = 1;
+
+                    console.info(res.data);                  
+                }).catch(err => {
+                    setIsLoading(false);
+                });
             },
             handleOpeningCheckout: () => {
-                setDialogVisible(true);
+                const data: ShoppingDialogResponse = {
+                    amount: 1000
+                };
+                
+                setDialog({
+                    status: true,
+                    data: data
+                });
+
                 dialogSelected.current = 2;
             },
-            showLoading: () => {
-                setIsLoading(true);
-            },
-            hideLoading: () => {
-                setIsLoading(false);
-            }
         }}>
 
-            <LoadingOverlay isVisible={true} />
+            <LoadingOverlay isVisible={isLoading} />
 
-            {isDialogVisible && dialogSelected.current == 1 && (
-                <AddingServiceDialog service={defaultDialogService} />
+            {isDialog.status && dialogSelected.current == 1 && (
+                <AddingServiceDialog service={isDialog.data as ServiceDialogResponse} />
             )}
 
-            {isDialogVisible && dialogSelected.current == 2 && (
+            {isDialog.status && dialogSelected.current == 2 && (
                 <CheckoutDialog />
             )}
 
@@ -96,7 +120,7 @@ function Home(): JSX.Element {
 
             </div>
 
-        </DialogContext.Provider>
+        </DialogContext>
     );
 }
 

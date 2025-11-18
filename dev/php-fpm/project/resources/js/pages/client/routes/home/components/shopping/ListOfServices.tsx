@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import ServiceResponse from "../../api/res/ServiceResponse";
+import ServiceResponse from "../../api/res/ServicesResponse";
 import { getAllServicesAsPage } from "../../api/Services";
 import DialogContext from "../../contexts/DialogContext";
 
@@ -41,11 +41,11 @@ function ServiceCounter({service_id, onAddingService}: ServiceCounterProps) {
     );
 }
 
-function ServiceInformation({name, logo_uri, short_description}: ServiceResponse) {
+function ServiceInformation({id, name, short_description}: ServiceResponse) {
     return (
         <div className="flex w-55 items-center gap-[5px]">
             
-            <img className="size-[50px]" src={logo_uri} alt={`${name} official logo`} />
+            <img className="size-[50px]" src={`/build/assets/services/${id}/logo.webp`} alt={`${name} official logo`} />
 
             <div className="flex flex-col gap-[5px]">
                 <span className="font-[Montserrat] text-[16px] w-[250px]">{name}</span>

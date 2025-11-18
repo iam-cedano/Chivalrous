@@ -7,10 +7,10 @@ const defaultDescription_2 = "🇮🇳 | Lifetime guaranteed | Delivering in 12-
 
 const Services: ServiceType[] = [
   { service: "Everything", title: "Eveything", image: "build/assets/logos/everything.webp", description: defaultDescription_1 },
-  { service: "Instagram", title: "Instagram Followers", image: "build/assets/logos/instagram.webp", description: defaultDescription_1 },
-  { service: "Facebook", title: "Facebook Followers", image: "build/assets/logos/facebook.webp", description: defaultDescription_1 },
+  { service: "Instagram", title: "Instagram Followers", image: "build/assets/services/1/logo.webp", description: defaultDescription_1 },
+  { service: "Facebook", title: "Facebook Followers", image: "build/assets/services/2/logo.webp", description: defaultDescription_1 },
   { service: "Youtube", title: "Youtube Followers", image: "build/assets/logos/youtube.webp", description: defaultDescription_1 },
-  { service: "TikTok", title: "TikTok Followers", image: "build/assets/logos/tiktok.webp", description: defaultDescription_1 },
+  { service: "TikTok", title: "TikTok Followers", image: "build/assets/services/3/logo.webp", description: defaultDescription_1 },
   { service: "Twitch", title: "Twitch Followers", image: "build/assets/logos/twitch.webp", description: defaultDescription_1 },
   { service: "Pinterest", title: "Pinterest Followers", image: "build/assets/logos/pinterest.webp", description: defaultDescription_1 },
   { service: "Linkedin", title: "Linkedin Followers", image: "build/assets/logos/linkedin.webp", description: defaultDescription_2 },

@@ -4,8 +4,6 @@ type DialogContextProps = {
     handleClosingDialog: () => void;
     handleAddingService: (dialogId: number) => void;
     handleOpeningCheckout: () => void;
-    showLoading: () => void;
-    hideLoading: () => void;
 };
 
 const DialogContext = createContext<DialogContextProps>({
@@ -18,12 +16,6 @@ const DialogContext = createContext<DialogContextProps>({
     handleOpeningCheckout: () => {
         console.info('opening checkout handler');
     },
-    showLoading: () => {
-        console.info('show loading handler');
-    },
-    hideLoading: () => {
-        console.info('hide loading handler');
-    }
 }); // Default methods 
 
 export default DialogContext;

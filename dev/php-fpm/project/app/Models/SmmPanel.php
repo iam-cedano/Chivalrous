@@ -17,7 +17,6 @@ class SmmPanel extends Model
         'name',
         'url',
         'api_url',
-        'logo_uri'
     ];
 
     public function apiKey(): HasMany {

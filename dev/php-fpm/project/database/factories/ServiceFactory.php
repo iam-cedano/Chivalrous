@@ -20,7 +20,6 @@ class ServiceFactory extends Factory
             'name' => 'Sample Service Name',
             'short_description' => '🇲🇽 | Lifetime Guaranteed | Delivering in 24-72h',
             'long_description' => 'This sample service is for testing-lovers that want more attention from the developers',
-            'logo_uri' => '/logos/testing.webp',
             'minimum_quantity' => 0,
             'maximum_quantity' => null
         ];

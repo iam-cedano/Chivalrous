@@ -1,12 +1,12 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { FormEvent, FocusEvent } from "react";
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
-import SingleServiceResponse from "../../api/res/SingleServiceResponse";
 import TextMagic from "@/functions/TextMagic.function";
 import DialogContext from "../../contexts/DialogContext";
+import ServiceDialogResponse from "../../api/res/ServiceDialogResponse";
 
 type AddingServiceProps = {
-    service: SingleServiceResponse;
+    service: ServiceDialogResponse;
 };
 
 type QualityOption = {
@@ -28,13 +28,13 @@ type ServiceInformationProps = {
     details: string;
 };
 
-function ServiceInformation ({title, description, details}: ServiceInformationProps) {
-    
+function ServiceInformation({ title, description, details }: ServiceInformationProps) {
+
     const purifiedDescription = TextMagic.transformText(description);
     const purifiedAndParsedDetails = TextMagic.transformText(details);
 
     const detailsAsBulletpoints = purifiedAndParsedDetails
-        .split('|') 
+        .split('|')
         .filter(Boolean)
         .map((detail, index) => (
             <li key={`service-detail-${index}`} className="flex items-start gap-2">
@@ -47,11 +47,11 @@ function ServiceInformation ({title, description, details}: ServiceInformationPr
         <>
             <header className="space-y-2">
                 <h3 className="text-[26px] font-[Montserrat] font-semibold text-black leading-[1.15]">
-                    { title }
+                    {title}
                 </h3>
             </header>
 
-            <p className="text-[#4B5563] text-[15px] leading-[1.6]" dangerouslySetInnerHTML={{__html: purifiedDescription}}></p>
+            <p className="text-[#4B5563] text-[15px] leading-[1.6]" dangerouslySetInnerHTML={{ __html: purifiedDescription }}></p>
 
             <ul className="space-y-1.5 text-[15px] text-[#1F2937]">
                 {detailsAsBulletpoints}
@@ -61,10 +61,11 @@ function ServiceInformation ({title, description, details}: ServiceInformationPr
 }
 
 function AddingServiceDialog({ service }: AddingServiceProps) {
-    const { handleClosingDialog } = useContext(DialogContext);
-    const bannerImage = service.banner_uri || "/build/assets/services/1/banner.webp";
-
     const mockupDetails = `|**Lorem** ipsum dolor **sit** amet, cotetur adipiscing|nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur`;
+
+    const { handleClosingDialog } = useContext(DialogContext);
+    const bannerImage = `/build/assets/services/${service.id}/banner.webp`;
+
     const qualityOptions = useMemo<QualityOption[]>(() => ([
         {
             id: "real-followers",
@@ -94,8 +95,8 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
             qualityOptions.some((option) => option.id === current)
                 ? current
                 : qualityOptions[0].id
-            ));
-        }, [qualityOptions]);
+        ));
+    }, [qualityOptions]);
 
     const countryOptions = useMemo<CountryOption[]>(() => ([
         {
@@ -137,7 +138,6 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
 
         const formData = new FormData(event.currentTarget);
 
-        // Log each field so we can validate the payload during testing.
         console.group("AddingServiceDialog form submission (test mode)");
         formData.forEach((value, key) => {
             console.log(`${key}:`, value);
@@ -164,11 +164,13 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
     return (
         <FullScreenDialog onClose={handleClosingDialog} title="Adding Service">
             <div>
-                    <img
-                        className="w-full object-cover"
-                        src={bannerImage}
-                        alt={`${service.name} banner`}
-                    />
+                <img
+                    className="w-full object-cover"
+                    width="640"
+                    height="426"
+                    src={bannerImage}
+                    alt={`${service.name} banner`}
+                />
             </div>
             <div className="relative w-full min-h-full">
                 <form
@@ -190,7 +192,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                         className="flex items-center justify-between gap-3 rounded-[14px] border border-[#D1D5DB] bg-white px-4 py-3 text-left shadow-sm"
                     >
                         <span className="flex items-center gap-3">
-                            <img className="size-9 rounded-full" src="/build/assets/logos/instagram.webp" alt="Selected account" />
+                            <img className="size-9 rounded-full" src={`/build/assets/services/${service.id}/logo.webp`} alt="Selected account" />
                             <span className="text-[15px] text-[#111827] font-[Montserrat]">
                                 Oscar Cedano&apos;s Account - /mrc...
                             </span>
@@ -219,11 +221,10 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                             required
                                         />
                                         <div
-                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${
-                                                isSelected
+                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
                                                     ? "border-[#111827] bg-[#111827] text-white shadow-lg"
                                                     : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
-                                            }`}
+                                                }`}
                                         >
                                             <span className="flex items-center gap-2 leading-[1.6]">
                                                 <span aria-hidden>{option.icon}</span>
@@ -231,16 +232,14 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                             </span>
                                             <span
                                                 aria-hidden="true"
-                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${
-                                                    isSelected
+                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
                                                         ? "border-white bg-white"
                                                         : "border-[#D1D5DB] bg-white"
-                                                }`}
+                                                    }`}
                                             >
                                                 <span
-                                                    className={`size-3 rounded-full transition-colors duration-200 ${
-                                                        isSelected ? "bg-[#111827]" : "bg-transparent"
-                                                    }`}
+                                                    className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
+                                                        }`}
                                                 />
                                             </span>
                                         </div>
@@ -294,11 +293,10 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                             required
                                         />
                                         <div
-                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${
-                                                isSelected
+                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
                                                     ? "border-[#111827] bg-[#111827] text-white shadow-lg"
                                                     : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
-                                            }`}
+                                                }`}
                                         >
                                             <span className="flex items-center gap-3 text-[15px] leading-[1.6]">
                                                 <span aria-hidden>{option.flag}</span>
@@ -306,16 +304,14 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                             </span>
                                             <span
                                                 aria-hidden="true"
-                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${
-                                                    isSelected
+                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
                                                         ? "border-white bg-white"
                                                         : "border-[#D1D5DB] bg-white"
-                                                }`}
+                                                    }`}
                                             >
                                                 <span
-                                                    className={`size-3 rounded-full transition-colors duration-200 ${
-                                                        isSelected ? "bg-[#111827]" : "bg-transparent"
-                                                    }`}
+                                                    className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
+                                                        }`}
                                                 />
                                             </span>
                                         </div>

@@ -9,8 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
-            $table->string('banner_uri', 60);
-            $table->string('logo_uri', 60)->change();
+            $table->dropColumn('logo_uri');
         });
 
         Schema::table('service_providers', function (Blueprint $table) {
@@ -61,8 +60,7 @@ return new class extends Migration
         });
 
         Schema::table('services', function (Blueprint $table) {
-            $table->string('logo_uri', 255)->change();
-            $table->dropColumn('banner_uri');
+            $table->string('logo_uri', length: 255)->change();
         });
     }
 };

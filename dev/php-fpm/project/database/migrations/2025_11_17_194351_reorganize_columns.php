@@ -9,12 +9,6 @@ return new class extends Migration
    
     public function up(): void
     {
-        Schema::table('services', function (Blueprint $table) {
-            $table->dropColumn('banner_uri');
-
-            $table->string('banner_uri', 60)->after('logo_uri');
-        });
-
         Schema::table('service_providers', function (Blueprint $table) {
            $table->dropColumn('price_per_thousand'); 
 

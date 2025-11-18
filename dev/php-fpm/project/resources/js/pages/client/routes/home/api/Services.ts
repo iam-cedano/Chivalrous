@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import ServiceResponse from "./res/ServiceResponse";
+import ServiceResponse from "./res/ServicesResponse";
+import ServiceDialogResponse from "./res/ServiceDialogResponse";
 
 function getAllServicesAsPage(page: number = 1): Promise<AxiosResponse<ServiceResponse[], any, {}>> {
     return axios.get<ServiceResponse[]>('/api/services/', {
@@ -15,7 +16,11 @@ function getServicesAsPageByQuery(page: number = 1, query: string = ''): Promise
             p: page,
             q: query
         }
-    })
+    });
 }
 
-export { getAllServicesAsPage, getServicesAsPageByQuery };
+function getServiceForDialog(serviceId: number): Promise<AxiosResponse<ServiceDialogResponse, any, {}>> {
+    return axios.get<ServiceDialogResponse>(`/api/services/${serviceId}`);
+}
+
+export { getAllServicesAsPage, getServicesAsPageByQuery, getServiceForDialog };

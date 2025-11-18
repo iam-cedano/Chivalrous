@@ -32,7 +32,7 @@ class ServiceLocalAdapter implements GetServicesPort {
         $servicesInCache = Cache::get( $idCache);
          
         if (! $servicesInCache ) {
-            $services = Service::query()->select(['id', 'name', 'short_description', 'logo_uri', 'minimum_quantity', 'maximum_quantity'] )->get();
+            $services = Service::query()->select(['id', 'name', 'short_description', 'minimum_quantity', 'maximum_quantity'] )->get();
 
             Cache::set($idCache, json_encode($services->toArray()), 20);
 
@@ -56,7 +56,7 @@ class ServiceLocalAdapter implements GetServicesPort {
             return json_decode($serviceInCache, true);
         }
 
-        $service = Service::find($id, ['name', 'long_description', 'logo_uri', 'banner_uri', 'minimum_quantity', 'maximum_quantity']);
+        $service = Service::find($id, ['name', 'long_description', 'minimum_quantity', 'maximum_quantity']);
 
         if ($service == null) {
             Cache::delete($keyCache);
@@ -81,14 +81,14 @@ class ServiceLocalAdapter implements GetServicesPort {
         $serviceInCache = Cache::get($keyCache);
 
         if ($serviceInCache) {
-            return json_decode($serviceInCache, true);
+            # return json_decode($serviceInCache, true);
         }
 
         $service = Service::query()
             ->with(['sources' => function ($query) {
                 $query->select(['id', 'country_abbreviation','service_id', 'quality', 'price_per_thousand', 'status']);
             }])
-            ->find($id, ['id', 'name', 'long_description', 'logo_uri', 'banner_uri', 'minimum_quantity', 'maximum_quantity']);
+            ->find($id, ['id', 'name', 'long_description', 'minimum_quantity', 'maximum_quantity']);
 
         if ($service == null) {
             Cache::delete($keyCache);
@@ -97,6 +97,13 @@ class ServiceLocalAdapter implements GetServicesPort {
         }
 
         $servicePayload = $service->toArray();
+        $groupedSources = collect($servicePayload['sources'] ?? [])
+            ->groupBy('country_abbreviation')
+            ->map(callback: function ($sources) {
+                return array_values($sources->toArray());
+            });
+
+        $servicePayload['sources'] = $groupedSources;
 
         Cache::set($keyCache, json_encode($servicePayload), 600);
 

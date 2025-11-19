@@ -27,7 +27,7 @@ return new class extends Migration
 
             $table->char('country_abbreviation', 3);
 
-            $table->string('quality', 60);
+            $table->string('name', 60);
             $table->decimal('price_per_thousand', 7, 2);
             $table->tinyInteger('status', unsigned: true)->default(1);
        

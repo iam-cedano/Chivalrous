@@ -6,7 +6,7 @@ type ServiceDialogResponse = {
     long_description: string;
     minimum_quantity: number;
     maximum_quantity: number;
-    sources: SourceServiceResponse[];
+    sources: SourceServiceResponse;
 };
 
 export default ServiceDialogResponse;

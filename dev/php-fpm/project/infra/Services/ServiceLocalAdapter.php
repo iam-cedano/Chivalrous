@@ -86,7 +86,7 @@ class ServiceLocalAdapter implements GetServicesPort {
 
         $service = Service::query()
             ->with(['sources' => function ($query) {
-                $query->select(['id', 'country_abbreviation','service_id', 'quality', 'price_per_thousand', 'status']);
+                $query->select(['id', 'country_abbreviation','service_id', 'name', 'price_per_thousand', 'status']);
             }])
             ->find($id, ['id', 'name', 'long_description', 'minimum_quantity', 'maximum_quantity']);
 
@@ -98,7 +98,7 @@ class ServiceLocalAdapter implements GetServicesPort {
 
         $servicePayload = $service->toArray();
         $groupedSources = collect($servicePayload['sources'] ?? [])
-            ->groupBy('country_abbreviation')
+            ->groupBy('name')
             ->map(callback: function ($sources) {
                 return array_values($sources->toArray());
             });

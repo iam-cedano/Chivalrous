@@ -62,8 +62,6 @@ function Home(): JSX.Element {
                     });
 
                     dialogSelected.current = 1;
-
-                    console.info(res.data);                  
                 }).catch(err => {
                     setIsLoading(false);
                 });

@@ -1,25 +1,16 @@
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
-import type { FormEvent, FocusEvent } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
+import type { FormEvent, FocusEvent, JSX } from "react";
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
-import TextMagic from "@/functions/TextMagic.function";
+import TextMagic from "@/functions/TextMagic";
 import DialogContext from "../../contexts/DialogContext";
 import ServiceDialogResponse from "../../api/res/ServiceDialogResponse";
+import SourceService from "../../api/res/SourceService";
+import * as EmojiTool from "@/functions/EmojiTool";
+import CountryDictionary from "@/functions/CountryDictionary";
+import SourceServiceResponse from "../../api/res/SourceServiceResponse";
 
 type AddingServiceProps = {
     service: ServiceDialogResponse;
-};
-
-type QualityOption = {
-    id: string;
-    label: string;
-    icon: string;
-    description: string;
-};
-
-type CountryOption = {
-    id: string;
-    label: string;
-    flag: string;
 };
 
 type ServiceInformationProps = {
@@ -27,6 +18,125 @@ type ServiceInformationProps = {
     description: string;
     details: string;
 };
+
+type QualityProps = {
+    id: number;
+    icon: string;
+    label: string;
+    description: string;
+}
+
+type CountryProps = {
+    serviceID: number;
+    flag: string;
+    name: string;
+};
+
+function Quality({ id, icon, label, description }: QualityProps) {
+    return (
+        <li key={id} className="space-y-3">
+            <label className="block">
+                <input
+                    type="radio"
+                    name="quality"
+                    value={id}
+                    className="sr-only"
+                    checked={false}
+                    onChange={() => console.info('on change')}
+                    required
+                />
+                <div
+                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${false
+                        ? "border-[#111827] bg-[#111827] text-white shadow-lg"
+                        : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
+                        }`}
+                >
+                    <span className="flex items-center gap-2 leading-[1.6]">
+                        <span aria-hidden>{icon}</span>
+                        <span className="font-[Montserrat]">{label.substring(1)}</span>
+                    </span>
+                    <span
+                        aria-hidden="true"
+                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${false
+                            ? "border-white bg-white"
+                            : "border-[#D1D5DB] bg-white"
+                            }`}
+                    >
+                        <span
+                            className={`size-3 rounded-full transition-colors duration-200 ${false ? "bg-[#111827]" : "bg-transparent"
+                                }`}
+                        />
+                    </span>
+                </div>
+            </label>
+
+            {false ? (
+                <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
+                    <svg
+                        aria-hidden="true"
+                        className="absolute left-8 -top-3 h-3 w-6 text-[#111827]/90"
+                        viewBox="0 0 24 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M12 0L24 12H0L12 0Z" fill="currentColor" />
+                    </svg>
+                    <svg
+                        aria-hidden="true"
+                        className="absolute left-8 -top-2.5 h-3 w-6 text-white"
+                        viewBox="0 0 24 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M12 0L23 12H1L12 0Z" fill="currentColor" />
+                    </svg>
+                    <p className="text-[14px] leading-[1.6]">
+                        {description}
+                    </p>
+                </div>
+            ) : null}
+        </li>
+    );
+}
+
+function Country({serviceID, flag, name}: CountryProps) {
+    return (
+        <li key={serviceID} className="w-full">
+            <label className="block">
+                <input
+                    type="radio"
+                    name="country"
+                    value={serviceID}
+                    className="sr-only"
+                    checked={false}
+                    onChange={() => console.info('on Change Country')}
+                    required
+                />
+                <div
+                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${false
+                        ? "border-[#111827] bg-[#111827] text-white shadow-lg"
+                        : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
+                        }`}
+                >
+                    <span className="flex items-center gap-3 text-[15px] leading-[1.6]">
+                        <span aria-hidden>{flag}</span>
+                        <span className="font-[Montserrat]">{name}</span>
+                    </span>
+                    <span
+                        aria-hidden="true"
+                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${false
+                            ? "border-white bg-white"
+                            : "border-[#D1D5DB] bg-white"
+                            }`}
+                    >
+                        <span
+                            className={`size-3 rounded-full transition-colors duration-200 ${false ? "bg-[#111827]" : "bg-transparent"
+                                }`}
+                        />
+                    </span>
+                </div>
+            </label>
+        </li>
+    );
+}
 
 function ServiceInformation({ title, description, details }: ServiceInformationProps) {
 
@@ -61,77 +171,51 @@ function ServiceInformation({ title, description, details }: ServiceInformationP
 }
 
 function AddingServiceDialog({ service }: AddingServiceProps) {
-    const mockupDetails = `|**Lorem** ipsum dolor **sit** amet, cotetur adipiscing|nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur`;
-
     const { handleClosingDialog } = useContext(DialogContext);
-    const bannerImage = `/build/assets/services/${service.id}/banner.webp`;
+    const namesOfQualities: string[] = Object.keys(service.sources);
+    const sources: SourceServiceResponse = service.sources;
 
-    const qualityOptions = useMemo<QualityOption[]>(() => ([
-        {
-            id: "real-followers",
-            label: "Real Followers",
-            icon: "🌟",
-            description: service.long_description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        },
-        {
-            id: "bot-followers",
-            label: "Bot Follower",
-            icon: "🤖",
-            description: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        }
-    ]), [service.long_description]);
+    const mockupDetails: string = `|**Lorem** ipsum dolor **sit** amet, 
+    cotetur adipiscing|nisi ut aliquip ex ea
+     commodo consequat. Duis aute irure dolor in reprehenderit in 
+     voluptate velit esse cillum dolore eu fugiat nulla pariatur`;
 
-    const [selectedQualityId, setSelectedQualityId] = useState<string>(
-        qualityOptions[0]?.id || ""
-    );
+    if (namesOfQualities.length == 0) {
+        handleClosingDialog();
 
-    useEffect(() => {
-        if (qualityOptions.length === 0) {
-            setSelectedQualityId("");
-            return;
-        }
+        return;
+    }
 
-        setSelectedQualityId((current) => (
-            qualityOptions.some((option) => option.id === current)
-                ? current
-                : qualityOptions[0].id
-        ));
-    }, [qualityOptions]);
+    const [selectedQuality, setSelectedQuality] = useState<string>(namesOfQualities[0]);
+    const sourcesServices: SourceService[]  = service.sources[selectedQuality]; 
 
-    const countryOptions = useMemo<CountryOption[]>(() => ([
-        {
-            id: "country-mx",
-            label: "Mexico",
-            flag: "🇲🇽"
-        },
-        {
-            id: "country-us",
-            label: "USA",
-            flag: "🇺🇸"
-        },
-        {
-            id: "country-br",
-            label: "Brazil",
-            flag: "🇧🇷"
-        }
-    ]), []);
+    const qualitiesJSXElements: JSX.Element[] = useMemo(() => {
+        let key = 1;
 
-    const [selectedCountryId, setSelectedCountryId] = useState<string>(
-        countryOptions[0]?.id || ""
-    );
+        return namesOfQualities.map((name, index) => {
+            const id = key;
+            const icon = TextMagic.extractEmojis(name)[0];
+            const label = name.substring(1);
+            const description = 'lorem impsum dolor amet, cotetur adipiscing';
+            
+            const data: QualityProps = { id, icon, label, description };
 
-    useEffect(() => {
-        if (countryOptions.length === 0) {
-            setSelectedCountryId("");
-            return;
-        }
+            key += 1;
 
-        setSelectedCountryId((current) => (
-            countryOptions.some((option) => option.id === current)
-                ? current
-                : countryOptions[0].id
-        ));
-    }, [countryOptions]);
+            return <Quality {...data} />
+        });
+    }, []);
+
+    const countriesJSXElements: JSX.Element[] = sourcesServices.map((source: SourceService) => {
+        const serviceID = source.id;
+        const [name, flag] = CountryDictionary.getCountry(source.country_abbreviation);
+
+        const props: CountryProps = {serviceID, name, flag};
+
+        return (
+            <Country {...props} />
+        );
+    });
 
     const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -144,7 +228,6 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
         });
         console.groupEnd();
     };
-
     const handleFieldFocus = useCallback((event: FocusEvent<HTMLElement>) => {
         if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
             return;
@@ -168,7 +251,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     className="w-full object-cover"
                     width="640"
                     height="426"
-                    src={bannerImage}
+                    src={`/build/assets/services/${service.id}/banner.webp`}
                     alt={`${service.name} banner`}
                 />
             </div>
@@ -205,120 +288,14 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     </p>
 
                     <ul className="space-y-4">
-                        {qualityOptions.map((option) => {
-                            const isSelected = option.id === selectedQualityId;
-
-                            return (
-                                <li key={option.id} className="space-y-3">
-                                    <label className="block">
-                                        <input
-                                            type="radio"
-                                            name="quality"
-                                            value={option.id}
-                                            className="sr-only"
-                                            checked={isSelected}
-                                            onChange={() => setSelectedQualityId(option.id)}
-                                            required
-                                        />
-                                        <div
-                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
-                                                    ? "border-[#111827] bg-[#111827] text-white shadow-lg"
-                                                    : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
-                                                }`}
-                                        >
-                                            <span className="flex items-center gap-2 leading-[1.6]">
-                                                <span aria-hidden>{option.icon}</span>
-                                                <span className="font-[Montserrat]">{option.label}</span>
-                                            </span>
-                                            <span
-                                                aria-hidden="true"
-                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
-                                                        ? "border-white bg-white"
-                                                        : "border-[#D1D5DB] bg-white"
-                                                    }`}
-                                            >
-                                                <span
-                                                    className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
-                                                        }`}
-                                                />
-                                            </span>
-                                        </div>
-                                    </label>
-
-                                    {isSelected ? (
-                                        <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
-                                            <svg
-                                                aria-hidden="true"
-                                                className="absolute left-8 -top-3 h-3 w-6 text-[#111827]/90"
-                                                viewBox="0 0 24 12"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M12 0L24 12H0L12 0Z" fill="currentColor" />
-                                            </svg>
-                                            <svg
-                                                aria-hidden="true"
-                                                className="absolute left-8 -top-2.5 h-3 w-6 text-white"
-                                                viewBox="0 0 24 12"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path d="M12 0L23 12H1L12 0Z" fill="currentColor" />
-                                            </svg>
-                                            <p className="text-[14px] leading-[1.6]">
-                                                {option.description}
-                                            </p>
-                                        </div>
-                                    ) : null}
-                                </li>
-                            );
-                        })}
+                        { qualitiesJSXElements }
                     </ul>
 
                     <p className="text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Country:
                     </p>
                     <ul className="grid grid-cols-2 gap-6">
-                        {countryOptions.map((option) => {
-                            const isSelected = selectedCountryId === option.id;
-
-                            return (
-                                <li key={option.id} className="w-full">
-                                    <label className="block">
-                                        <input
-                                            type="radio"
-                                            name="country"
-                                            value={option.id}
-                                            className="sr-only"
-                                            checked={isSelected}
-                                            onChange={() => setSelectedCountryId(option.id)}
-                                            required
-                                        />
-                                        <div
-                                            className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
-                                                    ? "border-[#111827] bg-[#111827] text-white shadow-lg"
-                                                    : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
-                                                }`}
-                                        >
-                                            <span className="flex items-center gap-3 text-[15px] leading-[1.6]">
-                                                <span aria-hidden>{option.flag}</span>
-                                                <span className="font-[Montserrat]">{option.label}</span>
-                                            </span>
-                                            <span
-                                                aria-hidden="true"
-                                                className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
-                                                        ? "border-white bg-white"
-                                                        : "border-[#D1D5DB] bg-white"
-                                                    }`}
-                                            >
-                                                <span
-                                                    className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
-                                                        }`}
-                                                />
-                                            </span>
-                                        </div>
-                                    </label>
-                                </li>
-                            );
-                        })}
+                        { countriesJSXElements }
                     </ul>
 
                     <div className="grid grid-cols-2 gap-4">

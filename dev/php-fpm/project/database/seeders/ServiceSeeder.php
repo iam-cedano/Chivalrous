@@ -57,13 +57,13 @@ class ServiceSeeder extends Seeder
       'Instagram Followers' => [
         [
         'country_abbreviation' => 'MEX',
-        'quality' => '🌟 Premium',
+        'name' => '🌟 Premium',
         'price_per_thousand' => 54,
         'status' => 1
         ],
         [
         'country_abbreviation' => 'MEX',
-        'quality' => '🤖 Bots',
+        'name' => '🤖 Bots',
         'price_per_thousand' => 23,
         'status' => 1
         ]
@@ -71,13 +71,13 @@ class ServiceSeeder extends Seeder
       'Facebook Followers' => [
         [
         'country_abbreviation' => 'USA',
-        'quality' => '🌟 Premium',
+        'name' => '🌟 Premium',
         'price_per_thousand' => 74,
         'status' => 1
         ],
         [
         'country_abbreviation' => 'USA',
-        'quality' => '🤖 Bots',
+        'name' => '🤖 Bots',
         'price_per_thousand' => 42,
         'status' => 1
         ],
@@ -85,13 +85,13 @@ class ServiceSeeder extends Seeder
       'TikTok Followers' => [
         [
         'country_abbreviation' => 'MEX',
-        'quality' => '🌟 Bots',
+        'name' => '🤖 Bots',
         'price_per_thousand' => 100,
         'status' => 1
         ],
         [
         'country_abbreviation' => 'USA',
-        'quality' => '🤖 Bots',
+        'name' => '🤖 Bots',
         'price_per_thousand' => 150,
         'status' => 1
         ],

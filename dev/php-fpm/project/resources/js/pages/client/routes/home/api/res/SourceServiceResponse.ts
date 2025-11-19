@@ -1,9 +1,7 @@
+import SourceService from "./SourceService";
+
 type SourceServiceResponse = {
-    service_id: number;
-    country_abbreviation: string;
-    quality: string;
-    price_per_thousand: number;
-    status: number
+    [id: string]: SourceService[]
 };
 
 export default SourceServiceResponse;

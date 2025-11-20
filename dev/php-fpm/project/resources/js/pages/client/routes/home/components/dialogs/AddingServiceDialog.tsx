@@ -8,6 +8,7 @@ import SourceService from "../../api/res/SourceService";
 import * as EmojiTool from "@/functions/EmojiTool";
 import CountryDictionary from "@/functions/CountryDictionary";
 import SourceServiceResponse from "../../api/res/SourceServiceResponse";
+import Select, { components } from 'react-select';
 
 type AddingServiceProps = {
     service: ServiceDialogResponse;
@@ -170,6 +171,100 @@ function ServiceInformation({ title, description, details }: ServiceInformationP
     );
 }
 
+function AccountSelector({ image }: { image: string }) {
+    const options = [
+        { value: 'account1', label: "Oscar Cedano's Account - /mrc...", image },
+        { value: 'account2', label: "John Doe's Account - /johndoe", image },
+        { value: 'account3', label: "Jane Smith's Account - /janesmith", image },
+        { value: 'account4', label: "Alex Johnson's Account - /alexj", image }
+    ];
+
+    const customStyles = {
+        control: (provided: any) => ({
+            ...provided,
+            border: '1px solid #D1D5DB',
+            borderRadius: '14px',
+            backgroundColor: 'white',
+            boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+            padding: '12px 16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            cursor: 'pointer',
+            fontSize: '15px',
+            fontFamily: 'Montserrat',
+            color: '#111827',
+            minHeight: 'auto',
+        }),
+        valueContainer: (provided: any) => ({
+            ...provided,
+            padding: 0,
+        }),
+        input: (provided: any) => ({
+            ...provided,
+            fontSize: '15px',
+            fontFamily: 'Montserrat',
+            color: '#111827',
+            marginLeft: '50px',
+            textOverflow: 'ellipsis'
+        }),
+        indicatorSeparator: () => ({ display: 'none' }),
+        menu: (provided: any) => ({
+            ...provided,
+            borderRadius: '14px',
+            border: '1px solid #D1D5DB',
+            boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05)',
+        }),
+        option: (provided: any, state: any) => ({
+            ...provided,
+            backgroundColor: state.isSelected ? '#111827' : state.isFocused ? '#B6B8BA' : 'white',
+            color: state.isSelected ? 'white' : '#1F2937',
+            cursor: 'pointer',
+            padding: '12px 16px',
+        }),
+    };
+
+    const CustomSingleValue = (props: any) => (
+        <components.SingleValue {...props}>
+            <span className="flex items-center gap-3">
+                <img className="size-9 rounded-full" src={props.data.image} alt="Selected account" />
+                <span>{props.data.label}</span>
+            </span>
+        </components.SingleValue>
+    );
+
+    const CustomOption = (props: any) => (
+        <components.Option {...props}>
+            <span className="flex items-center gap-3">
+                <img className="size-9 rounded-full" src={props.data.image} alt="Account" />
+                <span>{props.data.label}</span>
+            </span>
+        </components.Option>
+    );
+
+    const CustomDropdownIndicator = (props: any) => (
+        <components.DropdownIndicator {...props}>
+            <img className="size-5" src="/build/assets/down-arrow.webp" alt="Change account" />
+        </components.DropdownIndicator>
+    );
+
+    const CustomNoOptionsMessage = (props: any) => (
+        <components.NoOptionsMessage {...props}>
+            No accounts available.
+        </components.NoOptionsMessage>
+    );
+
+    return (
+        <Select
+            options={options}
+            defaultValue={options[0]}
+            components={{ SingleValue: CustomSingleValue, Option: CustomOption, DropdownIndicator: CustomDropdownIndicator, NoOptionsMessage: CustomNoOptionsMessage }}
+            styles={customStyles}
+            menuPortalTarget={document.body}
+        />
+    );
+}
+
 function AddingServiceDialog({ service }: AddingServiceProps) {
     const { handleClosingDialog } = useContext(DialogContext);
     const namesOfQualities: string[] = Object.keys(service.sources);
@@ -266,22 +361,10 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
 
                     <ServiceInformation title={service.name} description={service.long_description} details={mockupDetails} />
 
-                    <label htmlFor="account" className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
+                    <label className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Account:
                     </label>
-                    <button
-                        type="button"
-                        id="account"
-                        className="flex items-center justify-between gap-3 rounded-[14px] border border-[#D1D5DB] bg-white px-4 py-3 text-left shadow-sm"
-                    >
-                        <span className="flex items-center gap-3">
-                            <img className="size-9 rounded-full" src={`/build/assets/services/${service.id}/logo.webp`} alt="Selected account" />
-                            <span className="text-[15px] text-[#111827] font-[Montserrat]">
-                                Oscar Cedano&apos;s Account - /mrc...
-                            </span>
-                        </span>
-                        <img className="size-5" src="/build/assets/down-arrow.webp" alt="Change account" />
-                    </button>
+                    <AccountSelector image={`/build/assets/services/${service.id}/logo.webp`} />
 
                     <p className="text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Quality:

@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreignId('service_id')->constrained('services', 'id', 'fk_services_id_01');
 
             $table->char('country_abbreviation', 3);
-
             $table->string('name', 60);
             $table->decimal('price_per_thousand', 7, 2);
             $table->tinyInteger('status', unsigned: true)->default(1);

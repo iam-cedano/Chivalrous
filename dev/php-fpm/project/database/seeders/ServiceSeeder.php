@@ -15,11 +15,8 @@ class ServiceSeeder extends Seeder
           'name' => 'Instagram Followers',
           'short_description' => 'Lifetime guaranteed | Delivering in 12-24 hours',
           'long_description' => "🌴 Instagram Followers Service
-            🌎 Geo: Global
-            ⏲ Start Time: 0-6h
-            ⬆ Min - Max: 50 - 10,000,000
-            
-            ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
+            Best service for Instagram Followers, make your profile remembered for the number of followers you will have!
+            There are no risks, so buy our service and be the superstar ⭐ in your city.
         ",
           'minimum_quantity' => '50',
           'maximum_quantity' => '10000000'
@@ -28,11 +25,8 @@ class ServiceSeeder extends Seeder
           'name' => 'Facebook Followers',
           'short_description' => 'Lifetime guaranteed | Delivering in 24 hours',
           'long_description' => "🌴 Facebook Followers Service 
-            🌎 Geo: Global
-            ⏲ Start Time: 0-12h
-            ⬆ Min - Max: 5 - 1,000
-            
-            ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
+           Tired of being invisible in the eyes of others?
+            Buy these followers and fake your followers, they will think that you're famous, you will be the envy in your city!
         ",
           'minimum_quantity' => '5',
           'maximum_quantity' => '1000'
@@ -41,11 +35,9 @@ class ServiceSeeder extends Seeder
           'name' => 'TikTok Followers',
           'short_description' => 'Lifetime guaranteed | Delivering in 48 hours',
           'long_description' => "🌴 TikTok Followers Service
-            🌎 Geo: Global 
-            ⏲ Start Time: 0-12h
-            ⬆ Min - Max: 5 - 1,000
-             
-            ⚠ The profile must be set on 'public' or the order won't start. After the order starts, avoid changing the username until completion.
+            TikTok is the \"thing\" of today.
+            So, having follower is a must-need, a discussion isn't neccesary. So standout with these followers and create a whole
+            empire!
         ",
           'minimum_quantity' => '5',
           'maximum_quantity' => '1000'
@@ -59,12 +51,16 @@ class ServiceSeeder extends Seeder
         'country_abbreviation' => 'MEX',
         'name' => '🌟 Premium',
         'price_per_thousand' => 54,
-        'status' => 1
+        'warranty' => -1,
+        'warranty_text' => '🌟 Lifetime',
+        'status' => 1,
         ],
         [
-        'country_abbreviation' => 'MEX',
+        'country_abbreviation' => 'USA',
         'name' => '🤖 Bots',
         'price_per_thousand' => 23,
+        'warranty' => 0,
+        'warranty_text' => '😢 Lifetime',
         'status' => 1
         ]
       ],
@@ -73,12 +69,16 @@ class ServiceSeeder extends Seeder
         'country_abbreviation' => 'USA',
         'name' => '🌟 Premium',
         'price_per_thousand' => 74,
+        'warranty' => 0,
+        'warranty_text' => '😢 No warranty',
         'status' => 1
         ],
         [
         'country_abbreviation' => 'USA',
         'name' => '🤖 Bots',
         'price_per_thousand' => 42,
+        'warranty' => -1,
+        'warranty_text' => '🌟 Lifetime',
         'status' => 1
         ],
       ],
@@ -87,25 +87,58 @@ class ServiceSeeder extends Seeder
         'country_abbreviation' => 'MEX',
         'name' => '🤖 Bots',
         'price_per_thousand' => 100,
+        'warranty' => 60,
+        'warranty_text' => '😊 60 days ',
         'status' => 1
         ],
         [
         'country_abbreviation' => 'USA',
         'name' => '🤖 Bots',
         'price_per_thousand' => 150,
+        'warranty' => 120,
+        'warranty_text' => '😲 120 days',
         'status' => 1
         ],
       ]
      ];
 
-     $services->each(function(Service $service) use($sourcesPerService) {
+     $detailsPerService = [
+      'Instagram Followers' => [
+        [
+          'content' => '⏰ Delivering in 24-72h',
+        ],
+        [
+          'content' => '👤 Profile must be public'
+        ],
+        [
+          'content' => '🌟 Star Service'
+        ]
+      ],
+      'Facebook Followers' => [
+        [
+          'content' => '⏰ Delivering in 24-72h'
+        ]
+      ],
+      'TikTok Followers' => [
+        [
+          'content' => '⏰ Delivering in 24h'
+        ],
+        [
+          'content' => '👤 Profile must be public'
+        ]
+      ]
+     ];
+
+     $services->each(function(Service $service) use($sourcesPerService, $detailsPerService) {
         $name = $service->name;
 
-        if (! $sourcesPerService[$name] ) {
-          return;
+        if ($sourcesPerService[$name] ) {
+          $service->sources()->createMany($sourcesPerService[$name]);
         }
 
-        $service->sources()->createMany($sourcesPerService[$name]);
+        if ($detailsPerService[$name]) {
+          $service->details()->createMany($detailsPerService[$name]);
+        }
      });
     }
 }

@@ -12,6 +12,8 @@ class SourceService extends Model
         'country_abbreviation',
         'service_id',
         'quality',
+        'warranty',
+        'warranty_text',
         'price_per_thousand',
         'status'
     ];

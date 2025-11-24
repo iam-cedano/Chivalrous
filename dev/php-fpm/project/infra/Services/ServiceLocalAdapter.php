@@ -85,10 +85,15 @@ class ServiceLocalAdapter implements GetServicesPort {
         }
 
         $service = Service::query()
-            ->with(['sources' => function ($query) {
-                $query->select(['id', 'country_abbreviation','service_id', 'name', 'price_per_thousand', 'status']);
-            }])
-            ->find($id, ['id', 'name', 'long_description', 'minimum_quantity', 'maximum_quantity']);
+            ->with([
+            'sources' => function ($query) {
+                $query->select(['id', 'country_abbreviation','service_id', 'warranty', 'warranty_text', 'name', 'price_per_thousand', 'status']);
+            },
+            'details' => function ($query) {
+                $query->select(['id', 'content', 'service_id']);
+            }
+            ])
+            ->find($id, ['id', 'name','long_description', 'minimum_quantity', 'maximum_quantity']);
 
         if ($service == null) {
             Cache::delete($keyCache);
@@ -101,7 +106,7 @@ class ServiceLocalAdapter implements GetServicesPort {
             ->groupBy('name')
             ->map(callback: function ($sources) {
                 return array_values($sources->toArray());
-            });
+        });
 
         $servicePayload['sources'] = $groupedSources;
 

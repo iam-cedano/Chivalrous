@@ -5,7 +5,7 @@ const flags = {
   CAN: "🇨🇦"
 };
 
-function findFlag(abbreviation: keyof typeof flags | string): string {
+const findFlag = (abbreviation: keyof typeof flags | string): string => {
   if (!abbreviation) {
     return "🌎";
   }
@@ -17,9 +17,21 @@ function findFlag(abbreviation: keyof typeof flags | string): string {
   }
 
   return flags[key as keyof typeof flags];
+};
+
+const removeEmojis = (text: string): string => {
+  return text.replace(/\p{Emoji}+/gu, '').trim().toLocaleLowerCase();
+};
+
+function extractEmojis(text: string) {
+    return text.match(/\p{Emoji}+/gu) ?? '💻';
 }
 
 
-export default {
-  findFlag
-};
+const data = {
+  findFlag,
+  removeEmojis,
+  extractEmojis
+}
+
+export default data;

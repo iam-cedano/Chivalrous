@@ -27,6 +27,10 @@ class Service extends Model
         return $this->hasMany(SourceService::class, 'service_id');
     } 
 
+    public function details(): HasMany {
+        return $this->hasMany(ServiceDetails::class, 'service_id');
+    }
+
     protected static function newFactory() {
         return ServiceFactory::new();
     }

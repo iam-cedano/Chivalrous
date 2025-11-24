@@ -14,8 +14,4 @@ function machine(text: string): string {
     return DOMPurify.sanitize(secondTransformation);
 }
 
-function extractEmojis(text: string) {
-    return text.match(/\p{Emoji}+/gu) ?? '💻';
-}
-
-export default { transformText, extractEmojis };
+export default { transformText };

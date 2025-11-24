@@ -5,10 +5,11 @@ import TextMagic from "@/functions/TextMagic";
 import DialogContext from "../../contexts/DialogContext";
 import ServiceDialogResponse from "../../api/res/ServiceDialogResponse";
 import SourceService from "../../api/res/SourceService";
-import * as EmojiTool from "@/functions/EmojiTool";
+import EmojiTool from "@/functions/EmojiTool";
 import CountryDictionary from "@/functions/CountryDictionary";
 import SourceServiceResponse from "../../api/res/SourceServiceResponse";
 import Select, { components } from 'react-select';
+import ServiceDetailResponse from "../../api/res/ServiceDetailResponse";
 
 type AddingServiceProps = {
     service: ServiceDialogResponse;
@@ -17,7 +18,7 @@ type AddingServiceProps = {
 type ServiceInformationProps = {
     title: string;
     description: string;
-    details: string;
+    details: ServiceDetailResponse[];
 };
 
 type QualityProps = {
@@ -25,15 +26,25 @@ type QualityProps = {
     icon: string;
     label: string;
     description: string;
+    isSelected: boolean;
+    onClick: () => void;
 }
 
 type CountryProps = {
     serviceID: number;
     flag: string;
     name: string;
+    isSelected: boolean;
+    onClick: () => void;
 };
 
-function Quality({ id, icon, label, description }: QualityProps) {
+type GuaranteeProps = {
+    id: number;
+    content: string;
+    onClick: () => void;
+};
+
+function Quality({ id, icon, label, description, isSelected, onClick }: QualityProps) {
     return (
         <li key={id} className="space-y-3">
             <label className="block">
@@ -42,12 +53,12 @@ function Quality({ id, icon, label, description }: QualityProps) {
                     name="quality"
                     value={id}
                     className="sr-only"
-                    checked={false}
-                    onChange={() => console.info('on change')}
+                    checked={isSelected}
+                    onChange={onClick}
                     required
                 />
                 <div
-                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${false
+                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
                         ? "border-[#111827] bg-[#111827] text-white shadow-lg"
                         : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
                         }`}
@@ -58,20 +69,20 @@ function Quality({ id, icon, label, description }: QualityProps) {
                     </span>
                     <span
                         aria-hidden="true"
-                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${false
+                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
                             ? "border-white bg-white"
                             : "border-[#D1D5DB] bg-white"
                             }`}
                     >
                         <span
-                            className={`size-3 rounded-full transition-colors duration-200 ${false ? "bg-[#111827]" : "bg-transparent"
+                            className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
                                 }`}
                         />
                     </span>
                 </div>
             </label>
 
-            {false ? (
+            {isSelected ? (
                 <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
                     <svg
                         aria-hidden="true"
@@ -98,7 +109,7 @@ function Quality({ id, icon, label, description }: QualityProps) {
     );
 }
 
-function Country({serviceID, flag, name}: CountryProps) {
+function Country({serviceID, flag, name, isSelected, onClick}: CountryProps) {
     return (
         <li key={serviceID} className="w-full">
             <label className="block">
@@ -107,12 +118,12 @@ function Country({serviceID, flag, name}: CountryProps) {
                     name="country"
                     value={serviceID}
                     className="sr-only"
-                    checked={false}
-                    onChange={() => console.info('on Change Country')}
+                    checked={isSelected}
+                    onChange={onClick}
                     required
                 />
                 <div
-                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${false
+                    className={`flex w-full items-center justify-between rounded-2xl border px-5 py-4 text-left transition-colors duration-200 ${isSelected
                         ? "border-[#111827] bg-[#111827] text-white shadow-lg"
                         : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
                         }`}
@@ -123,13 +134,13 @@ function Country({serviceID, flag, name}: CountryProps) {
                     </span>
                     <span
                         aria-hidden="true"
-                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${false
+                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
                             ? "border-white bg-white"
                             : "border-[#D1D5DB] bg-white"
                             }`}
                     >
                         <span
-                            className={`size-3 rounded-full transition-colors duration-200 ${false ? "bg-[#111827]" : "bg-transparent"
+                            className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
                                 }`}
                         />
                     </span>
@@ -139,14 +150,78 @@ function Country({serviceID, flag, name}: CountryProps) {
     );
 }
 
+function Guarantee({ id, content, onClick}: GuaranteeProps) {
+    const isSelected = false;
+
+    return (
+        <li key={id} className="space-y-3">
+            <label className="block">
+                <input
+                    type="radio"
+                    name="quality"
+                    value={id}
+                    className="sr-only"
+                    checked={isSelected}
+                    onChange={onClick}
+                    required
+                />
+                <div
+                    className={`flex w-full items-center justify-between rounded-2xl border px-3 py-4 text-left transition-colors duration-200 ${isSelected
+                        ? "border-[#111827] bg-[#111827] text-white shadow-lg"
+                        : "border-[#E5E7EB] bg-white text-[#1F2937] hover:border-[#111827]/30 hover:bg-[#F9FAFB]"
+                        }`}
+                >
+                    <span>
+                        <span className="font-[Montserrat]">{content}</span>
+                    </span>
+                    <span
+                        aria-hidden="true"
+                        className={`grid size-6 place-items-center rounded-full border transition-colors duration-200 ${isSelected
+                            ? "border-white bg-white"
+                            : "border-[#D1D5DB] bg-white"
+                            }`}
+                    >
+                        <span
+                            className={`size-3 rounded-full transition-colors duration-200 ${isSelected ? "bg-[#111827]" : "bg-transparent"
+                                }`}
+                        />
+                    </span>
+                </div>
+            </label>
+{/* 
+            {isSelected ? (
+                <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
+                    <svg
+                        aria-hidden="true"
+                        className="absolute left-8 -top-3 h-3 w-6 text-[#111827]/90"
+                        viewBox="0 0 24 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M12 0L24 12H0L12 0Z" fill="currentColor" />
+                    </svg>
+                    <svg
+                        aria-hidden="true"
+                        className="absolute left-8 -top-2.5 h-3 w-6 text-white"
+                        viewBox="0 0 24 12"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path d="M12 0L23 12H1L12 0Z" fill="currentColor" />
+                    </svg>
+                    <p className="text-[14px] leading-[1.6]">
+                        {description}
+                    </p>
+                </div>
+            ) : null} */}
+        </li>
+    );
+}
+
 function ServiceInformation({ title, description, details }: ServiceInformationProps) {
 
     const purifiedDescription = TextMagic.transformText(description);
-    const purifiedAndParsedDetails = TextMagic.transformText(details);
+    const purifiedDetails = details.map(detail => TextMagic.transformText(detail.content));
 
-    const detailsAsBulletpoints = purifiedAndParsedDetails
-        .split('|')
-        .filter(Boolean)
+    const detailsAsBulletpoints = purifiedDetails
         .map((detail, index) => (
             <li key={`service-detail-${index}`} className="flex items-start gap-2">
                 <span aria-hidden="true" className="mt-[3px] text-[10px]">•</span>
@@ -283,32 +358,44 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
 
     const [selectedQuality, setSelectedQuality] = useState<string>(namesOfQualities[0]);
     const sourcesServices: SourceService[]  = service.sources[selectedQuality]; 
+    const [selectedCountryId, setSelectedCountryId] = useState<number>(sourcesServices[0]?.id);
 
-    const qualitiesJSXElements: JSX.Element[] = useMemo(() => {
+    const qualitiesJSXElements = useMemo(function() {
         let key = 1;
 
         return namesOfQualities.map((name, index) => {
             const id = key;
-            const icon = TextMagic.extractEmojis(name)[0];
+            const icon = EmojiTool.extractEmojis(name)[0];
             const label = name.substring(1);
             const description = 'lorem impsum dolor amet, cotetur adipiscing';
-            
-            const data: QualityProps = { id, icon, label, description };
+            const onClick = () => {
+                setSelectedQuality(name);
+                const newSources = service.sources[name];
+                if (newSources && newSources.length > 0) {
+                    setSelectedCountryId(newSources[0].id);
+                }
+            };
+
+            const isSelected = selectedQuality === name;
+            const data: QualityProps = { id, icon, label, description, isSelected, onClick };
 
             key += 1;
 
-            return <Quality {...data} />
+            return <Quality key={`quality-${id}`} {...data} />
         });
-    }, []);
+    }, [namesOfQualities, selectedQuality]);
+    
 
     const countriesJSXElements: JSX.Element[] = sourcesServices.map((source: SourceService) => {
         const serviceID = source.id;
         const [name, flag] = CountryDictionary.getCountry(source.country_abbreviation);
 
-        const props: CountryProps = {serviceID, name, flag};
+        const isSelected = selectedCountryId === serviceID;
+        const onClick = () => setSelectedCountryId(serviceID);
+        const props: CountryProps = {serviceID, name, flag, isSelected, onClick};
 
         return (
-            <Country {...props} />
+            <Country key={`country-${serviceID}`} {...props} />
         );
     });
 
@@ -323,6 +410,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
         });
         console.groupEnd();
     };
+
     const handleFieldFocus = useCallback((event: FocusEvent<HTMLElement>) => {
         if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
             return;
@@ -359,7 +447,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     onSubmit={handleFormSubmit}
                 >
 
-                    <ServiceInformation title={service.name} description={service.long_description} details={mockupDetails} />
+                    <ServiceInformation title={service.name} description={service.long_description} details={service.details} />
 
                     <label className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Account:
@@ -379,6 +467,17 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     </p>
                     <ul className="grid grid-cols-2 gap-6">
                         { countriesJSXElements }
+                    </ul>
+
+                    <p className="text-[15px] font-semibold font-[Montserrat] text-[#111827]">
+                        Guarantees:
+                    </p>
+                    
+                    <ul className="grid grid-cols-2 gap-1.5">
+                        <Guarantee key={0} id={0} content="😢 No warrant" onClick={() => console.info('Picked | 😢 No guarantee')}  />
+                        <Guarantee key={0} id={0} content="😊 30 days" onClick={() => console.info('Picked | 😢 No guarantee')}  />
+                        <Guarantee key={0} id={0} content="😍 90 days" onClick={() => console.info('Picked | 😢 No guarantee')}  />
+                        <Guarantee key={0} id={0} content="⭐ Lifetime" onClick={() => console.info('Picked | 😢 No guarantee')}  />
                     </ul>
 
                     <div className="grid grid-cols-2 gap-4">
@@ -406,6 +505,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                 <span className="text-[14px] text-[#6B7280]">Real</span>
                             </div>
                         </div>
+
                     </div>
                     <button
                         type="submit"

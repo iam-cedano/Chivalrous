@@ -1,3 +1,4 @@
+import ServiceDetailResponse from "./ServiceDetailResponse";
 import SourceServiceResponse from "./SourceServiceResponse";
 
 type ServiceDialogResponse = {
@@ -7,6 +8,7 @@ type ServiceDialogResponse = {
     minimum_quantity: number;
     maximum_quantity: number;
     sources: SourceServiceResponse;
+    details: ServiceDetailResponse[];
 };
 
 export default ServiceDialogResponse;

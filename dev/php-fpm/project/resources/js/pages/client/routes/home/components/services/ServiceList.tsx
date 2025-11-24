@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import ServiceListType from "../../types/ServiceList.type";
+import ServiceListType from "../../types/ServiceList";
 
 function ServiceList({children}: ServiceListType): JSX.Element {
     return (

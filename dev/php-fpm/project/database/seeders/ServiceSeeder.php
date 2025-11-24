@@ -60,7 +60,7 @@ class ServiceSeeder extends Seeder
         'name' => '🤖 Bots',
         'price_per_thousand' => 23,
         'warranty' => 0,
-        'warranty_text' => '😢 Lifetime',
+        'warranty_text' => '🌟 Lifetime',
         'status' => 1
         ]
       ],
@@ -71,6 +71,14 @@ class ServiceSeeder extends Seeder
         'price_per_thousand' => 74,
         'warranty' => 0,
         'warranty_text' => '😢 No warranty',
+        'status' => 1
+        ],
+        [
+        'country_abbreviation' => 'USA',
+        'name' => '🌟 Premium',
+        'price_per_thousand' => 120,
+        'warranty' => 120,
+        'warranty_text' => '😊 120 days',
         'status' => 1
         ],
         [

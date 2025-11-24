@@ -4,12 +4,13 @@ import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
 import TextMagic from "@/functions/TextMagic";
 import DialogContext from "../../contexts/DialogContext";
 import ServiceDialogResponse from "../../api/res/ServiceDialogResponse";
-import SourceService from "../../api/res/SourceService";
+import SourceService from "../../types/SourceService";
 import EmojiTool from "@/functions/EmojiTool";
 import CountryDictionary from "@/functions/CountryDictionary";
 import SourceServiceResponse from "../../api/res/SourceServiceResponse";
 import Select, { components } from 'react-select';
 import ServiceDetailResponse from "../../api/res/ServiceDetailResponse";
+import CountryService from "../../types/CountryService";
 
 type AddingServiceProps = {
     service: ServiceDialogResponse;
@@ -31,10 +32,11 @@ type QualityProps = {
 }
 
 type CountryProps = {
-    serviceID: number;
+    id: number;
     flag: string;
     name: string;
-    isSelected: boolean;
+    countryAbbreviation: string;
+    selectedCountryAbbreviation: string;
     onClick: () => void;
 };
 
@@ -81,42 +83,20 @@ function Quality({ id, icon, label, description, isSelected, onClick }: QualityP
                     </span>
                 </div>
             </label>
-
-            {isSelected ? (
-                <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
-                    <svg
-                        aria-hidden="true"
-                        className="absolute left-8 -top-3 h-3 w-6 text-[#111827]/90"
-                        viewBox="0 0 24 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M12 0L24 12H0L12 0Z" fill="currentColor" />
-                    </svg>
-                    <svg
-                        aria-hidden="true"
-                        className="absolute left-8 -top-2.5 h-3 w-6 text-white"
-                        viewBox="0 0 24 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M12 0L23 12H1L12 0Z" fill="currentColor" />
-                    </svg>
-                    <p className="text-[14px] leading-[1.6]">
-                        {description}
-                    </p>
-                </div>
-            ) : null}
         </li>
     );
 }
 
-function Country({serviceID, flag, name, isSelected, onClick}: CountryProps) {
+function Country({id, flag, name, countryAbbreviation, selectedCountryAbbreviation, onClick}: CountryProps) {
+    const isSelected = selectedCountryAbbreviation === countryAbbreviation;
+
     return (
-        <li key={serviceID} className="w-full">
+        <li key={id} className="w-full">
             <label className="block">
                 <input
                     type="radio"
                     name="country"
-                    value={serviceID}
+                    value={id}
                     className="sr-only"
                     checked={isSelected}
                     onChange={onClick}
@@ -342,13 +322,7 @@ function AccountSelector({ image }: { image: string }) {
 
 function AddingServiceDialog({ service }: AddingServiceProps) {
     const { handleClosingDialog } = useContext(DialogContext);
-    const namesOfQualities: string[] = Object.keys(service.sources);
-    const sources: SourceServiceResponse = service.sources;
-
-    const mockupDetails: string = `|**Lorem** ipsum dolor **sit** amet, 
-    cotetur adipiscing|nisi ut aliquip ex ea
-     commodo consequat. Duis aute irure dolor in reprehenderit in 
-     voluptate velit esse cillum dolore eu fugiat nulla pariatur`;
+    const namesOfQualities: string[] = useMemo(() => Object.keys(service.sources), [service.sources]);
 
     if (namesOfQualities.length == 0) {
         handleClosingDialog();
@@ -357,47 +331,51 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
     }
 
     const [selectedQuality, setSelectedQuality] = useState<string>(namesOfQualities[0]);
-    const sourcesServices: SourceService[]  = service.sources[selectedQuality]; 
-    const [selectedCountryId, setSelectedCountryId] = useState<number>(sourcesServices[0]?.id);
+    const sourceService: CountryService  = service.sources[selectedQuality]; 
+    const namesOfCountries: string[] = Object.keys(sourceService);
 
+    const [selectedCountryAbbreviation, setSelectedCountryAbbreviation] = useState<string>(namesOfCountries[0]);
+    
     const qualitiesJSXElements = useMemo(function() {
-        let key = 1;
-
         return namesOfQualities.map((name, index) => {
-            const id = key;
+            const id = index;
             const icon = EmojiTool.extractEmojis(name)[0];
             const label = name.substring(1);
             const description = 'lorem impsum dolor amet, cotetur adipiscing';
             const onClick = () => {
                 setSelectedQuality(name);
-                const newSources = service.sources[name];
-                if (newSources && newSources.length > 0) {
-                    setSelectedCountryId(newSources[0].id);
-                }
+                const newSourceService = service.sources[name];
+                const newNamesOfCountries = Object.keys(newSourceService);
+                setSelectedCountryAbbreviation(newNamesOfCountries[0]);
             };
 
             const isSelected = selectedQuality === name;
             const data: QualityProps = { id, icon, label, description, isSelected, onClick };
-
-            key += 1;
 
             return <Quality key={`quality-${id}`} {...data} />
         });
     }, [namesOfQualities, selectedQuality]);
     
 
-    const countriesJSXElements: JSX.Element[] = sourcesServices.map((source: SourceService) => {
-        const serviceID = source.id;
-        const [name, flag] = CountryDictionary.getCountry(source.country_abbreviation);
+    const countriesJSXElements = useMemo(() => namesOfCountries.map((countryAbbreviation: string, id: number) => {
+        const [name, flag] = CountryDictionary.getCountry(countryAbbreviation);
+        const onClick = () => setSelectedCountryAbbreviation(countryAbbreviation);
 
-        const isSelected = selectedCountryId === serviceID;
-        const onClick = () => setSelectedCountryId(serviceID);
-        const props: CountryProps = {serviceID, name, flag, isSelected, onClick};
+        const props: CountryProps = {id, name, flag, countryAbbreviation, selectedCountryAbbreviation, onClick};
 
         return (
-            <Country key={`country-${serviceID}`} {...props} />
+            <Country key={`country-${id}`} {...props} />
         );
-    });
+    }), [namesOfCountries]);
+
+
+    const warrantiesJSXElements: JSX.Element[] =
+     sourceService[selectedCountryAbbreviation].map(
+        service => <Guarantee 
+        key={service.id ?? 0} id={service.id ?? 0} 
+        onClick={() => console.info('click here')} 
+        content={service.warranty_text ?? ''} 
+        />);
 
     const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -474,10 +452,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     </p>
                     
                     <ul className="grid grid-cols-2 gap-1.5">
-                        <Guarantee key={0} id={0} content="😢 No warrant" onClick={() => console.info('Picked | 😢 No guarantee')}  />
-                        <Guarantee key={0} id={0} content="😊 30 days" onClick={() => console.info('Picked | 😢 No guarantee')}  />
-                        <Guarantee key={0} id={0} content="😍 90 days" onClick={() => console.info('Picked | 😢 No guarantee')}  />
-                        <Guarantee key={0} id={0} content="⭐ Lifetime" onClick={() => console.info('Picked | 😢 No guarantee')}  />
+                        { warrantiesJSXElements }
                     </ul>
 
                     <div className="grid grid-cols-2 gap-4">

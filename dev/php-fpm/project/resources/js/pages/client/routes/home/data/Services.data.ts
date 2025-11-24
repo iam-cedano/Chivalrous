@@ -1,4 +1,4 @@
-import ServiceType from "@/types/client/Service.type";
+import ServiceType from "@/pages/client/routes/home/types/Service";
 
 /* This is for development only */
 

@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import ServiceType from "../../types/Service.type";
+import ServiceType from "../../types/Service";
 
 function Service({title, service, image}: ServiceType): JSX.Element {
     return (

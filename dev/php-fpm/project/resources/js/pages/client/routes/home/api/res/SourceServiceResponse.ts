@@ -1,7 +1,8 @@
-import SourceService from "./SourceService";
+import CountryService from "../../types/CountryService";
+import SourceService from "../../types/SourceService";
 
 type SourceServiceResponse = {
-    [id: string]: SourceService[]
+    [id: string]: CountryService
 };
 
 export default SourceServiceResponse;

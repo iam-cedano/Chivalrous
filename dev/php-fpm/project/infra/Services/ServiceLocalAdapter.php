@@ -105,8 +105,8 @@ class ServiceLocalAdapter implements GetServicesPort {
         $groupedSources = collect($servicePayload['sources'] ?? [])
             ->groupBy('name')
             ->map(callback: function ($sources) {
-                return array_values($sources->toArray());
-        });
+                return $sources->groupBy('country_abbreviation')->toArray();
+            });
 
         $servicePayload['sources'] = $groupedSources;
 

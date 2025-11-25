@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { FormEvent, FocusEvent, JSX } from "react";
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
 import TextMagic from "@/functions/TextMagic";
@@ -7,10 +7,10 @@ import ServiceDialogResponse from "../../api/res/ServiceDialogResponse";
 import SourceService from "../../types/SourceService";
 import EmojiTool from "@/functions/EmojiTool";
 import CountryDictionary from "@/functions/CountryDictionary";
-import SourceServiceResponse from "../../api/res/SourceServiceResponse";
 import Select, { components } from 'react-select';
 import ServiceDetailResponse from "../../api/res/ServiceDetailResponse";
 import CountryService from "../../types/CountryService";
+import Calculator from "../../../shared/functions/Calculator";
 
 type AddingServiceProps = {
     service: ServiceDialogResponse;
@@ -44,6 +44,7 @@ type GuaranteeProps = {
     id: number;
     content: string;
     onClick: () => void;
+    isSelected: boolean;
 };
 
 function Quality({ id, icon, label, description, isSelected, onClick }: QualityProps) {
@@ -87,7 +88,7 @@ function Quality({ id, icon, label, description, isSelected, onClick }: QualityP
     );
 }
 
-function Country({id, flag, name, countryAbbreviation, selectedCountryAbbreviation, onClick}: CountryProps) {
+function Country({ id, flag, name, countryAbbreviation, selectedCountryAbbreviation, onClick }: CountryProps) {
     const isSelected = selectedCountryAbbreviation === countryAbbreviation;
 
     return (
@@ -130,9 +131,7 @@ function Country({id, flag, name, countryAbbreviation, selectedCountryAbbreviati
     );
 }
 
-function Guarantee({ id, content, onClick}: GuaranteeProps) {
-    const isSelected = false;
-
+function Guarantee({ id, content, onClick, isSelected }: GuaranteeProps) {
     return (
         <li key={id} className="space-y-3">
             <label className="block">
@@ -168,30 +167,6 @@ function Guarantee({ id, content, onClick}: GuaranteeProps) {
                     </span>
                 </div>
             </label>
-{/* 
-            {isSelected ? (
-                <div className="relative rounded-2xl border border-[#111827]/90 bg-white p-4 text-[#111827] shadow-lg">
-                    <svg
-                        aria-hidden="true"
-                        className="absolute left-8 -top-3 h-3 w-6 text-[#111827]/90"
-                        viewBox="0 0 24 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M12 0L24 12H0L12 0Z" fill="currentColor" />
-                    </svg>
-                    <svg
-                        aria-hidden="true"
-                        className="absolute left-8 -top-2.5 h-3 w-6 text-white"
-                        viewBox="0 0 24 12"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M12 0L23 12H1L12 0Z" fill="currentColor" />
-                    </svg>
-                    <p className="text-[14px] leading-[1.6]">
-                        {description}
-                    </p>
-                </div>
-            ) : null} */}
         </li>
     );
 }
@@ -226,12 +201,13 @@ function ServiceInformation({ title, description, details }: ServiceInformationP
     );
 }
 
-function AccountSelector({ image }: { image: string }) {
+function AccountSelector({ image, onChange, onAccountChange }: { image: string; onChange: (isAddAccount: boolean) => void; onAccountChange: (accountId: string) => void }) {
     const options = [
+        { value: 'add_account', label: "Add account", image: '/build/assets/plus-symbol.webp' },
         { value: 'account1', label: "Oscar Cedano's Account - /mrc...", image },
         { value: 'account2', label: "John Doe's Account - /johndoe", image },
         { value: 'account3', label: "Jane Smith's Account - /janesmith", image },
-        { value: 'account4', label: "Alex Johnson's Account - /alexj", image }
+        { value: 'account4', label: "Alex Johnson's Account - /alexj", image },
     ];
 
     const customStyles = {
@@ -316,6 +292,10 @@ function AccountSelector({ image }: { image: string }) {
             components={{ SingleValue: CustomSingleValue, Option: CustomOption, DropdownIndicator: CustomDropdownIndicator, NoOptionsMessage: CustomNoOptionsMessage }}
             styles={customStyles}
             menuPortalTarget={document.body}
+            onChange={(option) => {
+                onChange(option?.value === 'add_account');
+                onAccountChange(option?.value || 'account1');
+            }}
         />
     );
 }
@@ -323,20 +303,25 @@ function AccountSelector({ image }: { image: string }) {
 function AddingServiceDialog({ service }: AddingServiceProps) {
     const { handleClosingDialog } = useContext(DialogContext);
     const namesOfQualities: string[] = useMemo(() => Object.keys(service.sources), [service.sources]);
-
-    if (namesOfQualities.length == 0) {
-        handleClosingDialog();
-
-        return;
-    }
-
     const [selectedQuality, setSelectedQuality] = useState<string>(namesOfQualities[0]);
-    const sourceService: CountryService  = service.sources[selectedQuality]; 
-    const namesOfCountries: string[] = Object.keys(sourceService);
-
+    const namesOfCountries: string[] = useMemo(() => Object.keys(service.sources[selectedQuality]), [service.sources, selectedQuality]); 
     const [selectedCountryAbbreviation, setSelectedCountryAbbreviation] = useState<string>(namesOfCountries[0]);
-    
-    const qualitiesJSXElements = useMemo(function() {
+    const [selectedWarranty, setSelectedWarranty] = useState<SourceService>(service.sources[selectedQuality][selectedCountryAbbreviation][0]);
+
+    const quantityInputRef = useRef<HTMLInputElement>(null);
+    const [price, setPrice] = useState<number>(0);
+    const [showAccountInputs, setShowAccountInputs] = useState<boolean>(false);
+    const [selectedAccount, setSelectedAccount] = useState<string>('account1');
+
+    useEffect(() => {
+        const input = quantityInputRef.current;
+        if (input && selectedWarranty.price_per_thousand !== undefined) {
+            const quantity = input.valueAsNumber || 1000;
+            setPrice(Calculator.getPriceOfService(quantity, selectedWarranty.price_per_thousand));
+        }
+    }, [selectedWarranty]);
+
+    const qualitiesJSXElements = useMemo(function () {
         return namesOfQualities.map((name, index) => {
             const id = index;
             const icon = EmojiTool.extractEmojis(name)[0];
@@ -346,7 +331,9 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                 setSelectedQuality(name);
                 const newSourceService = service.sources[name];
                 const newNamesOfCountries = Object.keys(newSourceService);
+                const newWarranties = newSourceService[newNamesOfCountries[0]];
                 setSelectedCountryAbbreviation(newNamesOfCountries[0]);
+                setSelectedWarranty(newWarranties[0]);
             };
 
             const isSelected = selectedQuality === name;
@@ -355,55 +342,75 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
             return <Quality key={`quality-${id}`} {...data} />
         });
     }, [namesOfQualities, selectedQuality]);
-    
 
     const countriesJSXElements = useMemo(() => namesOfCountries.map((countryAbbreviation: string, id: number) => {
         const [name, flag] = CountryDictionary.getCountry(countryAbbreviation);
-        const onClick = () => setSelectedCountryAbbreviation(countryAbbreviation);
+        const onClick = () => {
+            setSelectedCountryAbbreviation(countryAbbreviation);
+            
+            const newWarranties = service.sources[selectedQuality][countryAbbreviation];
 
-        const props: CountryProps = {id, name, flag, countryAbbreviation, selectedCountryAbbreviation, onClick};
+            setSelectedWarranty(newWarranties[0]);
+        }
+
+        const props: CountryProps = { id, name, flag, countryAbbreviation, selectedCountryAbbreviation, onClick };
 
         return (
             <Country key={`country-${id}`} {...props} />
         );
-    }), [namesOfCountries]);
+    }), [namesOfCountries, selectedCountryAbbreviation]);
 
+    const warrantiesJSXElements: JSX.Element[] = useMemo( () => 
+        service.sources[selectedQuality][selectedCountryAbbreviation].map(
+            warrantyService => <Guarantee
+                key={ warrantyService.id ?? 0 } id={ warrantyService.id ?? 0 }
+                onClick={ () => setSelectedWarranty(warrantyService) }
+                content={ warrantyService.warranty_text ?? '' }
+                isSelected={ warrantyService.id == selectedWarranty.id }
+            />), [service.sources, selectedQuality, selectedCountryAbbreviation, selectedWarranty]);
 
-    const warrantiesJSXElements: JSX.Element[] =
-     sourceService[selectedCountryAbbreviation].map(
-        service => <Guarantee 
-        key={service.id ?? 0} id={service.id ?? 0} 
-        onClick={() => console.info('click here')} 
-        content={service.warranty_text ?? ''} 
-        />);
+    const handleOnInput = () => {
+        const input = quantityInputRef.current;
+
+        if (input == null || selectedWarranty.price_per_thousand == undefined) {
+            return;
+        }
+
+        if (input.value == '') {
+            setPrice(0);
+
+            return;
+        }
+
+        setPrice(Calculator.getPriceOfService(input.valueAsNumber, selectedWarranty.price_per_thousand));
+    }
+
 
     const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
+        const formValues: Record<string, any> = {};
 
-        console.group("AddingServiceDialog form submission (test mode)");
         formData.forEach((value, key) => {
-            console.log(`${key}:`, value);
+            formValues[key] = value;
+        });
+
+        console.group("AddingServiceDialog form submission");
+        console.log("Selected Account ID:", selectedAccount);
+        console.log("Quality:", selectedQuality);
+        console.log("Country:", selectedCountryAbbreviation);
+        console.log("Warranty ID:", selectedWarranty.id);
+        console.log("Form Values:", formValues);
+        console.log("\nAll Values:", {
+            account_id: selectedAccount,
+            quality: selectedQuality,
+            country: selectedCountryAbbreviation,
+            warranty_id: selectedWarranty.id,
+            ...formValues
         });
         console.groupEnd();
     };
-
-    const handleFieldFocus = useCallback((event: FocusEvent<HTMLElement>) => {
-        if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-            return;
-        }
-
-        const isMobileViewport = window.matchMedia("(max-width: 768px)").matches;
-
-        if (!isMobileViewport) {
-            return;
-        }
-
-        window.requestAnimationFrame(() => {
-            event.currentTarget.scrollIntoView({ behavior: "smooth", block: "center" });
-        });
-    }, []);
 
     return (
         <FullScreenDialog onClose={handleClosingDialog} title="Adding Service">
@@ -430,7 +437,41 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     <label className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Account:
                     </label>
-                    <AccountSelector image={`/build/assets/services/${service.id}/logo.webp`} />
+                    <AccountSelector 
+                        image={`/build/assets/services/${service.id}/logo.webp`} 
+                        onChange={setShowAccountInputs}
+                        onAccountChange={setSelectedAccount}
+                    />
+
+                    {showAccountInputs && (
+                        <>
+                            <label className="space-y-1.5">
+                                <span className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
+                                    Username:
+                                </span>
+                                <input
+                                    type="text"
+                                    name="account_username"
+                                    placeholder="Enter username"
+                                    className="w-full rounded-[14px] border border-[#D1D5DB] px-4 py-3 text-[15px] font-[Montserrat] text-[#111827] shadow-sm"
+                                    required
+                                />
+                            </label>
+
+                            <label className="space-y-1.5">
+                                <span className="block text-[15px] font-semibold font-[Montserrat] text-[#111827]">
+                                    Profile URL:
+                                </span>
+                                <input
+                                    type="url"
+                                    name="account_url"
+                                    placeholder="https://..."
+                                    className="w-full rounded-[14px] border border-[#D1D5DB] px-4 py-3 text-[15px] font-[Montserrat] text-[#111827] shadow-sm"
+                                    required
+                                />
+                            </label>
+                        </>
+                    )}
 
                     <p className="text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Quality:
@@ -450,7 +491,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                     <p className="text-[15px] font-semibold font-[Montserrat] text-[#111827]">
                         Guarantees:
                     </p>
-                    
+
                     <ul className="grid grid-cols-2 gap-1.5">
                         { warrantiesJSXElements }
                     </ul>
@@ -465,8 +506,9 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                 name="quantity"
                                 inputMode="numeric"
                                 defaultValue={1000}
+                                onInput={handleOnInput}
+                                ref={quantityInputRef}
                                 className="w-full scroll-mt-32 rounded-[14px] border border-[#D1D5DB] px-4 py-3 text-[18px] font-[Montserrat] text-[#111827] shadow-inner"
-                                onFocus={handleFieldFocus}
                                 required
                             />
                         </label>
@@ -476,7 +518,7 @@ function AddingServiceDialog({ service }: AddingServiceProps) {
                                 Total:
                             </span>
                             <div className="flex items-center justify-between rounded-[14px] border border-[#D1D5DB] bg-[#F9FAFB] px-4 py-3 text-[18px] font-[Montserrat] text-[#111827]">
-                                <span>$ 500 MXN</span>
+                                <span>$ {price} MXN</span>
                                 <span className="text-[14px] text-[#6B7280]">Real</span>
                             </div>
                         </div>

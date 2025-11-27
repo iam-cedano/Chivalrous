@@ -10,7 +10,7 @@ services:
       - chivalrous-network
       - chivalrous-cache-network
     volumes:
-      - chivalrous-php-fpm-project:/var/www/chivalrous.com/
+      - project:/var/www/chivalrous.com/
     depends_on:
       - db
         
@@ -25,7 +25,7 @@ services:
       - "80:80"
     volumes:
       - ./dev/nginx/chivalrous.com/logs/:/var/log/nginx/chivalrous.com/
-      - chivalrous-php-fpm-project-public:/var/www/chivalrous.com/public/
+      - public:/var/www/chivalrous.com/public/
     networks:
       - chivalrous-network
     depends_on:
@@ -48,7 +48,7 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     volumes: 
-      - chivalrous-php-fpm-project:/var/www/chivalrous.com/
+      - project:/var/www/chivalrous.com/
     networks:
       - chivalrous-network
       - chivalrous-cache-network
@@ -58,12 +58,12 @@ services:
   vite: 
     build:
       context: ./dev
-      dockerfile: Dockerfile.dev.vite
+      dockerfile: Dockerfile.dev.vite 
     ports:
       - "5173:5173"
     volumes:
       - ./dev/php-fpm/project/:/var/www/chivalrous.com/
-      - /var/www/chivalrous.com/node_modules
+      - vite-node-modules:/var/www/chivalrous.com/node_modules
     env_file:
       - ./dev/vite/.env.vite
   db:
@@ -73,7 +73,7 @@ services:
     ports:
       - "3306:3306"
     volumes:  
-      - chivalrous-db-dev:/var/lib/mysql
+      - db-dev:/var/lib/mysql
       - ./dev/db/scripts/:/docker-entrypoint-initdb.d/
     networks:
       - chivalrous-network
@@ -91,21 +91,23 @@ services:
       - redisinsight-data:/db
     
 volumes:
-  chivalrous-php-fpm-project:
+  project:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./dev/php-fpm/project/
   
-  chivalrous-php-fpm-project-public:
+  public:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: ./dev/php-fpm/project/public/
+  
+  vite-node-modules:
 
-  chivalrous-db-dev:
+  db-dev:
   redisinsight-data:
 
 networks:

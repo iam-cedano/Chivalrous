@@ -39,12 +39,12 @@ export default function FullScreenDialog({
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="flex min-h-screen bg-white"
+        className="flex h-screen bg-white overflow-hidden"
       >
-        <div className="flex h-full w-full flex-col">
+        <div className="flex h-full w-full flex-col overflow-hidden">
           <Header title={title}  onClose={onClose} />
 
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 min-h-0 overflow-hidden">
             {children}
           </div>
         </div>

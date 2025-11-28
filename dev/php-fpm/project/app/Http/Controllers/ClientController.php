@@ -10,4 +10,8 @@ class ClientController extends Controller
     public function showHomePage(Request $request): View {
         return view('client.index');
     }
+
+    public function index(): View {
+        return view('client.index');
+    }
 }

@@ -1,5 +1,4 @@
-import { Link } from "react-router";
-import { useState } from "react";
+import { Link, useLocation } from "react-router";
 
 type NavItem = {
     key: string,
@@ -12,7 +11,6 @@ type TabProps = {
     details: NavItem,
     withBorder?: boolean,
     selected?: boolean,
-    onSelect: (key: string) => void
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -23,9 +21,9 @@ const NAV_ITEMS: NavItem[] = [
     { key: 'setting', label: 'Setting', image: 'build/assets/setting.webp', gold: 'build/assets/setting_gold.webp' },
 ];
 
-function Tab({ details, withBorder = true, selected = false, onSelect }: TabProps) {
+function Tab({ details, withBorder = true, selected = false }: TabProps) {
     return (
-        <Link to={`/${details.key}`} onClick={() => onSelect(details.key)}>
+        <Link to={`/${details.key}`}>
               <div className={`flex flex-col pr-[5px] ${ withBorder ? 'border-r-[0.5px] border-r-[#F8F8F8]' : '' }`}>
                 <img
                     src={ selected ? details.gold : details.image }
@@ -39,14 +37,14 @@ function Tab({ details, withBorder = true, selected = false, onSelect }: TabProp
 }
 
 function Footer() {
-    const [activeKey, setActiveKey] = useState<string>('home');
+    const location = useLocation();
+    const activeKey = location.pathname.replace('/', '') || 'home';
 
     const navItems = NAV_ITEMS.map((item, index) => (
         <Tab
             key={item.key}
             details={item}
             selected={activeKey === item.key}
-            onSelect={setActiveKey}
             withBorder={index < NAV_ITEMS.length - 1}
         />
     ));

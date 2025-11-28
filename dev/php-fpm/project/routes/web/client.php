@@ -6,5 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ClientController::class)
 ->middleware([EnsureUserIsAuthenticated::class])
 ->group( function () {
-    Route::get('/home','showHomePage')->name('client.home');
+    Route::get('/home','index')->name('client.home');
+    Route::get('/history','index')->name('client.history');
 });

@@ -9,6 +9,11 @@
 @tailwind components;
 @tailwind utilities;
 
+#app {
+    background-color: #F8F8F8;
+    height: 100vh;
+}
+
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';

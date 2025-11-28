@@ -6,7 +6,7 @@ function SearchInputAndServices() {
     const [input, setInput] = useState<string>('');
     const [debouncedQuery, setDebouncedQuery] = useState<string>('');
 
-    function handleInput(text: string) {
+    function handlerInput(text: string) {
         setInput(text);
     }
 
@@ -22,7 +22,7 @@ function SearchInputAndServices() {
 
     return (
         <>
-            <SearchInput handleInput={handleInput}  />
+            <SearchInput onInput={handlerInput} className="flex w-full gap-[9px] p-2.5 border border-[#F3F3F3]"  />
             <ServicesContainer query={debouncedQuery} />
         </>
     );

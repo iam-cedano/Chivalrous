@@ -187,7 +187,7 @@ function CheckoutDialog() {
         console.info('Checkout!');
     }
 
-    const checkScrollPosition = () => {
+        const checkScrollPosition = () => {
         const container = scrollContainerRef.current;
         if (container) {
             const hasMoreContent = container.scrollHeight > container.clientHeight;

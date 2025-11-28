@@ -8,7 +8,8 @@ import { History } from "./routes/history/History";
 
 ReactDOM.createRoot(document.getElementById("app")!)
     .render(
-            <BrowserRouter>
+        <StrictMode>
+           <BrowserRouter>
                 <Routes>
                     <Route path="/home" element={ <Home /> }  />
                     <Route path="/history" element={ <History /> }  />
@@ -17,5 +18,6 @@ ReactDOM.createRoot(document.getElementById("app")!)
                 <Footer />
                 
             </BrowserRouter>
+        </StrictMode>
     );
     

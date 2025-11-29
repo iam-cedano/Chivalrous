@@ -14,4 +14,18 @@ function machine(text: string): string {
     return DOMPurify.sanitize(secondTransformation);
 }
 
-export default { transformText };
+function formatURL(text: string): string {
+    if (!text.match(/^https?:\/\//)) {
+        return text; 
+    }
+
+    try {
+        const urlObj = new URL(text);
+        return urlObj.pathname;
+    } catch {
+            const match = text.match(/^https?:\/\/[^\/]+(\/.*)?$/);
+        return match?.[1] || text;
+    }
+}
+
+export default { transformText, formatURL };

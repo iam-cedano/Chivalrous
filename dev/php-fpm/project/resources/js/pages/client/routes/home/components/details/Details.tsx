@@ -9,7 +9,7 @@ type DetailsProps = {
 function Details({children}: DetailsProps) {
     return (
         <section id="details" className="w-full p-2.5">
-            <div className="bg-white flex w-full rounded-2xl p-1.5">
+            <div className="bg-white w-full rounded-2xl p-1.5 flex">
                 {children}
             </div>
         </section>

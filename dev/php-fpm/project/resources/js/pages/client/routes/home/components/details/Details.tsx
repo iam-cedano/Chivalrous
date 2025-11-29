@@ -2,15 +2,12 @@ import { Wallet } from "./Wallet";
 import { Orders } from "./Orders";
 import { ReactNode } from "react";
 
-type DetailsProps = {
-    children: ReactNode
-};
-
-function Details({children}: DetailsProps) {
+function Details() {
     return (
         <section id="details" className="w-full p-2.5">
             <div className="bg-white w-full rounded-2xl p-1.5 flex">
-                {children}
+                <Wallet />
+                <Orders />
             </div>
         </section>
     );

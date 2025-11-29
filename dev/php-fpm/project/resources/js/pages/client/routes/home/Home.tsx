@@ -91,19 +91,10 @@ function Home(): JSX.Element {
             )}
 
             <div className={`${visibility} p-[5px]`}>
-                <Header>
-                    <Hambuger />
+                
+                <Header />
 
-                    <div className="flex gap-2.5">
-                        <Balance />
-                        <Account />
-                    </div>
-                </Header>
-
-                <Details>
-                    <Wallet />
-                    <Orders />
-                </Details>
+                <Details />
 
                 <ServiceList>
                     {services}

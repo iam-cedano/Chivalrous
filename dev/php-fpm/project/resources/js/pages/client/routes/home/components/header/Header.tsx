@@ -1,13 +1,18 @@
 import { JSX, ReactNode } from "react";
+import { Hambuger } from "./Hambuger";
+import { Account } from "./Account";
+import { Balance } from "./Balance";
 
-interface HeaderInterface {
-    children: ReactNode
-}
 
-function Header({children}: HeaderInterface): JSX.Element {
+function Header(): JSX.Element {
     return (
         <header className="flex justify-between">
-            {children}
+            <Hambuger />
+
+            <div className="flex gap-2.5">
+                <Balance />
+                <Account />
+            </div>
         </header>
     );
 }

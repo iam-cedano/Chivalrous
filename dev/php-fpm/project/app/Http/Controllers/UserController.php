@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Usecases\CreateApiTokenUsecase;
 use App\Usecases\Users\GetUserUsecase;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Domain\User\UserChecker;
-use Domain\Auth\GetUserBySession;
-use Domain\Auth\GetUserByToken;
+use Domain\User\UserDto;
+use GetCurrentUserUsecase;
 
 class UserController extends Controller
 {
     public function __construct(
         private GetUserUsecase $getUserUsecase,
-        private UserChecker $userChecker,
-        private GetUserBySession $getUserBySession,
-        private GetUserByToken $getUserByToken
-    ) {}
+        private GetCurrentUserUsecase $getCurrentUserUsecase,
+        private CreateApiTokenUsecase $createApiTokenUsecase
+        ) {}
 
     public function getUser(int $id) {
         $data = $this->getUserUsecase->getUser(3);
@@ -24,23 +21,19 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-    public function getCurrentUser(Request $request) {
-        if ( $request->hasHeader('Authorization') ) {
-            return $this->getUserByToken->execute()->toJson();
-        }
+    public function getCurrentUser() {
+        $domainUser = $this->getCurrentUserUsecase->execute();
 
-        return $this->getUserBySession->execute()->toJson();
+        $dto = UserDto::fromDomain($domainUser);
+        
+        return response()->json($dto->toJSON());
     }
 
     public function getToken() {
-        $user = Auth::user();
+        $user = $this->getCurrentUserUsecase->execute();
         
-        $user->tokens()->where('name', 'api-token')->delete();
+        $data = $this->createApiTokenUsecase->execute($user->getId());
 
-        $token = $user->createToken('api-token');
-        
-        return response()->json([
-            'token' => $token->plainTextToken,
-        ]);
+        return json_encode($data);
     }
 }

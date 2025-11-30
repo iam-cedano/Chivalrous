@@ -1,5 +1,7 @@
 type LoginResponse = {
-    token?: string;
+    status: number;
+    message: string;
+    redirect?: string;
 };
 
 export default LoginResponse

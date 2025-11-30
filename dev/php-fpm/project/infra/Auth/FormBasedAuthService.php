@@ -2,22 +2,17 @@
 
 namespace Infrastructure\Auth;
 
-use Domain\Auth\FormRequestDto;
-use Domain\Auth\LoginResponseDto;
-use Domian\Auth\AuthServiceInterface;
-use Illuminate\Http\Request;
+use Domain\Auth\Interfaces\AuthServiceInterface;
+use Domain\Auth\DTOs\FormRequestDto;
+use Domain\Auth\DTOs\LoginResponseDto;
 use Illuminate\Support\Facades\Auth;
 
 class FormBasedAuthService implements AuthServiceInterface {
-
-    public function __construct(private Request $request) {
-
-    }
-
+    public function __construct() {}
     public function login(): LoginResponseDto {
-        $credentials = $this->request->validate([
-            'username',
-            'password'
+        $credentials = request()->validate([
+            'username' => 'required',
+            'password' => 'required'
         ]);
 
         $username = $credentials['username'];
@@ -25,11 +20,18 @@ class FormBasedAuthService implements AuthServiceInterface {
 
         $formRequestDto = new FormRequestDto($username, $password);
 
+        $response = null;
+
         if (! Auth::guard('web')->attempt($formRequestDto->toArray()) ) {
-            return new LoginResponseDto(400, 'Credentials don\'t match');
+            $response = new LoginResponseDto(400, 'Credentials don\'t match');
+            
+            return $response;
         }
 
-        return new LoginResponseDto(200, 'Everything okay!');
-    }
+        $response = new LoginResponseDto(200, 'OKAY');
+        
+        $response->setRedirect("/home");
 
+        return $response;
+    }
 }

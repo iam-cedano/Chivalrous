@@ -3,7 +3,7 @@
 namespace Infrastructure\Auth;
 
 use App\Models\UserModel;
-use Domain\Auth\SessionServiceInterface;
+use Domain\Auth\Interfaces\SessionServiceInterface;
 use Domain\User\UserDomain;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,5 +22,9 @@ class SessionService implements SessionServiceInterface {
         $domain = new UserDomain($model);
         
         return $domain;
+    }
+
+    public function isLogged(): bool {
+        return Auth::guard()->check();
     }
 }

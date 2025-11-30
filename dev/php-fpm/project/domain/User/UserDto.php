@@ -3,12 +3,12 @@
 namespace Domain\User;
 
 class UserDto {
-    private int $id;
+    private string $id;
     private string $username;
     private string $email;
     private int $role;
 
-    public function __construct(int $id, string $username, string $email, int $role)
+    public function __construct(string $id, string $username, string $email, int $role)
     {
         $this->id = $id;
         $this->username = $username;
@@ -16,7 +16,7 @@ class UserDto {
         $this->role = $role;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }

@@ -2,17 +2,21 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\UserController;
-use App\Usecases\CreateApiTokenUsecase;
+use App\Usecases\Auth\CreateApiTokenUsecase;
+use App\Usecases\Auth\LoginUsecase;
 use App\Usecases\Services\BrowseServicesUsecase;
 use App\Usecases\Services\SearchServicesUsecase;
 use App\Usecases\Services\GetServiceDetailsUsecase;
 use App\Usecases\Users\GetUserUsecase;
-use Domain\Auth\TokenServiceInterface;
-use GetCurrentUserUsecase;
+use Domain\Auth\Interfaces\AuthServiceInterface;
+use App\Usecases\Auth\GetCurrentUserUsecase;
+use Domain\Auth\Interfaces\SessionServiceInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
+use Infrastructure\Auth\FormBasedAuthService;
 use Infrastructure\Auth\SanctumTokenService;
 use Infrastructure\Auth\SessionService;
 use Infrastructure\Local\Services\ServiceLocalAdapter;
@@ -53,13 +57,13 @@ class PortsProvider extends ServiceProvider {
             );
         });
 
-        $this->app->when(UserController::class)
-        ->needs(GetCurrentUserUsecase::class)
-        ->give(function () {
-            return new GetCurrentUserUsecase(
-                $this->app->make(SessionService::class)
-            );
+        $this->app->when(AuthController::class)
+        ->needs(LoginUsecase::class)
+        ->give(function() {
+            return new LoginUsecase($this->app->make(FormBasedAuthService::class)); 
         });
+
+        $this->app->singleton(SessionServiceInterface::class, SessionService::class);
     }
 
     public function boot() {

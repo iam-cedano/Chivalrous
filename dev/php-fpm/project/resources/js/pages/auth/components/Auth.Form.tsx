@@ -74,11 +74,15 @@ function LoginForm(): JSX.Element {
                 return;
             }
 
-            if (data.status == 200) {
-                location.reload();
+            if (data.status != 200) {
+                alert('[Authentication] Login failed!');
+            }
+
+            if ( data.data.redirect != undefined ) {
+                location.replace(data.data.redirect);
             }
         })
-        .catch(() => alert('[Authentication] ¡Fatal error!'));
+        .catch(() => alert('[Authentication] ¡Credentials don\'t match!'));
 
         console.groupEnd();
 

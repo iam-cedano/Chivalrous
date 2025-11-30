@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Usecases;
+namespace App\Usecases\Auth;
 
-use Domain\Auth\TokenServiceInterface;
+use Domain\Auth\Interfaces\TokenServiceInterface;
 
 class CreateApiTokenUsecase {
 
@@ -10,7 +10,7 @@ class CreateApiTokenUsecase {
         private TokenServiceInterface $tokenServiceInterface
     ) {}
 
-    public function execute(int $userID, string $name = 'api-key'): string {
+    public function execute(string $userID, string $name = 'api-token'): string {
         return $this->tokenServiceInterface->createToken($userID, $name);
     }
 }

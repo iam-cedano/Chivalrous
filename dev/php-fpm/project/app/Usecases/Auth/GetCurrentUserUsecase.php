@@ -1,6 +1,7 @@
 <?php
+namespace App\Usecases\Auth;
 
-use Domain\Auth\SessionServiceInterface;
+use Domain\Auth\Interfaces\SessionServiceInterface;
 use Domain\User\UserDomain;
 
 class GetCurrentUserUsecase {

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Usecases\CreateApiTokenUsecase;
+use App\Usecases\Auth\CreateApiTokenUsecase;
+use App\Usecases\Auth\GetCurrentUserUsecase;
 use App\Usecases\Users\GetUserUsecase;
 use Domain\User\UserDto;
-use GetCurrentUserUsecase;
 
 class UserController extends Controller
 {

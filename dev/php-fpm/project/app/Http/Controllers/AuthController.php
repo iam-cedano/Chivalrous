@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Usecases\LoginUsecase;
-use Auth;
-use Domian\Auth\AuthServiceInterface;
+use App\Usecases\Auth\LoginUsecase;
+use Domain\Auth\Interfaces\AuthServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\View\View;
-use Infrastructure\Auth\FormBasedAuthService;
 
 trait AuthenticationsForWeb {
     public function authenticateByWeb(Request $request): Response
@@ -53,17 +53,13 @@ trait AuthenticationsForWeb {
     }
 }
 
-trait AuthenticationsForApi {}
-
 class AuthController extends Controller
 {
-    public function __construct( private LoginUsecase $loginUsecase ){}
-
-    public function login(Request $request) {
-        $authService = new FormBasedAuthService($request);
-        $this->loginUsecase = new LoginUsecase($authService);
-
+    public function __construct(private LoginUsecase $loginUsecase) {}
+    public function login(): JsonResponse | RedirectResponse {
         $responseDto = $this->loginUsecase->execute();
+
+        return response()->json($responseDto->toArray(), $responseDto->getCode());
     }
 
     public function logout(Request $request): RedirectResponse

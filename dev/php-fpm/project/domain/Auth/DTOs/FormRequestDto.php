@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Auth;
+namespace Domain\Auth\DTOs;
 
 class FormRequestDto {
     private string $username;

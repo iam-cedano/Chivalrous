@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Usecases;
+namespace App\Usecases\Auth;
 
-use Domain\Auth\LoginResponseDto;
-use Domian\Auth\AuthServiceInterface;
+use Domain\Auth\Interfaces\AuthServiceInterface;
+use Domain\Auth\DTOs\LoginResponseDto;
 
 class LoginUsecase {
 
-    private function __construct(
+    public function __construct(
         private AuthServiceInterface $authServiceInterface,
     ) {}
 

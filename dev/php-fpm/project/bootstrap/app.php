@@ -13,14 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
             __DIR__.'/../routes/web/global.php'
         ],
         api: [
-            __DIR__.'/../routes/api/services.php'
+            __DIR__.'/../routes/api/services.php',
+            __DIR__.'/../routes/api/users.php'
         ],
         commands: __DIR__.'/../routes/commands.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->redirectGuestsTo('/');
-        $middleware->validateCsrfTokens(except: ['/auth/login']);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
     })->create();

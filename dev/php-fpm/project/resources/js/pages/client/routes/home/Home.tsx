@@ -1,4 +1,4 @@
-import { JSX, useRef, useState } from "react";
+import { JSX, useEffect, useRef, useState } from "react";
 import { Header } from "./components/header/Header";
 import { Hambuger } from "./components/header/Hambuger";
 import { Balance } from "./components/header/Balance";
@@ -22,6 +22,7 @@ import Services from "./data/Services.data";
 import * as ServicesApi  from "./api/Services";
 import ServiceDialogResponse from "./api/res/ServiceDialogResponse";
 import ShoppingDialogResponse from "./api/res/ShoppingDialogResponse";
+import axios from "axios";
 
 const services = Services.map(service => <Service key={service.service} {...service} />);
 
@@ -39,6 +40,18 @@ function Home(): JSX.Element {
     const [isLoading, setIsLoading] = useState(false);
     const dialogSelected = useRef<number>(0);
     const visibility = isDialog.status ? "hidden" : "block";
+
+    useEffect(() => {
+    axios.get('/api/user/2', {
+        headers: {
+            Accept: 'application/json',
+        },
+    }).then((res) => {
+        console.log(res);
+    }).catch(() => {
+
+    });
+    }, [])
 
     return (
         <DialogContext value={{

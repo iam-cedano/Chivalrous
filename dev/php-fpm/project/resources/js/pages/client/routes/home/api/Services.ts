@@ -20,7 +20,7 @@ function getServicesAsPageByQuery(page: number = 1, query: string = ''): Promise
 }
 
 function getServiceForDialog(serviceId: number): Promise<AxiosResponse<ServiceDialogResponse, any, {}>> {
-    return axios.get<ServiceDialogResponse>(`/api/services/${serviceId}`);
+    return axios.get<ServiceDialogResponse>(`/api/service/${serviceId}`);
 }
 
 export { getAllServicesAsPage, getServicesAsPageByQuery, getServiceForDialog };

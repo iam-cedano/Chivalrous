@@ -1,5 +1,4 @@
 <?php
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
@@ -8,5 +7,5 @@ Route::controller(AuthController::class)->prefix('/auth')->group(function() {
 
     Route::get('/logout', 'logout')->name('auth.logout');
 
-    Route::get('/login', 'showLoginForm')->name('auth.login');
+    Route::get('/login', 'showLogin')->name('auth.login');
 });

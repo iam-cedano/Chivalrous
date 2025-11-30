@@ -2,38 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Usecases\Services\GetServicesUsecase;
-use Illuminate\Database\Eloquent\Collection;
+use App\Usecases\Services\BrowseServicesUsecase;
+use App\Usecases\Services\SearchServicesUsecase;
+use App\Usecases\Services\GetServiceDetailsUsecase;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class ServicesController extends Controller
 {
     public function __construct(
-        private GetServicesUsecase $getServicesUsecase
+        private BrowseServicesUsecase $browseServicesUsecase,
+        private SearchServicesUsecase $searchServicesUsecase,
+        private GetServiceDetailsUsecase $getServiceDetailsUsecase
     ) {}
 
     public function searchByQuery(string $pageNumber = '1', string $count = '10', string $query ): JsonResponse {
-        $page = $this->getServicesUsecase->query($query ) ;
+        $page = $this->searchServicesUsecase->query($query);
     
         return response()->json($page);
     }
 
     public function searchAll(string $pageNumber = '1', string $count = '10'): JsonResponse {
-        $page = $this->getServicesUsecase->allAsPage($pageNumber, $count);
+        $page = $this->browseServicesUsecase->allAsPage($pageNumber, $count);
 
         return response()->json($page);
     }
 
     public function getService(int $id): JsonResponse {
-        $data = $this->getServicesUsecase->getService($id);
+        $data = $this->getServiceDetailsUsecase->getService($id);
         
         return response()->json($data);
     }
 
     public function getServiceAndSources(int $id): JsonResponse {
-        $data = $this->getServicesUsecase->getServiceAndSources($id);
+        $data = $this->getServiceDetailsUsecase->getServiceAndSources($id);
 
         return response()->json($data);
     }

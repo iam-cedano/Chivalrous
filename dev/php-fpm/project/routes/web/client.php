@@ -1,11 +1,7 @@
 <?php
-use App\Http\Controllers\ClientController;
 use App\Http\Middleware\EnsureUserIsAuthenticated;
 use Illuminate\Support\Facades\Route;
 
-Route::controller(ClientController::class)
+Route::view('/home', 'client.index')
 ->middleware([EnsureUserIsAuthenticated::class])
-->group( function () {
-    Route::get('/home','index')->name('client.home');
-    Route::get('/history','index')->name('client.history');
-});
+->name('client');

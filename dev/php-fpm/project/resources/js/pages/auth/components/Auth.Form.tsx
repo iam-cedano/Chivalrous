@@ -1,11 +1,18 @@
-import { JSX, useState } from "react";
+import { FormEvent, JSX, RefObject, useRef, useState } from "react";
 import { Switcher } from "./Auth.Switcher";
 
 import AccessMethod from "../shared/AccessMethod.enum";
+import { getCSRFToken } from "../api/CSRF";
+import { Login } from "../api/Login";
+import LoginResponse from "../api/res/login.response";
+import { useNavigate } from "react-router";
+import { l } from "node_modules/react-router/dist/development/index-react-server-client-BIz4AUNd.mjs";
+import axios, { AxiosResponse } from "axios";
 
 interface FieldInterface {
     label: string,
-    type?: string
+    type?: string,
+    reference?: RefObject<HTMLInputElement | null>
 }
 
 interface RememberCheckboxInterface {
@@ -29,13 +36,13 @@ const getSafeId = (label: string): string => label.toLowerCase().replace(/\s+/g,
 function Form ({defaultAcessMethod}: FormInterface): JSX.Element {
     const [accessMethod, setAccessMethod] = useState(defaultAcessMethod);
 
-    function handleChangeAccessMethod(accessMethod: AccessMethod): void {
+    function handlerChangeAccessMethod(accessMethod: AccessMethod): void {
         setAccessMethod(accessMethod);
     }
 
     return (
         <>
-            <Switcher accessMethod={accessMethod} onChangeAccessMethod={handleChangeAccessMethod}  />
+            <Switcher accessMethod={accessMethod} onChangeAccessMethod={handlerChangeAccessMethod}  />
             
             {accessMethod == AccessMethod.LOGIN && <LoginForm />  }
             {accessMethod == AccessMethod.SIGN_UP && <RegisterForm />  }
@@ -44,17 +51,50 @@ function Form ({defaultAcessMethod}: FormInterface): JSX.Element {
 }
 
 function LoginForm(): JSX.Element {
+    
+    const loginRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+
+    const handlerOnSubmit = (e: FormEvent) => {
+        console.group('[Storing CSRF Token] https://laravel.com/docs/12.x/sanctum#spa-authenticating')
+        
+        getCSRFToken()
+        .then(() => {
+          const username = loginRef.current?.value;
+          const password = passwordRef.current?.value;
+
+          if (username == undefined || password == undefined) {
+            return;
+          }
+
+          return Login(username, password);
+        })
+        .then((data: AxiosResponse<LoginResponse, any, {}> | undefined) => {
+            if (data == undefined) {
+                return;
+            }
+
+            if (data.status == 200) {
+                location.reload();
+            }
+        })
+        .catch(() => alert('[Authentication] ¡Fatal error!'));
+
+        console.groupEnd();
+
+        e.preventDefault();
+    }
+
     return (
-        <form method="post" action="/auth/login" className="mt-7" onSubmit={() => console.info('')}>
+        <form method="post" action="/auth/login" className="mt-7" onSubmit={handlerOnSubmit}>
             <fieldset>
-                <InputField label="Username"  />
-                <PasswordField label="Password" />
+                
+                <InputField label="Username" reference={loginRef}  />
+                <PasswordField label="Password" reference={passwordRef} />
                 <RememberCheckbox label="Remember me" />
                 <LoginButton text="Sign In" />
                 
                 <a className="block text-blue-500 text-center mt-5 text-[17px] font-[Montserrat]" href="https://google.com">Did you forget your password?</a>
-
-                <input type="hidden" name="_token" value=""></input>
           
             </fieldset>
         </form>
@@ -75,7 +115,7 @@ function RegisterForm(): JSX.Element {
     );
 }
 
-function InputField({label}: FieldInterface): JSX.Element {
+function InputField({label, reference}: FieldInterface): JSX.Element {
     const inputId = getSafeId(label);
     
     return (
@@ -84,17 +124,18 @@ function InputField({label}: FieldInterface): JSX.Element {
                 {label}
             </label>
             <input 
-                className="block border-solid border-stone-300 border-1 w-full p-2 text-2xl"
+                className="block border-solid border-stone-300 border w-full p-2 text-2xl"
                 type="text" 
                 id={inputId}
                 name={inputId}
+                ref={reference}
                 autoComplete="off"
             />
         </div>
     );
 }
 
-function PasswordField({label}: FieldInterface): JSX.Element {
+function PasswordField({label, reference}: FieldInterface): JSX.Element {
     const inputId = getSafeId(label);
     
     return (
@@ -103,10 +144,11 @@ function PasswordField({label}: FieldInterface): JSX.Element {
                 {label}
             </label>
             <input 
-                className="block border-solid border-stone-300 border-1 w-full p-2 text-2xl"
+                className="block border-solid border-stone-300 border w-full p-2 text-2xl"
                 type="password" 
                 id={inputId}
                 name={inputId}
+                ref={reference}
             />
         </div>
     );
@@ -118,7 +160,7 @@ function RememberCheckbox({label}: RememberCheckboxInterface): JSX.Element {
     return (
     <div>
         <input 
-            className="mr-2 relative top-[4px] size-5 mt-5"
+            className="mr-2 relative top-1 size-5 mt-5"
             type="checkbox"
             id={inputId}
             name={inputId}

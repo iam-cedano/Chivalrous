@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
 use Illuminate\View\View;
 
 trait AuthenticationsForWeb {
-    public function authenticateByWeb(Request $request): RedirectResponse
+    public function authenticateByWeb(Request $request): Response
     {
         $credentials = $request->validate([
             'username' => ['required'],
@@ -17,35 +19,34 @@ trait AuthenticationsForWeb {
         ]);
 
         if (Auth::guard('web')->attempt($credentials) == false) {
-            return back()->with('error', 'The provided credentials do not match our records or guard doesn\'t exist.');
+            return response('Unathenticated', 401);
         }
 
         $request->session()->regenerate();
-
+        
         $user = Auth::guard('web')->user();
 
-        $role = $user->role;
-
-        return $this->redirectByRoleForWeb($role);
+        return response([], 200);
     }
 
-    public function showLoginForm(): RedirectResponse|View
+    public function showLogin(): RedirectResponse|View
     {
         if (!Auth::guard('web')->check()) {
             return view('auth.login');
         }
 
+        $user = Auth::guard('web')->user();
+
         $role = Auth::guard('web')->user()->role;
 
-        return $this->redirectByRoleForWeb($role);
+        return redirect($this->getRouteByRole($role));
     }
 
-    private function redirectByRoleForWeb(int $role): RedirectResponse
+    private function getRouteByRole(int $role): string
     {
         return match ($role) {
-            Config::get('constants.roles.client') => redirect()->route('client.home'),
-            Config::get('constants.roles.admin') => redirect()->route('admin.dashboard'),
-            default => back()->with('error', 'User has an unknown role.')
+            Config::get('constants.roles.client') => route('client'),
+            Config::get('constants.roles.admin') => route('admin.dashboard'),
         };
     }
 }
@@ -57,12 +58,16 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $user = Auth::guard('web')->user();
+
+        $user->tokens()->delete();
+
         Auth::guard()->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('global.index');
+        return redirect()->route('auth.login');
     }
 }

@@ -1,14 +1,16 @@
 <?php
 
-namespace Infrastructure\Services;
+namespace Infrastructure\Local\Services;
 
 use App\Models\Service;
-use App\Ports\Services\GetServicesPort;
+use App\Ports\Services\BrowseServicesPort;
+use App\Ports\Services\SearchServicesPort;
+use App\Ports\Services\GetServiceDetailsPort;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 
-class ServiceLocalAdapter implements GetServicesPort {
+class ServiceLocalAdapter implements BrowseServicesPort, SearchServicesPort, GetServiceDetailsPort {
     public function all(): Collection {
         $bunchOfServices = Service::all( ['name', 'short_description']);
 

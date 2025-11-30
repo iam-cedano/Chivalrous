@@ -2,7 +2,9 @@
 
 namespace Domain\User;
 
-class UserDto {
+use Domain\DTO;
+
+class UserDto extends DTO {
     private string $id;
     private string $username;
     private string $email;

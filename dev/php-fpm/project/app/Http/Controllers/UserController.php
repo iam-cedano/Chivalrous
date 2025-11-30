@@ -25,7 +25,7 @@ class UserController extends Controller
         $domainUser = $this->getCurrentUserUsecase->execute();
 
         $dto = UserDto::fromDomain($domainUser);
-        
+
         return response()->json($dto->toJSON());
     }
 

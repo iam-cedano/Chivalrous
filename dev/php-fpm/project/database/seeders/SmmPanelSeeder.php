@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use App\Models\SmmPanel;
+use App\Models\SmmPanelModel as SmmPanel;
 use Illuminate\Database\Seeder;
 
 class SmmPanelSeeder extends Seeder

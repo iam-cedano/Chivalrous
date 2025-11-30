@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\User;
+use App\Models\UserModel as User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;

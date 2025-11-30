@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SourceService extends Model
+class SourceServiceModel extends Model
 {
     protected $table = 'source_services';
     protected $guard = [    

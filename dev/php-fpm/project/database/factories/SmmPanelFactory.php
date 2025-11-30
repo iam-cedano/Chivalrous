@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\SmmPanel;
+use App\Models\SmmPanelModel as SmmPanel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

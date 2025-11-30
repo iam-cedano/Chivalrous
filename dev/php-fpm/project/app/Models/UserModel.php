@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Config;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class UserModel extends Authenticatable
 {
     use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
     protected $keyType = 'string';
@@ -22,11 +22,15 @@ class User extends Authenticatable
         'email',
         'timezone_offset',
         'role',
-        'api_key'
+        'api_key',
     ];
     protected $hidden = [
         'password',
-        'api_key'        
+        'remember_token',
+        'api_key',
+        'created_at',
+        'updated_at',
+        'deleted_at'       
     ];
     protected function casts(): array
     {
@@ -36,7 +40,7 @@ class User extends Authenticatable
     }
 
     public function balance(): HasOne {
-        return $this->hasOne(Balance::class, 'user_id');
+        return $this->hasOne(BalanceModel::class, 'user_id');
     }
     public function isAdministrator(): bool {
         return $this->role == Config::get('constants.roles.admin');

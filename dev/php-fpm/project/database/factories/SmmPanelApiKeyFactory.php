@@ -3,9 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\SmmPanelApiKeyModel as SmmPanelApiKey;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SmmPanelApiKey>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SmmPanelApiKeyModel>
  */
 class SmmPanelApiKeyFactory extends Factory
 {

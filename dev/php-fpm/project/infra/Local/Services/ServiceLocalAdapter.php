@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Local\Services;
 
-use App\Models\Service;
+use App\Models\ServiceModel as Service;
 use App\Ports\Services\BrowseServicesPort;
 use App\Ports\Services\SearchServicesPort;
 use App\Ports\Services\GetServiceDetailsPort;

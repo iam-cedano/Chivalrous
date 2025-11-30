@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * Model to represent a service from a SMM Panel.
  */
-class Service extends Model
+class ServiceModel extends Model
 {
     use HasFactory;
     protected $table = 'services';
@@ -24,11 +24,11 @@ class Service extends Model
     ];
 
     public function sources(): HasMany {
-        return $this->hasMany(SourceService::class, 'service_id');
+        return $this->hasMany(SourceServiceModel::class, 'service_id');
     } 
 
     public function details(): HasMany {
-        return $this->hasMany(ServiceDetails::class, 'service_id');
+        return $this->hasMany(ServiceDetailsModel::class, 'service_id');
     }
 
     protected static function newFactory() {

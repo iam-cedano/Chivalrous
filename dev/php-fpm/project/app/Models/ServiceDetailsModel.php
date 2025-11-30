@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceDetails extends Model
+class ServiceDetailsModel extends Model
 {   
     public $table = 'service_details';
 
@@ -17,6 +17,6 @@ class ServiceDetails extends Model
     ];
 
     public function service() {
-        return $this->hasOne(Service::class, 'id', 'service_id');
+        return $this->hasOne(ServiceModel::class, 'id', 'service_id');
     }
 }

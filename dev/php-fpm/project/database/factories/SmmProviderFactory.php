@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\SmmProvider;
+use App\Models\SmmProviderModel as SmmProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\UserModel as User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
@@ -21,6 +21,7 @@ class UserFactory extends Factory
             'id' => uuid_create(),
             'username' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'role' => 0,
             'password' => static::$password ??= Hash::make('password'),
             'timezone_offset' => Config::get('timezones.central.offSet'),
             'remember_token' => Str::random(10),

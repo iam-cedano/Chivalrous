@@ -6,4 +6,5 @@ Route::middleware(['auth:sanctum', 'web'])
 ->group(function () {
     Route::get('/user/token', 'getToken')->name('api.user.token');
     Route::get('/user/{id}', 'getUser')->name('api.user.id');
+    Route::get('/user', 'getCurrentUser')->name('api.user.id');
 });

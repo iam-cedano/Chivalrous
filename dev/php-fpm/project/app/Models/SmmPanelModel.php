@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SmmPanel extends Model
+class SmmPanelModel extends Model
 {
     use HasFactory;
 
@@ -20,7 +20,7 @@ class SmmPanel extends Model
     ];
 
     public function apiKey(): HasMany {
-        return $this->hasMany(SmmPanelApiKey::class, 'smm_panel_id');
+        return $this->hasMany(SmmPanelApiKeyModel::class, 'smm_panel_id');
     }
 
     protected static function newFactory() {

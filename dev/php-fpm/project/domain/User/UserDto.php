@@ -1,7 +1,7 @@
 <?php
-
 namespace Domain\User;
 
+use Domain\Balance\BalanceDto;
 use Domain\DTO;
 
 class UserDto extends DTO {
@@ -9,13 +9,20 @@ class UserDto extends DTO {
     private string $username;
     private string $email;
     private int $role;
-
-    public function __construct(string $id, string $username, string $email, int $role)
+    private BalanceDto|null $balanceDto;
+    public function __construct(
+        string $id, 
+        string $username, 
+        string $email, 
+        int $role,
+        BalanceDto $balanceDto = null
+    )
     {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->role = $role;
+        $this->balanceDto = $balanceDto;
     }
 
     public function getId(): string
@@ -38,14 +45,8 @@ class UserDto extends DTO {
         return $this->role;
     }
 
-    public static function fromDomain(UserDomain $user): self
-    {
-        return new self(
-            $user->getId(),
-            $user->getUsername(),
-            $user->getEmail(),
-            $user->getRole()
-        );
+    public function getBalance(): BalanceDto | null {
+        return $this->balanceDto;
     }
 
     public function toArray(): array

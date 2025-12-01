@@ -1,4 +1,4 @@
-import { JSX, ReactNode, useCallback } from "react";
+import { JSX, ReactNode, useCallback, useContext } from "react";
 import { Header } from "../home/components/header/Header";
 import { Hambuger } from "../home/components/header/Hambuger";
 import { Balance } from "../home/components/header/Balance";
@@ -6,6 +6,8 @@ import { Account } from "../home/components/header/Account";
 import { SearchInput } from "../home/components/shopping/SearchInput";
 import Select, { SingleValue, StylesConfig } from "react-select";
 import TextMagic from "@/functions/TextMagic";
+import ClientContext from "../home/contexts/ClientContext";
+import { u } from "node_modules/react-router/dist/development/index-react-server-client-BIz4AUNd.mjs";
 
 enum OrderStatus {
     PENDIENT,
@@ -267,10 +269,12 @@ function Searcher() {
 }
 
 function History(): JSX.Element {
+    const { user } = useContext(ClientContext);
+
     return (
         <div className="p-3 pb-[60px]">
           
-            <Header />
+            <Header amount={user?.balance?.amount ?? 0} profile_img_url="/build/assets/srajo.webp" />
 
             <Searcher />
 

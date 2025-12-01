@@ -1,8 +1,5 @@
-import { JSX, useEffect, useRef, useState } from "react";
+import { JSX, useContext, useRef, useState } from "react";
 import { Header } from "./components/header/Header";
-import { Hambuger } from "./components/header/Hambuger";
-import { Balance } from "./components/header/Balance";
-import { Account } from "./components/header/Account";
 import { Details } from "./components/details/Details";
 import { Shopping } from "./components/shopping/Shopping";
 import { ServiceList } from "./components/services/ServiceList";
@@ -10,8 +7,6 @@ import { Service } from "./components/services/Service";
 import { CartButton } from "./components/cart/CartButton";
 import { ShoppingHeader } from "./components/shopping/ShoppingHeader";
 import { SearchInputAndServices } from "./components/shopping/SearchInputAndServices";
-import { Orders } from "./components/details/Orders";
-import { Wallet } from "./components/details/Wallet";
 import { AddingServiceDialog } from "./components/dialogs/AddingServiceDialog";
 
 import { CheckoutDialog } from "./components/dialogs/CheckoutDialog";
@@ -22,7 +17,7 @@ import Services from "./data/Services.data";
 import * as ServicesApi  from "./api/Services";
 import ServiceDialogResponse from "./api/res/ServiceDialogResponse";
 import ShoppingDialogResponse from "./api/res/ShoppingDialogResponse";
-import axios from "axios";
+import ClientContext from "./contexts/ClientContext";
 
 const services = Services.map(service => <Service key={service.service} {...service} />);
 
@@ -32,26 +27,18 @@ type DialogInformation = {
 };
 
 function Home(): JSX.Element {
+    const {user} = useContext(ClientContext);
+
     const [isDialog, setDialog] = useState<DialogInformation>({
         status: false,
         data: null
     });
 
     const [isLoading, setIsLoading] = useState(false);
+    
     const dialogSelected = useRef<number>(0);
+
     const visibility = isDialog.status ? "hidden" : "block";
-
-    useEffect(() => {
-    axios.get('/api/user/2', {
-        headers: {
-            Accept: 'application/json',
-        },
-    }).then((res) => {
-        console.log(res);
-    }).catch(() => {
-
-    });
-    }, [])
 
     return (
         <DialogContext value={{
@@ -105,7 +92,9 @@ function Home(): JSX.Element {
 
             <div className={`${visibility} p-[5px]`}>
                 
-                <Header />
+                <Header amount={user?.balance?.amount ?? 0} 
+                profile_img_url="/build/assets/srajo.webp"
+                />
 
                 <Details />
 

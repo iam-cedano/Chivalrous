@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Usecases\Auth\CreateApiTokenUsecase;
-use App\Usecases\Auth\GetCurrentUserUsecase;
-use App\Usecases\Users\GetUserUsecase;
-use Domain\User\UserDto;
+use App\Usecases\User\GetCurrentUserUsecase;
+use App\Usecases\User\GetUserUsecase;
 
 class UserController extends Controller
 {
@@ -13,20 +12,27 @@ class UserController extends Controller
         private GetUserUsecase $getUserUsecase,
         private GetCurrentUserUsecase $getCurrentUserUsecase,
         private CreateApiTokenUsecase $createApiTokenUsecase
-        ) {}
+    ) {}
 
-    public function getUser(int $id) {
-        $data = $this->getUserUsecase->getUser(3);
+    public function getUser(string $id) {
+        $user = $this->getUserUsecase->execute($id);
 
-        return response()->json($data);
+        return response()->json([
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+        ]);
     }
 
     public function getCurrentUser() {
-        $domainUser = $this->getCurrentUserUsecase->execute();
+        $user = $this->getCurrentUserUsecase->execute();
 
-        $dto = UserDto::fromDomain($domainUser);
-
-        return response()->json($dto->toJSON());
+        return response()->json([
+            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
+            'balance' => [
+                'amount' => $user->getBalance()->getAmount()
+            ]
+        ]);
     }
 
     public function getToken() {

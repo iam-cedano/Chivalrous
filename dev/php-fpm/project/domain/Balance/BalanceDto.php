@@ -5,9 +5,9 @@ namespace Domain\Balance;
 use Domain\DTO;
 
 class BalanceDto extends DTO {
-    public function __construct(private int $userid, private int $amount) {}
+    public function __construct(private string $userid, private int $amount) {}
 
-    public function getUserId(): int
+    public function getUserId(): string
     {
         return $this->userid;
     }

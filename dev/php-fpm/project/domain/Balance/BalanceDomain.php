@@ -5,6 +5,4 @@ namespace Domain\Balance;
 class BalanceDomain {
 
 
-
-    
 }

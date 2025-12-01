@@ -10,20 +10,19 @@ use App\Usecases\Auth\LoginUsecase;
 use App\Usecases\Services\BrowseServicesUsecase;
 use App\Usecases\Services\SearchServicesUsecase;
 use App\Usecases\Services\GetServiceDetailsUsecase;
-use App\Usecases\Users\GetUserUsecase;
-use Domain\Auth\Interfaces\AuthServiceInterface;
-use App\Usecases\Auth\GetCurrentUserUsecase;
 use Domain\Auth\Interfaces\SessionServiceInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Auth\FormBasedAuthService;
 use Infrastructure\Auth\SanctumTokenService;
 use Infrastructure\Auth\SessionService;
 use Infrastructure\Local\Services\ServiceLocalAdapter;
-use Infrastructure\Local\Users\GetUserAdapter;
+use App\Usecases\User\GetUserUsecase;
+use App\Usecases\User\GetCurrentUserUsecase;
+use Infrastructure\User\UserService;
 
 class PortsProvider extends ServiceProvider {
     public function register() {
+        $this->app->singleton(SessionServiceInterface::class, SessionService::class);
         
         $this->app->when(ServicesController::class)
         ->needs(BrowseServicesUsecase::class)
@@ -44,12 +43,6 @@ class PortsProvider extends ServiceProvider {
         });
 
         $this->app->when(UserController::class)
-        ->needs(GetUserUsecase::class)
-        ->give(function() {
-            return new GetUserUsecase($this->app->make(GetUserAdapter::class));
-        });
-        
-        $this->app->when(UserController::class)
         ->needs(CreateApiTokenUsecase::class)
         ->give(function () {
             return new CreateApiTokenUsecase(
@@ -57,13 +50,23 @@ class PortsProvider extends ServiceProvider {
             );
         });
 
+        $this->app->when(UserController::class)
+        ->needs(GetUserUsecase::class)
+        ->give(function () {
+            return new GetUserUsecase($this->app->make(UserService::class));
+        });
+
+        $this->app->when(UserController::class)
+        ->needs(GetCurrentUserUsecase::class)
+        ->give(function () {
+            return new GetCurrentUserUsecase($this->app->make(UserService::class));
+        });
+
         $this->app->when(AuthController::class)
         ->needs(LoginUsecase::class)
         ->give(function() {
             return new LoginUsecase($this->app->make(FormBasedAuthService::class)); 
         });
-
-        $this->app->singleton(SessionServiceInterface::class, SessionService::class);
     }
 
     public function boot() {

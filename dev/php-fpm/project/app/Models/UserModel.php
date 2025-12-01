@@ -15,9 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 class UserModel extends Authenticatable
 {
     use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
-    
     protected $table = 'users'; 
-
     protected $keyType = 'string';
     protected $guard = [    
         'id',

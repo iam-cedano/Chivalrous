@@ -1,8 +1,10 @@
 <?php
 
+use App\Exceptions\NotFoundResourceException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Psr\Log\LogLevel;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,5 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo('/');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        
+        $exceptions->dontReportDuplicates();
+        $exceptions->level(NotFoundResourceException::class, LogLevel::INFO);
     })->create();

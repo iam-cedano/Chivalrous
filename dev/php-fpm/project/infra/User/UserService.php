@@ -3,7 +3,9 @@ namespace Infrastructure\User;
 
 use App\Models\UserModel;
 use Domain\Balance\BalanceDto;
+use App\Exceptions\NotFoundResourceException;
 use Domain\User\UserDto;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Domain\User\Interfaces\UserServiceInterface;
 
@@ -11,7 +13,11 @@ class UserService implements UserServiceInterface {
     public function getCurrentUser(): UserDto {
         $auth = Auth::guard()->user();
 
-        $model = UserModel::with('balance')->findOrFail($auth->id);
+        try {
+            $model = UserModel::with('balance')->findOrFail($auth->id);
+        } catch (ModelNotFoundException) {
+            throw new NotFoundResourceException('User', $auth->id);
+        }
 
         $balanceDto = null;
         
@@ -29,7 +35,11 @@ class UserService implements UserServiceInterface {
     }
 
     public function getUser(string $id): UserDto {
-        $model = UserModel::with('balance')->findOrFail($id);
+        try {
+            $model = UserModel::with('balance')->findOrFail($id);
+        } catch (ModelNotFoundException) {
+            throw new NotFoundResourceException('User', $id);
+        }
 
         $balanceDto = null;
         if ($model->balance) {

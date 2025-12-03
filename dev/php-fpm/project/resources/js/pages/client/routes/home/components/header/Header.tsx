@@ -1,4 +1,5 @@
-import { JSX } from "react";
+import { JSX, useContext } from "react";
+import SidebarContext from "../../../shared/contexts/SidebarContext";
 
 type HeaderProps = {
     amount: number;
@@ -6,9 +7,12 @@ type HeaderProps = {
 };
 
 function Header({amount, profile_img_url}: HeaderProps): JSX.Element {
+    const { openSidebar } = useContext(SidebarContext);
+
     return (
         <header className="flex justify-between">
-            <button className="rounded-[50%] bg-white size-[50px]">
+
+            <button className="rounded-[50%] bg-white size-[50px]" onClick={openSidebar}>
                 <img src="/build/assets/hambuger.webp" alt="Navigation Button" className="size-10 mx-auto" />
             </button>
 

@@ -1,5 +1,4 @@
 import { StrictMode, useEffect, useState } from "react";
-import { Footer } from "./routes/shared/Footer";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { History } from "./routes/history/History";
 import { Home } from "./routes/home/Home";
@@ -7,6 +6,7 @@ import { getCurrentUser } from "./routes/home/api/User";
 import ClientContext from "./routes/home/contexts/ClientContext";
 import UserServiceResponse from "./routes/home/api/res/UserServiceResponse";
 import ReactDOM from "react-dom/client";
+import { Layout } from "./routes/shared/Layout";
 
 function Main() {
     const [user, setUser] = useState<UserServiceResponse>({username: '', email: ''});
@@ -26,12 +26,11 @@ function Main() {
             <ClientContext.Provider value={{user}}>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/history" element={<History />} />
+                        <Route element={<Layout />}>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/history" element={<History />} />
+                        </Route>
                     </Routes>
-
-                  <Footer />
-
                 </BrowserRouter>
             </ClientContext.Provider>
         </StrictMode>

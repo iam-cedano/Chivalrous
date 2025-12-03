@@ -2,9 +2,9 @@
 
 namespace Http\Controllers;
 
-use App\Usecases\Services\BrowseServicesUsecase;
-use App\Usecases\Services\SearchServicesUsecase;
-use App\Usecases\Services\GetServiceDetailsUsecase;
+use Usecases\Services\BrowseServicesUsecase;
+use Usecases\Services\SearchServicesUsecase;
+use Usecases\Services\GetServiceDetailsUsecase;
 use Illuminate\Http\JsonResponse;
 
 class ServicesController extends Controller

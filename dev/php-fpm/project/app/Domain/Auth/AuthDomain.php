@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Auth;
+namespace Domains\Auth;
 
 class AuthDomain {
     

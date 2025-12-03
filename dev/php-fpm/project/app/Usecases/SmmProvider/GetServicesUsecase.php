@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecases\SmmProvider;
+namespace Usecases\SmmProvider;
 
 class GetServicesUsecase {
 

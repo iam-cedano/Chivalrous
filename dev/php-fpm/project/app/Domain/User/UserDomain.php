@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\User;
+namespace Domains\User;
 
 class UserDomain {
 

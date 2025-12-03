@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Local\Users;
+namespace Infra\Local\Users;
 
 use App\Ports\Users\GetUserPort;
 

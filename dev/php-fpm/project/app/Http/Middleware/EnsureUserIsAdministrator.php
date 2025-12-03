@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Http\Middleware;
 
 use App\Models\UserModel as User;
 use Closure;

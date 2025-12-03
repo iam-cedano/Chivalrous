@@ -1,5 +1,5 @@
 <?php
-use App\Http\Middleware\EnsureUserIsAuthenticated;
+use Http\Middleware\EnsureUserIsAuthenticated;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([EnsureUserIsAuthenticated::class])

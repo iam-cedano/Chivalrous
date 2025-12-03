@@ -1,6 +1,6 @@
 <?php
 
-namespace Infrastructure\Local\Services;
+namespace Infra\Local\Services;
 
 use App\Models\ServiceModel as Service;
 use App\Ports\Services\BrowseServicesPort;

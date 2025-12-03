@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Usecases\Services;
+namespace Usecases\Services;
 
 use App\Ports\Services\GetServiceDetailsPort;
 

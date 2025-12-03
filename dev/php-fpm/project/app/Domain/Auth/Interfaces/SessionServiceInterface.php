@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Auth\Interfaces;
+namespace Domains\Auth\Interfaces;
 
 interface SessionServiceInterface {
     public function isLogged(): bool;

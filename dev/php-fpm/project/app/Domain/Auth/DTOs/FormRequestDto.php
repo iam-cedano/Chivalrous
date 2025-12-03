@@ -1,12 +1,10 @@
 <?php
 
-namespace Domain\Auth\DTOs;
+namespace Domains\Auth\DTOs;
 
 class FormRequestDto {
     private string $username;
-
     private string $password;
-
     public function __construct(string $username, string $password)
     {
         $this->username = $username;

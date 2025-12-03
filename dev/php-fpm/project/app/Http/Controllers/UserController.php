@@ -1,10 +1,9 @@
 <?php
+namespace Http\Controllers;
 
-namespace App\Http\Controllers;
-
-use App\Usecases\Auth\CreateApiTokenUsecase;
-use App\Usecases\User\GetCurrentUserUsecase;
-use App\Usecases\User\GetUserUsecase;
+use Usecases\Auth\CreateApiTokenUsecase;
+use Usecases\User\GetCurrentUserUsecase;
+use Usecases\User\GetUserUsecase;
 
 class UserController extends Controller
 {

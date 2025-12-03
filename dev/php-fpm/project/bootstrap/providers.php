@@ -1,7 +1,7 @@
 <?php
 
 return [
-    App\Providers\AuthProvider::class,
-    App\Providers\PortsProvider::class,
-    App\Providers\ClientDetectionServiceProvider::class
+    Providers\AuthProvider::class,
+    Providers\PortsProvider::class,
+    Providers\ClientDetectionServiceProvider::class
 ];

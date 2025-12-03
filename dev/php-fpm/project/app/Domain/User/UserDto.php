@@ -1,8 +1,8 @@
 <?php
-namespace Domain\User;
+namespace Domains\User;
 
-use Domain\Balance\BalanceDto;
-use Domain\DTO;
+use Domains\Balance\BalanceDto;
+use Domains\DTO;
 
 class UserDto extends DTO {
     private string $id;

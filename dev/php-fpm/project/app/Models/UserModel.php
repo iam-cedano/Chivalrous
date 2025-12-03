@@ -46,7 +46,6 @@ class UserModel extends Authenticatable
     public function isAdministrator(): bool {
         return $this->role == Config::get('constants.roles.admin');
     }
-
     protected static function newFactory() {
         return UserFactory::new();
     }

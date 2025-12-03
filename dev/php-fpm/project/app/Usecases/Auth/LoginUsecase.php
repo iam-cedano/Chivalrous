@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Usecases\Auth;
+namespace Usecases\Auth;
 
-use Domain\Auth\Interfaces\AuthServiceInterface;
-use Domain\Auth\DTOs\LoginResponseDto;
+use Domains\Auth\Interfaces\AuthServiceInterface;
+use Domains\Auth\DTOs\LoginResponseDto;
 
 class LoginUsecase {
 

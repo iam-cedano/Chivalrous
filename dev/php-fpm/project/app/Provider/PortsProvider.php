@@ -1,24 +1,23 @@
 <?php
+namespace Providers;
 
-namespace App\Providers;
-
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ServicesController;
-use App\Http\Controllers\UserController;
-use App\Usecases\Auth\CreateApiTokenUsecase;
-use App\Usecases\Auth\LoginUsecase;
-use App\Usecases\Services\BrowseServicesUsecase;
-use App\Usecases\Services\SearchServicesUsecase;
-use App\Usecases\Services\GetServiceDetailsUsecase;
-use Domain\Auth\Interfaces\SessionServiceInterface;
+use Http\Controllers\AuthController;
+use Http\Controllers\ServicesController;
+use Http\Controllers\UserController;
+use Usecases\Auth\CreateApiTokenUsecase;
+use Usecases\Auth\LoginUsecase;
+use Usecases\Services\BrowseServicesUsecase;
+use Usecases\Services\SearchServicesUsecase;
+use Usecases\Services\GetServiceDetailsUsecase;
+use Domains\Auth\Interfaces\SessionServiceInterface;
 use Illuminate\Support\ServiceProvider;
-use Infrastructure\Auth\FormBasedAuthService;
-use Infrastructure\Auth\SanctumTokenService;
-use Infrastructure\Auth\SessionService;
-use Infrastructure\Local\Services\ServiceLocalAdapter;
-use App\Usecases\User\GetUserUsecase;
-use App\Usecases\User\GetCurrentUserUsecase;
-use Infrastructure\User\UserService;
+use Infra\Auth\FormBasedAuthService;
+use Infra\Auth\SanctumTokenService;
+use Infra\Auth\SessionService;
+use Infra\Local\Services\ServiceLocalAdapter;
+use Infra\User\UserService;
+use Usecases\User\GetUserUsecase;
+use Usecases\User\GetCurrentUserUsecase;
 
 class PortsProvider extends ServiceProvider {
     public function register() {

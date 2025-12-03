@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Balance;
+namespace Domains\Balance;
 
-use Domain\DTO;
+use Domains\DTO;
 
 class BalanceDto extends DTO {
     public function __construct(private string $userid, private int $amount) {}

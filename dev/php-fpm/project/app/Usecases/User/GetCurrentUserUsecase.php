@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Usecases\User;
+namespace Usecases\User;
 
-use Domain\User\Interfaces\UserServiceInterface;
-use Domain\User\UserDto;
+use Domains\User\Interfaces\UserServiceInterface;
+use Domains\User\UserDto;
 
 class GetCurrentUserUsecase {
     public function __construct(

@@ -1,11 +1,8 @@
 <?php
+namespace Usecases\Auth;
 
-namespace App\Usecases\Auth;
-
-use Domain\Auth\Interfaces\TokenServiceInterface;
-
+use Domains\Auth\Interfaces\TokenServiceInterface;
 class CreateApiTokenUsecase {
-
     public function __construct(
         private TokenServiceInterface $tokenServiceInterface
     ) {}

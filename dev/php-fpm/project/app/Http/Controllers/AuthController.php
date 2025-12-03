@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Http\Controllers;
 
-use App\Usecases\Auth\LoginUsecase;
-use Domain\Auth\Interfaces\AuthServiceInterface;
+use Usecases\Auth\LoginUsecase;
+use Domains\Auth\Interfaces\AuthServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

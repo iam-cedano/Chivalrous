@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Providers;
+namespace Providers;
 
 use App\Models\UserModel as User;
 use Illuminate\Auth\Access\Response;
@@ -10,9 +9,6 @@ use Illuminate\Support\ServiceProvider;
 
 class AuthProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
         Gate::define('access-admin-dashboard', function(User $user): Response {

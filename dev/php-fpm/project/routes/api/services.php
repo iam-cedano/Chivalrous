@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\ServicesController;
+use Http\Controllers\ServicesController;
 
 Route::controller(ServicesController::class)->group(function() {
     Route::get('/service/{id}', 'getServiceAndSources')->name('api.services.id');

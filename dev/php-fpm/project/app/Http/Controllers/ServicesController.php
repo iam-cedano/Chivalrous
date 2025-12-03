@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Http\Controllers;
+namespace Http\Controllers;
 
 use App\Usecases\Services\BrowseServicesUsecase;
 use App\Usecases\Services\SearchServicesUsecase;

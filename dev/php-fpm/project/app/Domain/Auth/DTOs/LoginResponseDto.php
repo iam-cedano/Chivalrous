@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Auth\DTOs;
+namespace Domains\Auth\DTOs;
 
 class LoginResponseDto {
     private int $code;

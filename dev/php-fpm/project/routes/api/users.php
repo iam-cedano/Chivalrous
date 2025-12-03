@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\UserController;
+use Http\Controllers\UserController;
 
 Route::middleware(['auth:sanctum', 'web'])
 ->controller(UserController::class)

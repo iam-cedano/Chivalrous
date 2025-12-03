@@ -1,9 +1,9 @@
 <?php
 
-namespace Infrastructure\Auth;
+namespace Infra\Auth;
 
-use Domain\Auth\Interfaces\AuthServiceInterface;
-use Domain\Auth\DTOs\LoginResponseDto;
+use Domains\Auth\Interfaces\AuthServiceInterface;
+use Domains\Auth\DTOs\LoginResponseDto;
 
 class RestBasedAuthService implements AuthServiceInterface {
     public function login(): LoginResponseDto {

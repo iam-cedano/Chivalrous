@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\User\Interfaces;
+namespace Domains\User\Interfaces;
 
-use Domain\User\UserDto;
+use Domains\User\UserDto;
 
 interface UserServiceInterface {
     public function getCurrentUser(): UserDto;

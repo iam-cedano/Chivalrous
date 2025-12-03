@@ -1,9 +1,9 @@
 <?php
 
-namespace Infrastructure\Auth;
+namespace Infra\Auth;
 
 use App\Models\UserModel;
-use Domain\Auth\Interfaces\TokenServiceInterface;
+use Domains\Auth\Interfaces\TokenServiceInterface;
 
 class SanctumTokenService implements TokenServiceInterface {
     public function createToken(string $id, string $name = 'api-token'): string {

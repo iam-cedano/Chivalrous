@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Middleware\EnsureUserIsAdministrator;
-use App\Http\Middleware\EnsureUserIsAuthenticated;
+use Http\Controllers\AdminController;
+use Http\Middleware\EnsureUserIsAdministrator;
+use Http\Middleware\EnsureUserIsAuthenticated;
 
 Route::controller(AdminController::class)
 ->middleware([EnsureUserIsAuthenticated::class, EnsureUserIsAdministrator::class])

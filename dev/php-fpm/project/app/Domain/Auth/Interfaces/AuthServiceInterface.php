@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Auth\Interfaces;
+namespace Domains\Auth\Interfaces;
 
-use Domain\Auth\DTOs\LoginResponseDto;
+use Domains\Auth\DTOs\LoginResponseDto;
 
 interface AuthServiceInterface {
         public function login(): LoginResponseDto;

@@ -1,13 +1,13 @@
 <?php
-namespace Infrastructure\User;
+namespace Infra\User;
 
-use App\Models\UserModel;
-use Domain\Balance\BalanceDto;
 use App\Exceptions\NotFoundResourceException;
-use Domain\User\UserDto;
+use App\Models\UserModel;
+use Domains\Balance\BalanceDto;
+use Domains\User\UserDto;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Domain\User\Interfaces\UserServiceInterface;
+use Domains\User\Interfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface {
     public function getCurrentUser(): UserDto {
@@ -42,6 +42,7 @@ class UserService implements UserServiceInterface {
         }
 
         $balanceDto = null;
+
         if ($model->balance) {
             $balanceDto = new BalanceDto($model->id, (int) $model->balance->amount);
         }

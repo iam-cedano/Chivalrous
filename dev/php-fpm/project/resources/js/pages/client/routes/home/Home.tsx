@@ -90,7 +90,7 @@ function Home(): JSX.Element {
                 <CheckoutDialog />
             )}
 
-            <div className={`${visibility} p-[5px]`}>
+            <div className={`${visibility} p-3 pb-20`}>
                 
                 <Header amount={user?.balance?.amount ?? 0} 
                 profile_img_url="/build/assets/srajo.webp"

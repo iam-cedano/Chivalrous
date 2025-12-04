@@ -10,7 +10,7 @@ function Header({amount, profile_img_url}: HeaderProps): JSX.Element {
     const { openSidebar } = useContext(SidebarContext);
 
     return (
-        <header className="flex justify-between">
+        <header className="sticky top-0 z-30 flex justify-between bg-[#F8F8F8] p-1 mb-1">
 
             <button className="rounded-[50%] bg-white size-[50px]" onClick={openSidebar}>
                 <img src="/build/assets/hambuger.webp" alt="Navigation Button" className="size-10 mx-auto" />

@@ -1,10 +1,18 @@
 import { Link, useLocation } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { 
+    faClipboardList, 
+    faHeadset, 
+    faHouse, 
+    faGift, 
+    faGear 
+} from "@fortawesome/free-solid-svg-icons";
 
 type NavItem = {
     key: string,
     label: string,
-    image: string,
-    gold: string
+    icon: IconDefinition
 };
 
 type TabProps = {
@@ -12,25 +20,26 @@ type TabProps = {
     withBorder?: boolean,
     selected?: boolean,
 };
-
+    
 const NAV_ITEMS: NavItem[] = [
-    { key: 'history', label: 'Orders', image: 'build/assets/order.webp', gold: 'build/assets/orders_gold.webp' },
-    { key: 'support', label: 'Support', image: 'build/assets/support.webp', gold: 'build/assets/support_gold.webp' },
-    { key: 'home', label: 'Home', image: 'build/assets/home.webp', gold: 'build/assets/home_gold.webp' },
-    { key: 'offers', label: 'Offers', image: 'build/assets/offer.webp', gold: 'build/assets/offer_gold.webp' },
-    { key: 'setting', label: 'Setting', image: 'build/assets/setting.webp', gold: 'build/assets/setting_gold.webp' },
+    { key: 'history', label: 'Orders', icon: faClipboardList },
+    { key: 'support', label: 'Support', icon: faHeadset },
+    { key: 'home', label: 'Home', icon: faHouse },
+    { key: 'offers', label: 'Offers', icon: faGift },
+    { key: 'setting', label: 'Setting', icon: faGear },
 ];
 
 function Tab({ details, withBorder = true, selected = false }: TabProps) {
     return (
         <Link to={`/${details.key}`}>
-              <div className={`flex flex-col pr-[5px] ${ withBorder ? 'border-r-[0.5px] border-r-[#F8F8F8]' : '' }`}>
-                <img
-                    src={ selected ? details.gold : details.image }
-                    alt={`${details.label}'s link`}
-                    className="size-[35px] m-auto"
+            <div className={`flex flex-col pr-[5px] ${withBorder ? 'border-r-[0.5px] border-r-[#F8F8F8]' : ''}`}>
+                <FontAwesomeIcon 
+                    icon={details.icon} 
+                    className={`w-[25px] h-[25px] m-auto ${selected ? 'text-[#D4AF37]' : 'text-[#6B7280]'}`}
                 />
-                <span className="text-center">{ details.label }</span>
+                <span className={`text-center ${selected ? 'text-[#D4AF37]' : 'text-[#6B7280]'}`}>
+                    {details.label}
+                </span>
             </div>
         </Link>
     );

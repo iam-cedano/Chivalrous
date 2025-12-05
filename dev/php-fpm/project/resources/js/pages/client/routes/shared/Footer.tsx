@@ -35,7 +35,7 @@ function Tab({ details, withBorder = true, selected = false }: TabProps) {
             <div className={`flex flex-col pr-[5px] ${withBorder ? 'border-r-[0.5px] border-r-[#F8F8F8]' : ''}`}>
                 <FontAwesomeIcon 
                     icon={details.icon} 
-                    className={`w-[25px] h-[25px] m-auto ${selected ? 'text-[#D4AF37]' : 'text-[#6B7280]'}`}
+                    className={`text-[25px] m-auto ${selected ? 'text-[#D4AF37]' : 'text-[#6B7280]'}`}
                 />
                 <span className={`text-center ${selected ? 'text-[#D4AF37]' : 'text-[#6B7280]'}`}>
                     {details.label}
@@ -59,7 +59,7 @@ function Footer() {
     ));
 
     return (
-        <nav id="footer" className="w-full p-2.5 fixed inset-x-0 bottom-0 flex justify-center bg-white">
+        <nav id="footer" className="w-full p-2.5 fixed inset-x-0 bottom-0 flex justify-center bg-white h-[68px]">
             <ul className="flex flex-row gap-2.5">
                 { navItems }
             </ul>

@@ -1,6 +1,8 @@
 import FullScreenDialog from "@/pages/shared/components/FullScreenDialog";
 import DialogContext from "../../contexts/DialogContext";
 import { useContext, useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping } from '@fortawesome/free-solid-svg-icons';
 
 type CartItem = {
     id: number;
@@ -286,7 +288,6 @@ function CheckoutDialog() {
                 </div>
             </div>
 
-            {/* Scroll indicator - positioned above the checkout footer */}
             {showScrollIndicator && (
                 <div className="fixed bottom-[210px] left-0 right-0 flex justify-center pointer-events-none z-10">
                     <div className="bg-white/90 rounded-full p-2 shadow-md animate-bounce">
@@ -295,19 +296,24 @@ function CheckoutDialog() {
                 </div>
             )}
 
-            {/* Fixed checkout footer */}
+          
             <div className="fixed bottom-17 left-0 right-0 bg-white border-t border-[#E5E7EB] p-4 shadow-lg">
                     <div className="flex items-center justify-between mb-3">
-                        <span className="font-[Montserrat] font-semibold text-[#111827]">Total</span>
-                        <span className="font-[Montserrat] font-semibold text-[#111827]">$ {totalPrice} MXN</span>
+                        <span className="text-[21px] font-[Montserrat] font-semibold text-[#111827]">Total</span>
+                        <span className="text-[21px] font-[Montserrat] font-semibold text-[#111827]">$ {totalPrice} MXN</span>
                     </div>
                     <button
                         type="button"
-                        className="flex w-full gap-2 rounded-full bg-[#22C55E] px-4 py-4 justify-center shadow-md"
+                        className="flex w-full items-center gap-4 rounded-xl bg-[#111827] px-4 py-4 justify-center shadow-md"
                         onClick={handlerClick}
                     >
-                        <span className="text-[18px] font-[Montserrat] font-semibold text-white">
-                            🛒 Checkout ({selectedCount} items)
+                        <span className="relative">
+                            <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white">
+                                    <FontAwesomeIcon icon={faBagShopping} className="text-xl text-[#111827]" />
+                                </span>
+                        </span>
+                        <span className="text-[20px] font-[Montserrat] font-semibold text-white">
+                            Checkout ({selectedCount} items)
                         </span>
                 </button>
             </div>

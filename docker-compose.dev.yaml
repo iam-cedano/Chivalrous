@@ -10,7 +10,7 @@ services:
       - chivalrous-network
       - chivalrous-cache-network
     volumes:
-      - project:/var/www/chivalrous.com/
+      - ./dev/php-fpm/project/:/var/www/chivalrous.com/
     depends_on:
       - db
         
@@ -25,7 +25,7 @@ services:
       - "80:80"
     volumes:
       - ./dev/nginx/chivalrous.com/logs/:/var/log/nginx/chivalrous.com/
-      - public:/var/www/chivalrous.com/public/
+      - ./dev/php-fpm/project/public/:/var/www/chivalrous.com/public/
     networks:
       - chivalrous-network
     depends_on:
@@ -48,7 +48,7 @@ services:
         UID: ${UID:-1000}
         GID: ${GID:-1000}
     volumes: 
-      - project:/var/www/chivalrous.com/
+      - ./dev/php-fpm/project/:/var/www/chivalrous.com/
     networks:
       - chivalrous-network
       - chivalrous-cache-network
@@ -91,20 +91,6 @@ services:
       - redisinsight-data:/db
     
 volumes:
-  project:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./dev/php-fpm/project/
-  
-  public:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./dev/php-fpm/project/public/
-  
   vite-node-modules:
 
   db-dev:

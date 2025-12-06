@@ -10,7 +10,7 @@
     @vite('resources/css/app.css')
 
     @viteReactRefresh
-    @vite('resources/js/pages/client/Client.tsx')
+    @vite('resources/js/presentation/features/client/Client.tsx')
     <link rel="icon" type="image/png" href="/build/assets/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/build/assets/favicon.svg" />
     <link rel="shortcut icon" href="/build/assets/favicon.ico" />

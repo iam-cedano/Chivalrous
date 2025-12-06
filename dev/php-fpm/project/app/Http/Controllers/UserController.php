@@ -19,6 +19,9 @@ class UserController extends Controller
         return response()->json([
             'username' => $user->getUsername(),
             'email' => $user->getEmail(),
+            'balance' => [
+                'amount' => $user->getBalance()->getAmount()
+            ]
         ]);
     }
 

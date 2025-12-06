@@ -10,10 +10,10 @@ export default defineConfig({
         tailwindcss(),
         laravel({
             input: [
-                'resources/js/pages/admin/Admin.Users.tsx',
-                'resources/js/pages/admin/Admin.Dashboard.tsx',
-                'resources/js/pages/client/Client.tsx',
-                'resources/js/pages/auth/Auth.Login.tsx',
+                'resources/js/presentation/features/admin/Users.tsx',
+                'resources/js/presentation/features/admin/Dashboard.tsx',
+                'resources/js/presentation/features/client/Client.tsx',
+                'resources/js/presentation/features/auth/Auth.tsx',
                 'resources/css/app.css',
                 'resources/fonts/Lobster-Regular.woff',
                 'resources/fonts/Lobster-Regular.woff2',
@@ -33,8 +33,6 @@ export default defineConfig({
     ],
     resolve: {
     alias: [
-        { find: "@/types/client", replacement: path.resolve(__dirname, "resources/js/pages/client/routes/home/types") },
-        { find: "@/data/client", replacement: path.resolve(__dirname, "resources/js/pages/client/data") },
         { find: "@", replacement: path.resolve(__dirname, "resources/js") },
     ],
     },

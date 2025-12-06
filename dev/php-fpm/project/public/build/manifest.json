@@ -1,10 +1,14 @@
 {
-  "_index-Bdv0ketA.js": {
-    "file": "assets/index-Bdv0ketA.js",
+  "_index-B1TpfuMd.js": {
+    "file": "assets/index-B1TpfuMd.js",
+    "name": "index"
+  },
+  "_index-ngrFHoWO.js": {
+    "file": "assets/index-ngrFHoWO.js",
     "name": "index"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BLTXAYvu.css",
+    "file": "assets/app-BdqiieAD.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -32,40 +36,42 @@
     "file": "assets/Montserrat-Regular-Cp4YO4Vy.woff2",
     "src": "resources/fonts/Montserrat-Regular.woff2"
   },
-  "resources/js/pages/admin/Admin.Dashboard.tsx": {
-    "file": "assets/Admin.Dashboard-DQklGFwR.js",
-    "name": "Admin.Dashboard",
-    "src": "resources/js/pages/admin/Admin.Dashboard.tsx",
+  "resources/js/presentation/features/admin/Dashboard.tsx": {
+    "file": "assets/Dashboard-zcjQ8SVx.js",
+    "name": "Dashboard",
+    "src": "resources/js/presentation/features/admin/Dashboard.tsx",
     "isEntry": true,
     "imports": [
-      "_index-Bdv0ketA.js"
+      "_index-B1TpfuMd.js"
     ]
   },
-  "resources/js/pages/admin/Admin.Users.tsx": {
-    "file": "assets/Admin.Users-DQklGFwR.js",
-    "name": "Admin.Users",
-    "src": "resources/js/pages/admin/Admin.Users.tsx",
+  "resources/js/presentation/features/admin/Users.tsx": {
+    "file": "assets/Users-zcjQ8SVx.js",
+    "name": "Users",
+    "src": "resources/js/presentation/features/admin/Users.tsx",
     "isEntry": true,
     "imports": [
-      "_index-Bdv0ketA.js"
+      "_index-B1TpfuMd.js"
     ]
   },
-  "resources/js/pages/auth/Auth.Login.tsx": {
-    "file": "assets/Auth.Login-B-wIqrMf.js",
-    "name": "Auth.Login",
-    "src": "resources/js/pages/auth/Auth.Login.tsx",
+  "resources/js/presentation/features/auth/Auth.tsx": {
+    "file": "assets/Auth-DA8gql5p.js",
+    "name": "Auth",
+    "src": "resources/js/presentation/features/auth/Auth.tsx",
     "isEntry": true,
     "imports": [
-      "_index-Bdv0ketA.js"
+      "_index-B1TpfuMd.js",
+      "_index-ngrFHoWO.js"
     ]
   },
-  "resources/js/pages/client/Client.tsx": {
-    "file": "assets/Client-Da-4PGRR.js",
+  "resources/js/presentation/features/client/Client.tsx": {
+    "file": "assets/Client-DdkoKjgC.js",
     "name": "Client",
-    "src": "resources/js/pages/client/Client.tsx",
+    "src": "resources/js/presentation/features/client/Client.tsx",
     "isEntry": true,
     "imports": [
-      "_index-Bdv0ketA.js"
+      "_index-B1TpfuMd.js",
+      "_index-ngrFHoWO.js"
     ]
   }
 }

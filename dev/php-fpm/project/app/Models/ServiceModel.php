@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-/**
- * Model to represent a service from a SMM Panel.
- */
 class ServiceModel extends Model
 {
     use HasFactory;

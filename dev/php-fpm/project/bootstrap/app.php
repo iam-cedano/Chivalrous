@@ -4,6 +4,8 @@ use App\Exceptions\NotFoundResourceException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Validation\ValidationException;
 use Psr\Log\LogLevel;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -26,5 +28,16 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->dontReportDuplicates();
+        
         $exceptions->level(NotFoundResourceException::class, LogLevel::INFO);
+        $exceptions->level(ValidationException::class, LogLevel::INFO);
+        
+        $exceptions->render(function (ValidationException $e, $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Error when creating an user',
+                    'reasons' => $e->errors()
+                ], 422);
+            }
+        });
     })->create();

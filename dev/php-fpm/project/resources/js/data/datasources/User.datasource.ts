@@ -5,4 +5,16 @@ async function getCurrentUser(): Promise<AxiosResponse<UserDTO>> {
     return axios.get<UserDTO>('/api/user');
 }
 
-export { getCurrentUser };
+interface CreateUserResponse {
+    message: string;
+}
+
+async function createUser(username: string, email: string, password: string): Promise<AxiosResponse<CreateUserResponse>> {
+    return axios.post<CreateUserResponse>('/api/user', {
+        username,
+        email,
+        password
+    });
+}
+
+export { getCurrentUser, createUser };

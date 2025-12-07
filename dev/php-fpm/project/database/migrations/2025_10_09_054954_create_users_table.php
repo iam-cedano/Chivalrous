@@ -29,9 +29,6 @@ return new class extends Migration
             $table->unique('username');
             $table->unique('email');
 
-            $table->index('username');
-            $table->index('email');
-
             $table->primary('id');
         });
     }

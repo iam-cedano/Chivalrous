@@ -11,8 +11,9 @@ class BalanceModel extends Model
     use HasFactory;
     protected $table = 'balances';
     protected $primaryKey = 'id';
-    public $incremeting = true;
-    protected $guard = [
+    public $incrementing = true;
+    protected $fillable = [
+        'user_id',
         'amount'
     ];
     public function user(): BelongsTo {

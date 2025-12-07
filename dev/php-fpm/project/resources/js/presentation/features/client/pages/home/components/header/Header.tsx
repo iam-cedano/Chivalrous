@@ -1,5 +1,7 @@
-import { JSX, useContext } from "react";
+import { JSX, useContext, useState } from "react";
 import SidebarContext from "@/presentation/shared/contexts/SidebarContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 type HeaderProps = {
     amount: number;
@@ -8,6 +10,11 @@ type HeaderProps = {
 
 function Header({ amount, profile_img_url }: HeaderProps): JSX.Element {
     const { openSidebar } = useContext(SidebarContext);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const handleLogout = () => {
+        location.replace('/auth/logout');
+    };
 
     return (
         <header className="sticky top-0 z-30 flex justify-between bg-[#F8F8F8] p-1 mb-1">
@@ -21,9 +28,29 @@ function Header({ amount, profile_img_url }: HeaderProps): JSX.Element {
                     <img src="/build/assets/wallet.webp" alt="Current balance of your account at the header" className="size-[37px]" />
                     <span className="font-[Montserrat] text-[16px] relative top-2 max-w-[214px] truncate">${amount} MXN</span>
                 </div>
-                <div className="flex gap-[5px] rounded-3xl bg-white p-2">
-                    <img className="size-[37px] rounded-[50%] object-cover" src={profile_img_url} alt="Profile photo" />
-                    <img className="size-8 rounded-[50%] relative top-[5px]" src="/build/assets/down-arrow.webp" alt="Down Arrow" />
+                <div className="relative">
+                    <button 
+                        className="flex gap-[5px] rounded-3xl bg-white p-2"
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                    >
+                        <img className="size-[37px] rounded-[50%] object-cover" src={profile_img_url} alt="Profile photo" />
+                        <img 
+                            className={`size-8 rounded-[50%] relative top-[5px] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`} 
+                            src="/build/assets/down-arrow.webp" 
+                            alt="Down Arrow" 
+                        />
+                    </button>
+                    {dropdownOpen && (
+                        <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg py-2 min-w-[150px]">
+                            <button 
+                                className="flex items-center gap-2 w-full px-4 py-2 text-left hover:bg-gray-100 font-[Montserrat]"
+                                onClick={handleLogout}
+                            >
+                                <FontAwesomeIcon icon={faRightFromBracket} className="text-red-500" />
+                                <span>Sign out</span>
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

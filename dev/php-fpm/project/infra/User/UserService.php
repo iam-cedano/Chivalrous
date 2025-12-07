@@ -2,6 +2,7 @@
 namespace Infra\User;
 
 use App\Exceptions\NotFoundResourceException;
+use Http\Requests\CreateUserRequest;
 use App\Models\UserModel;
 use Domains\Balance\BalanceDto;
 use Domains\User\UserDto;
@@ -22,7 +23,7 @@ class UserService implements UserServiceInterface {
         $balanceDto = null;
         
         if ($model->balance) {
-            $balanceDto = new BalanceDto($model->id, (int) $model->balance->amount);
+            $balanceDto = new BalanceDto($model->balance->id, $auth->id,(int) $model->balance->amount);
         }
 
         return new UserDto(
@@ -44,7 +45,7 @@ class UserService implements UserServiceInterface {
         $balanceDto = null;
 
         if ($model->balance) {
-            $balanceDto = new BalanceDto($model->id, (int) $model->balance->amount);
+            $balanceDto = new BalanceDto($model->balance->id, $model->id, (int) $model->balance->amount);
         }
 
         return new UserDto(
@@ -54,5 +55,23 @@ class UserService implements UserServiceInterface {
             (int) $model->role,
             $balanceDto
         );
+    }
+
+    public function createUser(CreateUserRequest $request): UserDto {
+        $inputs = $request->validated();
+
+        $username = $inputs['username'];
+        $email = $inputs['email'];
+        $password = $inputs['password'];
+
+        $user = UserModel::create([
+            'username' => $username,
+            'email' => $email,
+            'password' => $password
+        ]);
+
+        $balance = new BalanceDto($user->balance->id, $user->id, (int) $user->balance->amount);
+
+        return new UserDto($user->id, $user->username, $user->email, 1, $balance);
     }
 }

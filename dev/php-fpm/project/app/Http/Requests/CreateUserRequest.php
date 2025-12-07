@@ -1,28 +1,37 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
+    protected $stopOnFirstFailure = false;
+
+    public function prepareForValidation() {
+        $this->merge([
+            'username' => trim($this->username),
+            'email' => trim($this->email),
+            'password' => trim($this->password)
+        ]);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    public function messages() {
+        return [
+            'username.required' => 'Username is required',
+            'email.required' => 'Email is required',
+            'password.required' => 'Password is required',
+            'email.email' => 'The email field must be a valid email address',
+            'password.min' => 'Use 8 characters or more for your password'
+        ];
+    }
+
     public function rules(): array
     {
         return [
-            //
+            'username' => 'required|string|max:30|unique:users,username',
+            'email' => 'required|email|max:254|unique:users,email',
+            'password' => 'required|string|min:8'
         ];
     }
 }

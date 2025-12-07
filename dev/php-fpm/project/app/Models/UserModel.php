@@ -17,13 +17,13 @@ class UserModel extends Authenticatable
     use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
     protected $table = 'users'; 
     protected $keyType = 'string';
-    protected $guard = [    
-        'id',
+    protected $fillable = [    
         'username',
         'email',
+        'password',
         'timezone_offset',
         'role',
-        'api_key',
+        'language',
     ];
     protected $hidden = [
         'password',
@@ -38,6 +38,15 @@ class UserModel extends Authenticatable
         return [
             'password' => 'hashed',
         ];
+    }
+
+    protected static function booted(): void
+    {
+        static::created(function (UserModel $user) {
+            $user->balance()->create([
+                'amount' => 0
+            ]);
+        });
     }
 
     public function balance(): HasOne {

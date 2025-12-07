@@ -6,6 +6,7 @@ use Http\Controllers\ServicesController;
 use Http\Controllers\UserController;
 use Usecases\Auth\CreateApiTokenUsecase;
 use Usecases\Auth\LoginUsecase;
+use Usecases\Auth\StartSessionByUserIdUsecase;
 use Usecases\Services\BrowseServicesUsecase;
 use Usecases\Services\SearchServicesUsecase;
 use Usecases\Services\GetServiceDetailsUsecase;
@@ -16,13 +17,14 @@ use Infra\Auth\SanctumTokenService;
 use Infra\Auth\SessionService;
 use Infra\Local\Services\ServiceLocalAdapter;
 use Infra\User\UserService;
+use Usecases\User\CreateUserUsecase;
 use Usecases\User\GetUserUsecase;
 use Usecases\User\GetCurrentUserUsecase;
 
 class PortsProvider extends ServiceProvider {
     public function register() {
         $this->app->singleton(SessionServiceInterface::class, SessionService::class);
-        
+
         $this->app->when(ServicesController::class)
         ->needs(BrowseServicesUsecase::class)
         ->give(function() {
@@ -61,11 +63,24 @@ class PortsProvider extends ServiceProvider {
             return new GetCurrentUserUsecase($this->app->make(UserService::class));
         });
 
+        $this->app->when(UserController::class)
+        ->needs(CreateUserUsecase::class)
+        ->give(function() {
+            return new CreateUserUsecase($this->app->make(UserService::class));
+        });
+
+        $this->app->when(UserController::class)
+        ->needs(StartSessionByUserIdUsecase::class)
+        ->give(function() {
+            return new StartSessionByUserIdUsecase($this->app->make(\Infra\Session\SessionService::class));
+        });
+
         $this->app->when(AuthController::class)
         ->needs(LoginUsecase::class)
         ->give(function() {
             return new LoginUsecase($this->app->make(FormBasedAuthService::class)); 
         });
+
     }
 
     public function boot() {

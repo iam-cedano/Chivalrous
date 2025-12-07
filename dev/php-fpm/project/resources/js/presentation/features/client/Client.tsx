@@ -17,7 +17,6 @@ function ClientApp() {
                 setUser(userData);
             })
             .catch(() => {
-                location.replace('/auth/logout');
             });
     }, []);
 

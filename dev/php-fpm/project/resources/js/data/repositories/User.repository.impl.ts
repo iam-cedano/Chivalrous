@@ -18,6 +18,11 @@ class UserRepositoryImpl implements UserRepository {
             balance: dto.balance ? { amount: dto.balance.amount } : undefined
         };
     }
+
+    async createUser(username: string, email: string, password: string): Promise<{ message: string }> {
+        const response = await UserDatasource.createUser(username, email, password);
+        return response.data;
+    }
 }
 
 export const userRepository: UserRepository = new UserRepositoryImpl();

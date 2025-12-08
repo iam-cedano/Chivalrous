@@ -29,6 +29,7 @@
             "Domains\\": "app/Domain/",
             "Usecases\\": "app/Usecases/",
             "Providers\\": "app/Provider/",
+            "Models\\": "app/Models/",
             "Http\\": "app/Http/",
             "Infra\\": "infra/",
             "Database\\Factories\\": "database/factories/",

@@ -4,6 +4,7 @@ namespace Providers;
 use Http\Controllers\AuthController;
 use Http\Controllers\ServicesController;
 use Http\Controllers\UserController;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Usecases\Auth\CreateApiTokenUsecase;
 use Usecases\Auth\LoginUsecase;
 use Usecases\Auth\StartSessionByUserIdUsecase;
@@ -21,7 +22,7 @@ use Usecases\User\CreateUserUsecase;
 use Usecases\User\GetUserUsecase;
 use Usecases\User\GetCurrentUserUsecase;
 
-class PortsProvider extends ServiceProvider {
+class PortsProvider extends ServiceProvider implements DeferrableProvider {
     public function register() {
         $this->app->singleton(SessionServiceInterface::class, SessionService::class);
 
@@ -84,5 +85,20 @@ class PortsProvider extends ServiceProvider {
     }
 
     public function boot() {
+    }
+
+    public function provides(): array {
+        return [
+            SessionServiceInterface::class,
+            BrowseServicesUsecase::class,
+            SearchServicesUsecase::class,
+            GetServiceDetailsUsecase::class,
+            CreateApiTokenUsecase::class,
+            GetUserUsecase::class,
+            GetCurrentUserUsecase::class,
+            CreateUserUsecase::class,
+            StartSessionByUserIdUsecase::class,
+            LoginUsecase::class,
+        ];
     }
 }

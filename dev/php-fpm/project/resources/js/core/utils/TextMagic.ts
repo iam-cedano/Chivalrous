@@ -6,7 +6,11 @@ function transformText(text: string): string {
     return transformedText;
 }
 
-function machine(text: string): string {
+function machine(text: string | undefined): string {
+    if (text == undefined) {
+        return '';
+    }
+
     const firstTransformation = text.replace(/\*\*(.+?)\*\*/g, '<span class="font-bold">$1</span>');
     const secondTransformation = firstTransformation.replace(/(?:\r\n|\r|\n|\u0085|\u2028|\u2029)/g, '<br/>');
     

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,6 +53,11 @@ class UserModel extends Authenticatable
     public function balance(): HasOne {
         return $this->hasOne(BalanceModel::class, 'user_id');
     }
+
+    public function orders(): HasMany {
+        return $this->hasMany(OrderModel::class, 'user_id');
+    }
+
     public function isAdministrator(): bool {
         return $this->role == Config::get('constants.roles.admin');
     }

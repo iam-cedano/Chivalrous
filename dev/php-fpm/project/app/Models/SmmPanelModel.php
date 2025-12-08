@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Models;
 
 use Database\Factories\SmmPanelFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

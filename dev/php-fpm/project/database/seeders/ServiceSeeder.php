@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ServiceModel as Service;
+use Models\ServiceModel as Service;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 

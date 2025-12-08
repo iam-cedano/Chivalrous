@@ -22,8 +22,8 @@ class FormBasedAuthService implements AuthServiceInterface {
 
         $response = null;
 
-        if (! Auth::guard('web')->attempt($formRequestDto->toArray()) ) {
-            $response = new LoginResponseDto(400, 'Credentials don\'t match');
+        if (! Auth::guard('web')->attempt($formRequestDto->toArray() ) ) {
+            $response = new LoginResponseDto(401, 'Credentials don\'t match');
             
             return $response;
         }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\UserModel as User;
+use Models\UserModel as User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;

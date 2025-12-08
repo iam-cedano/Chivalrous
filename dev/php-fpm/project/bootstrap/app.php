@@ -1,9 +1,11 @@
 <?php
 
 use App\Exceptions\NotFoundResourceException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Validation\ValidationException;
 use Psr\Log\LogLevel;
@@ -32,12 +34,22 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->level(NotFoundResourceException::class, LogLevel::INFO);
         $exceptions->level(ValidationException::class, LogLevel::INFO);
         
-        $exceptions->render(function (ValidationException $e, $request) {
+        $exceptions->render(function (ValidationException $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 return response()->json([
                     'message' => 'Error when creating an user',
                     'reasons' => $e->errors()
                 ], 422);
             }
+        });
+
+        $exceptions->render(function (AuthorizationException $e, Request $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Not authorized user',
+                ], 403);
+            }
+            
+            return to_route('auth.login');
         });
     })->create();

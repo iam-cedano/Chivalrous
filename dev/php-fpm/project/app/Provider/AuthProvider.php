@@ -1,7 +1,7 @@
 <?php
 namespace Providers;
 
-use App\Models\UserModel as User;
+use Models\UserModel as User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;

@@ -8,13 +8,13 @@ class UserDto extends DTO {
     private string $id;
     private string $username;
     private string $email;
-    private int $role;
+    private string $role;
     private BalanceDto|null $balanceDto;
     public function __construct(
         string $id, 
         string $username, 
         string $email, 
-        int $role,
+        string $role,
         BalanceDto $balanceDto = null
     )
     {
@@ -40,7 +40,7 @@ class UserDto extends DTO {
         return $this->email;
     }
 
-    public function getRole(): int
+    public function getRole(): string
     {
         return $this->role;
     }

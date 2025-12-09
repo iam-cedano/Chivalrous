@@ -81,12 +81,7 @@ class PortsProvider extends ServiceProvider implements DeferrableProvider {
         ->give(function() {
             return new LoginUsecase($this->app->make(FormBasedAuthService::class)); 
         });
-
     }
-
-    public function boot() {
-    }
-
     public function provides(): array {
         return [
             SessionServiceInterface::class,

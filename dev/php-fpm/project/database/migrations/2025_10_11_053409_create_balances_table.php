@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('balances', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignUuid('user_id')->constrained('users', 'id', 'fk_user_id_01');
+            $table->foreignId('user_id')->constrained('users', 'id', 'fk_user_id_01');
             
             $table->unique('user_id');
 

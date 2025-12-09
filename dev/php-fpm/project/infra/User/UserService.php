@@ -3,7 +3,7 @@ namespace Infra\User;
 
 use App\Exceptions\NotFoundResourceException;
 use Http\Requests\CreateUserRequest;
-use App\Models\UserModel;
+use Models\UserModel;
 use Domains\Balance\BalanceDto;
 use Domains\User\UserDto;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

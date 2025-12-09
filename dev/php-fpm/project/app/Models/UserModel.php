@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use Models\OrderModel;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,6 @@ class UserModel extends Authenticatable
 {
     use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
     protected $table = 'users'; 
-    protected $keyType = 'string';
     protected $fillable = [    
         'username',
         'email',

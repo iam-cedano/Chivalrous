@@ -1,8 +1,7 @@
 <?php
 use Http\Controllers\UserController;
-use Illuminate\Foundation\Http\Middleware\ValidateCsrfToken;
 
-Route::middleware(['auth:sanctum', 'web', ValidateCsrfToken::class])
+Route::middleware(['auth:sanctum', 'web'])
 ->controller(UserController::class)
 ->group(function () {
     Route::get('/user/token', 'getToken')->name('api.user.token');

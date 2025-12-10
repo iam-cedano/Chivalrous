@@ -2,6 +2,7 @@
 namespace Infra\User;
 
 use App\Exceptions\NotFoundResourceException;
+use Domains\Cart\DTOs\CartDto;
 use Http\Requests\CreateUserRequest;
 use Models\UserModel;
 use Domains\Balance\DTOs\BalanceDto;
@@ -15,15 +16,20 @@ class UserService implements UserServiceInterface {
         $auth = Auth::guard()->user();
 
         try {
-            $model = UserModel::with('balance')->findOrFail($auth->id);
+            $model = UserModel::with(['balance', 'cart'])->findOrFail($auth->id);
         } catch (ModelNotFoundException) {
             throw new NotFoundResourceException('User', $auth->id);
         }
 
         $balanceDto = null;
+        $cartDto = null;
         
         if ($model->balance) {
-            $balanceDto = new BalanceDto($model->balance->id, $auth->id,(int) $model->balance->amount);
+            $balanceDto = new BalanceDto($model->balance->id, $auth->id, $model->balance->amount);
+        }
+
+        if ($model->cart) {
+            $cartDto = new CartDto($model->cart->id, $model->id, $model->cart->item_count);
         }
 
         return new UserDto(
@@ -31,7 +37,8 @@ class UserService implements UserServiceInterface {
             $model->username,
             $model->email,
             (int) $model->role,
-            $balanceDto
+            $balanceDto,
+            $cartDto
         );
     }
 

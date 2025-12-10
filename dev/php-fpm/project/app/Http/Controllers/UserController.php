@@ -38,6 +38,9 @@ class UserController extends Controller
             'email' => $user->getEmail(),
             'balance' => [
                 'amount' => $user->getBalance()->getAmount()
+            ],
+            'cart' => [
+                'count' => $user->getCart()->getItemCount()
             ]
         ]);
     }

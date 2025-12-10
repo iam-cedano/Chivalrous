@@ -2,16 +2,20 @@
 namespace Providers;
 
 use Http\Controllers\AuthController;
+use Http\Controllers\CartController;
 use Http\Controllers\ServicesController;
 use Http\Controllers\UserController;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Usecases\Auth\CreateApiTokenUsecase;
 use Usecases\Auth\LoginUsecase;
 use Usecases\Auth\StartSessionByUserIdUsecase;
+use Usecases\Cart\AddItemUsecase;
+use Usecases\Cart\GetCurrentCartUsecase;
 use Usecases\Services\BrowseServicesUsecase;
 use Usecases\Services\SearchServicesUsecase;
 use Usecases\Services\GetServiceDetailsUsecase;
 use Domains\Auth\Interfaces\SessionServiceInterface;
+use Domains\User\Interfaces\UserServiceInterface;
 use Illuminate\Support\ServiceProvider;
 use Infra\Auth\FormBasedAuthService;
 use Infra\Auth\SanctumTokenService;
@@ -81,10 +85,25 @@ class PortsProvider extends ServiceProvider implements DeferrableProvider {
         ->give(function() {
             return new LoginUsecase($this->app->make(FormBasedAuthService::class)); 
         });
+
+        $this->app->when(CartController::class)
+        ->needs(GetCurrentCartUsecase::class)
+        ->give(function() {
+            return new GetCurrentCartUsecase($this->app->make(UserService::class));
+        });
+
+        $this->app->when(CartController::class)
+        ->needs(AddItemUsecase::class)
+        ->give(function() {
+            return new AddItemUsecase();
+        });
     }
+    
     public function provides(): array {
         return [
             SessionServiceInterface::class,
+            UserServiceInterface::class,
+            BrowseServicesUsecase::class,
             BrowseServicesUsecase::class,
             SearchServicesUsecase::class,
             GetServiceDetailsUsecase::class,
@@ -94,6 +113,7 @@ class PortsProvider extends ServiceProvider implements DeferrableProvider {
             CreateUserUsecase::class,
             StartSessionByUserIdUsecase::class,
             LoginUsecase::class,
+            GetCurrentCartUsecase::class
         ];
     }
 }

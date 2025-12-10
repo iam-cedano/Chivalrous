@@ -4,7 +4,6 @@ namespace Models;
 
 use Models\OrderModel;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -16,7 +15,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class UserModel extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuids, SoftDeletes, HasApiTokens;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
     protected $table = 'users'; 
     protected $fillable = [    
         'username',
@@ -47,6 +46,10 @@ class UserModel extends Authenticatable
             $user->balance()->create([
                 'amount' => 0
             ]);
+
+            $user->cart()->create([
+                'item_count' => 0
+            ]);
         });
     }
 
@@ -54,11 +57,14 @@ class UserModel extends Authenticatable
         return $this->hasOne(BalanceModel::class, 'user_id');
     }
 
+    public function cart(): HasOne {
+        return $this->hasOne(CartModel::class, 'user_id');
+    }
+
     public function orders(): HasMany {
         return $this->hasMany(OrderModel::class, 'user_id');
     }
-
-    public function isAdministrator(): bool {
+    public function isAdministrator() {
         return $this->role == Config::get('constants.roles.admin');
     }
     protected static function newFactory() {

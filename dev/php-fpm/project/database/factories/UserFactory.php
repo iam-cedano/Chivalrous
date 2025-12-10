@@ -2,23 +2,21 @@
 
 namespace Database\Factories;
 
-use Models\UserModel as User;
+use Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-
 class UserFactory extends Factory
 {
-    protected $model = User::class;
+    protected $model = UserModel::class;
 
     protected static ?string $password;
 
     public function definition(): array
     {
         return [
-            'id' => uuid_create(),
             'username' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'role' => 0,
@@ -30,9 +28,15 @@ class UserFactory extends Factory
 
     public function configure(): static {
         return $this->afterCreating(function (User $user) {
-            if ( !$user->balance()->exists() ) {
+            if (! $user->balance()->exists() ) {
                 $user->balance()->create([
                     'amount' => 0
+                ]);
+            }
+
+            if (! $user->cart()->exists() ) {
+                $user->cart()->create([
+                    'item_count' => 0
                 ]);
             }
         });

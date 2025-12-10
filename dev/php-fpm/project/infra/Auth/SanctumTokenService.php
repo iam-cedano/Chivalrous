@@ -2,7 +2,7 @@
 
 namespace Infra\Auth;
 
-use App\Models\UserModel;
+use Models\UserModel;
 use Domains\Auth\Interfaces\TokenServiceInterface;
 
 class SanctumTokenService implements TokenServiceInterface {

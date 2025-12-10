@@ -3,7 +3,7 @@
 namespace Domains\User\Interfaces;
 
 use Http\Requests\CreateUserRequest;
-use Domains\User\UserDto;
+use Domains\User\DTOs\UserDto;
 
 interface UserServiceInterface {
     public function getCurrentUser(): UserDto;

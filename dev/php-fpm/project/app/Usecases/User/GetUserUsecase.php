@@ -3,7 +3,7 @@
 namespace Usecases\User;
 
 use Domains\User\Interfaces\UserServiceInterface;
-use Domains\User\UserDto;
+use Domains\User\DTOs\UserDto;
 
 class GetUserUsecase {
     

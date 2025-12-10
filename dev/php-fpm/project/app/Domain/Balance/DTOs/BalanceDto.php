@@ -1,6 +1,6 @@
 <?php
 
-namespace Domains\Balance;
+namespace Domains\Balance\DTOs;
 
 use Domains\DTO;
 

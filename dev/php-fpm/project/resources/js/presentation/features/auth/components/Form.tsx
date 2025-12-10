@@ -63,17 +63,16 @@ function LoginForm(): JSX.Element {
     const passwordRef = useRef<HTMLInputElement>(null);
 
     const handlerOnSubmit = (e: FormEvent) => {
-        authRepository.getCSRFToken()
-            .then(() => {
-                const username = loginRef.current?.value;
-                const password = passwordRef.current?.value;
+        e.preventDefault();
 
-                if (username == undefined || password == undefined) {
-                    return;
-                }
+        const username = loginRef.current?.value;
+        const password = passwordRef.current?.value;
 
-                return authRepository.login(username, password);
-            })
+        if (username == undefined || password == undefined) {
+            return;
+        }
+
+        authRepository.login(username, password)
             .then((data: LoginResult | undefined) => {
                 if (data == undefined) {
                     return;
@@ -82,9 +81,7 @@ function LoginForm(): JSX.Element {
                 if (data.redirect != undefined) {
                     location.replace(data.redirect);
                 }
-            })
-
-        e.preventDefault();
+            });
     };
 
     return (
@@ -157,8 +154,7 @@ function RegisterForm(): JSX.Element {
             return;
         }
 
-        authRepository.getCSRFToken()
-            .then(() => userRepository.createUser(username as string, email as string, password as string))
+        userRepository.createUser(username as string, email as string, password as string)
             .then((data) => {
                 location.replace('/home');
             })

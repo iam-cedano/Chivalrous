@@ -4,8 +4,8 @@ namespace Infra\User;
 use App\Exceptions\NotFoundResourceException;
 use Http\Requests\CreateUserRequest;
 use Models\UserModel;
-use Domains\Balance\BalanceDto;
-use Domains\User\UserDto;
+use Domains\Balance\DTOs\BalanceDto;
+use Domains\User\DTOs\UserDto;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Domains\User\Interfaces\UserServiceInterface;
@@ -52,7 +52,7 @@ class UserService implements UserServiceInterface {
             $model->id,
             $model->username,
             $model->email,
-            (int) $model->role,
+            $model->role,
             $balanceDto
         );
     }

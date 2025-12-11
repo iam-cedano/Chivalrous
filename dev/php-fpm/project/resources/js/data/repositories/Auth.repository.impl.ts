@@ -8,9 +8,9 @@ class AuthRepositoryImpl implements AuthRepository {
         const dto = response.data;
         
         return {
-            status: dto.status,
+            status: dto.code,
             message: dto.message,
-            redirect: dto.redirect
+            role: dto.role
         };
     }
 

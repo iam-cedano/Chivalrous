@@ -5,13 +5,12 @@ namespace Domains\Auth\DTOs;
 class LoginResponseDto {
     private int $code;
     private string $message;
-    private string $redirect;
+    private ?string $role = null;
 
     public function __construct(int $code, string $message)
     {
         $this->code = $code;
         $this->message = $message;
-        $this->redirect = '';
     }
 
     public function getCode(): int
@@ -24,13 +23,13 @@ class LoginResponseDto {
         return $this->message;
     }
 
-    public function getRedirect(): string {
-        return $this->redirect;
+    public function getRole(): ?string {
+        return $this->role;
     }
 
-    public function setRedirect(string $redirect): void 
+    public function setRole(string $role): void 
     {
-        $this->redirect = $redirect;
+        $this->role = $role;
     }
 
     public function toArray(): array
@@ -40,8 +39,8 @@ class LoginResponseDto {
             'message' => $this->getMessage()
         ];
         
-        if (! empty($this->getRedirect()) ) {
-            $data['redirect'] = $this->getRedirect();
+        if ($this->getRole() !== null) {
+            $data['role'] = $this->getRole();
         }
 
         return $data;

@@ -1,7 +1,7 @@
 type LoginResponseDTO = {
-    status: number;
+    code: number;
     message: string;
-    redirect?: string;
+    role?: string;
 };
 
 export type { LoginResponseDTO };

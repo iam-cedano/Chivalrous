@@ -12,8 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
-    ];
+            //
+        ];
 
     /**
      * Determine if the request has a URI that should pass through CSRF verification.

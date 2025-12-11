@@ -62,7 +62,7 @@ function LoginForm(): JSX.Element {
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const handlerOnSubmit = (e: FormEvent) => {
+    const handlerOnSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         const username = loginRef.current?.value;
@@ -72,14 +72,19 @@ function LoginForm(): JSX.Element {
             return;
         }
 
+        // Get CSRF cookie first
+        await authRepository.getCSRFToken();
+
         authRepository.login(username, password)
             .then((data: LoginResult | undefined) => {
                 if (data == undefined) {
                     return;
                 }
 
-                if (data.redirect != undefined) {
-                    location.replace(data.redirect);
+                if (data.role !== undefined) {
+                    // Navigate based on role (you can customize these routes)
+                    const route = data.role === 'admin' ? '/admin' : '/home';
+                    window.location.href = route;
                 }
             });
     };

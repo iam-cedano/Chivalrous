@@ -19,14 +19,25 @@ return Application::configure(basePath: dirname(__DIR__))
         api: [
             __DIR__.'/../routes/api/services.php',
             __DIR__.'/../routes/api/users.php',
-            __DIR__.'/../routes/api/carts.php'
+            __DIR__.'/../routes/api/carts.php',
         ],
         commands: __DIR__.'/../routes/commands.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->redirectGuestsTo('/');
-        $middleware->validateCsrfTokens(except: []);
+        $middleware->redirectGuestsTo(fn (Request $request) => 
+            $request->is('api/*') || $request->expectsJson() 
+                ? route('auth.login') 
+                : '/'
+        );
+        
+        $middleware->api(prepend: [
+            \Illuminate\Cookie\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+        ]);
+        
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->dontReportDuplicates();
@@ -41,6 +52,16 @@ return Application::configure(basePath: dirname(__DIR__))
                     'reasons' => $e->errors()
                 ], 422);
             }
+        });
+
+        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Unauthenticated',
+                ], 401);
+            }
+            
+            return to_route('auth.login');
         });
 
         $exceptions->render(function (AuthorizationException $e, Request $request) {

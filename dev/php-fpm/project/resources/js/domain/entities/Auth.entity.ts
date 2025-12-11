@@ -6,7 +6,7 @@ enum AccessMethod {
 type LoginResult = {
     status: number;
     message: string;
-    redirect?: string;
+    role?: string;
 };
 
 export type { LoginResult };

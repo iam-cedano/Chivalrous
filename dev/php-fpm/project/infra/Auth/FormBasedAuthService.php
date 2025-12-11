@@ -28,9 +28,13 @@ class FormBasedAuthService implements AuthServiceInterface {
             return $response;
         }
 
-        $response = new LoginResponseDto(200, 'OKAY');
+        $user = Auth::guard('web')->user();
         
-        $response->setRedirect("/home");
+        // Regenerate session AFTER getting user to ensure auth persists
+        request()->session()->regenerate();
+        
+        $response = new LoginResponseDto(200, 'OKAY');
+        $response->setRole($user->role);
 
         return $response;
     }

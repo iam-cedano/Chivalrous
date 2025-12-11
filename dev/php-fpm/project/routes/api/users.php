@@ -1,7 +1,7 @@
 <?php
 use Http\Controllers\UserController;
 
-Route::middleware(['auth:sanctum', 'web'])
+Route::middleware(['auth:sanctum'])
 ->controller(UserController::class)
 ->group(function () {
     Route::get('/user/token', 'getToken')->name('api.user.token');
@@ -9,7 +9,7 @@ Route::middleware(['auth:sanctum', 'web'])
     Route::get('/user', 'getCurrentUser')->name('api.user');
 });
 
-Route::middleware(['web'])
+Route::middleware(['auth:sanctum'])
 ->controller(UserController::class)
 ->group(function() {
     Route::post('/user', 'createUser')->name('api.create.user');

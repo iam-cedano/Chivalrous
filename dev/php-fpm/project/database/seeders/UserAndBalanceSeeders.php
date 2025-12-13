@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use Models\UserModel as User;
+use Models\UserModel;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Database\Seeder;
 
 class UserAndBalanceSeeders extends Seeder
 {
 
     public function run(): void
     {
-      User::factory()
+      UserModel::factory()
             ->count(2)
             ->state(new Sequence(
                 [

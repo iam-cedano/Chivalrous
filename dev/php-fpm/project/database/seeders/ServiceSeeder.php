@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Models\ServiceModel as Service;
+use Models\ServiceModel;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
@@ -10,7 +10,7 @@ class ServiceSeeder extends Seeder
 {
     public function run(): void
     {
-       $services = Service::factory()->count(3)->state(new Sequence(
+       $services = ServiceModel::factory()->count(3)->state(new Sequence(
         [
           'name' => 'Instagram Followers',
           'short_description' => 'Lifetime guaranteed | Delivering in 12-24 hours',
@@ -137,7 +137,7 @@ class ServiceSeeder extends Seeder
       ]
      ];
 
-     $services->each(function(Service $service) use($sourcesPerService, $detailsPerService) {
+     $services->each(function(ServiceModel $service) use($sourcesPerService, $detailsPerService) {
         $name = $service->name;
 
         if ($sourcesPerService[$name] ) {

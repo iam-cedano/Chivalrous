@@ -45,32 +45,25 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->level(NotFoundResourceException::class, LogLevel::INFO);
         $exceptions->level(ValidationException::class, LogLevel::INFO);
         
-        $exceptions->render(function (ValidationException $e, Request $request) {
-            if ($request->is('api/*') || $request->expectsJson()) {
-                return response()->json([
-                    'message' => $e->getMessage(),
-                    'reasons' => $e->errors()
-                ], 422);
+        $exceptions->render(function (\Throwable $e, Request $request) {
+            # ToDo: Remove config('app.debug') before deploying
+            if (($request->is('api/*') || $request->expectsJson()) && config('app.debug') == false ) {
+                $statusCode = match (true) {
+                    $e instanceof \Illuminate\Auth\AuthenticationException => 401,
+                    $e instanceof AuthorizationException => 403,
+                    $e instanceof \Illuminate\Database\Eloquent\ModelNotFoundException => 404,
+                    $e instanceof NotFoundResourceException => 404,
+                    $e instanceof ValidationException => 422,
+                    $e instanceof \Symfony\Component\HttpKernel\Exception\HttpException => $e->getStatusCode(),
+                    default => 500,
+                };
+                
+                return response()->json([], $statusCode);
             }
-        });
 
-        $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
-            if ($request->is('api/*') || $request->expectsJson()) {
-                return response()->json([
-                    'message' => 'Unauthenticated',
-                ], 401);
-            }
-            
-            return to_route('auth.login');
-        });
-
-        $exceptions->render(function (AuthorizationException $e, Request $request) {
-            if ($request->is('api/*') || $request->expectsJson()) {
-                return response()->json([
-                    'message' => 'Not authorized user',
-                ], 403);
-            }
-            
-            return to_route('auth.login');
+            return response()->json([
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ]);
         });
     })->create();

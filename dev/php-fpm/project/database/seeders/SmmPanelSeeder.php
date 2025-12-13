@@ -3,14 +3,14 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Models\SmmPanelModel as SmmPanel;
+use Models\SmmPanelModel;
 use Illuminate\Database\Seeder;
 
 class SmmPanelSeeder extends Seeder
 {
     public function run(): void
     {
-       $panels = SmmPanel::factory()->count(2)->state(new Sequence(
+       $panels = SmmPanelModel::factory()->count(2)->state(new Sequence(
   [
                  'name' => 'Morethanpanel',
                  'url' => 'https://morethanpanel.com/',
@@ -44,7 +44,7 @@ class SmmPanelSeeder extends Seeder
             ]
         ];
 
-        $panels->each(function (SmmPanel $smmPanel) use($apiKeysPerPanel) {
+        $panels->each(function (SmmPanelModel $smmPanel) use($apiKeysPerPanel) {
             $name = $smmPanel->name;
 
             if (! isset($apiKeysPerPanel[$name]) ) {

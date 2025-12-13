@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use Models\ServiceDetailsModel;
 use Database\Factories\ServiceFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +26,7 @@ class ServiceModel extends Model
     } 
 
     public function details(): HasMany {
-        return $this->hasMany(ServiceDetailsModel::class, 'service_id');
+    return $this->hasMany(ServiceDetailsModel::class, 'service_id');
     }
 
     protected static function newFactory() {

@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\SmmPanelModel as SmmPanel;
+use Models\SmmPanelModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SmmPanel>
- */
 class SmmPanelFactory extends Factory
 {
+
+    protected $model = SmmPanelModel::class;
+
     /**
      * Define the model's default state.
      *

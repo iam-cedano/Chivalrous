@@ -27,7 +27,7 @@ class UserFactory extends Factory
     }
 
     public function configure(): static {
-        return $this->afterCreating(function (User $user) {
+        return $this->afterCreating(function (UserModel $user) {
             if (! $user->balance()->exists() ) {
                 $user->balance()->create([
                     'amount' => 0

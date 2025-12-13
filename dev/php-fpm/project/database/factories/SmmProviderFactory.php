@@ -2,12 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\SmmProviderModel as SmmProvider;
+use App\Models\SmmProviderModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SmmProvider>
- */
 class SmmProviderFactory extends Factory
 {
 
@@ -16,7 +13,7 @@ class SmmProviderFactory extends Factory
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
      */
-    protected $model = SmmProvider::class;
+    protected $model = SmmProviderFactory::class;
 
     /**
      * Define the model's default state.
